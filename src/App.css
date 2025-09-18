@@ -1,0 +1,30 @@
+* {
+  padding: 0;
+  margin: 0;
+}
+
+body {
+  background-color: white;
+}
+
+main {
+  min-height: 800px;
+  padding: 0px 10px;
+}
+
+:root {
+  --dark_blue: #142740;
+  --golden_fonts: #ff8c00;
+  --light_blue_color: #315481;
+  /*Cores de teste:*/
+  --teste3: #f2c879;
+  --teste5: #734014;
+}
+
+h1, h2, p, a, label{
+  color: var(--golden_fonts);
+}
+
+h2{
+  color: var(--golden_fonts);
+}

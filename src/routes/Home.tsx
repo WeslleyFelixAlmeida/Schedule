@@ -1,0 +1,16 @@
+import { Link } from "react-router-dom";
+import style from "./Home.module.css";
+
+const Home = () => {
+    return (
+        <div className={style.homeContainer}>
+            <h1>Seja bem vindo ao Schedule</h1>
+            <h2>Agende compromissos ou divulgue horários de serviço para seu negócio.</h2>
+            <Link to={"/register"}>
+                <p>Comece a usar clicando aqui!</p>
+            </Link>
+        </div>
+    );
+}
+
+export default Home;
