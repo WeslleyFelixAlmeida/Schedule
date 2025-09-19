@@ -3,33 +3,49 @@
   height: 100vh;
   padding: 10px 0px;
   display: flex;
-  flex-direction: column;
-  row-gap: 20px;
+}
+.mainContainer {
+  display: flex;
+  align-items: center;
+  max-width: 1200px;
 }
 
-.contentContainer > a {
+.containerLogo {
+  display: flex;
+  height: 100vh;
+}
+
+.logoContainer {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+  height: 60%;
+  min-height: 450px;
+}
+
+.containerLogo > a {
   text-decoration: underline;
+  height: fit-content;
 }
 
 .contentContainer > form {
   border: 1px solid var(--dark_blue);
   border-radius: 20px;
-  height: 300px;
+  height: 440px;
   width: 90%;
-  max-width: 600px;
+  max-width: 380px;
   display: flex;
   flex-direction: column;
+  align-items: center;
   padding: 10px;
-}
-
-.contentContainer > form > label {
-  margin-top: 10px;
-  font-size: 20px;
-  font-weight: bold;
+  row-gap: 10px;
+  margin: 35px auto;
 }
 
 .contentContainer > form > input[type="text"],
-.contentContainer > form > input[type="password"] {
+.contentContainer > form > input[type="password"],
+.contentContainer > form > input[type="email"] {
   padding: 10px;
   border-radius: 10px;
   border: 1px solid var(--dark_blue);
@@ -37,13 +53,15 @@
 }
 
 .contentContainer > form > input[type="text"]:focus,
-.contentContainer > form > input[type="password"]:focus {
+.contentContainer > form > input[type="password"]:focus,
+.contentContainer > form > input[type="email"]:focus {
   outline-color: var(--golden_fonts);
   color: var(--dark_blue);
 }
 
 .contentContainer > form > input[type="text"]::placeholder,
-.contentContainer > form > input[type="password"]::placeholder {
+.contentContainer > form > input[type="password"]::placeholder,
+.contentContainer > form > input[type="email"]::placeholder {
   color: var(--dark_blue);
   opacity: 50%;
 }
@@ -63,4 +81,16 @@
 
 .contentContainer > form > input[type="submit"]:hover {
   background-color: var(--light_blue_color);
+}
+
+.errorMessage {
+  display: block;
+  height: 10px;
+  color: red;
+}
+
+@media screen and (max-width: 810px) {
+  .logoContainer {
+    display: none;
+  }
 }

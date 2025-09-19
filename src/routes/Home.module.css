@@ -31,3 +31,8 @@
 .homeContainer > a > p:hover {
   text-decoration: underline;
 }
+
+.homeContainer img {
+  width: 600px;
+  opacity: 50%;
+}

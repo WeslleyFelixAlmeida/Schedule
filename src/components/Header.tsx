@@ -1,8 +1,8 @@
 import style from "./Header.module.css";
-import white_logo from "./../assets/imgs/icone_branco.png";
 import { Link } from "react-router-dom";
 import { VscAccount } from "react-icons/vsc";
 import { useLocation } from "react-router-dom";
+import Logo from "./Logo";
 
 const Header = () => {
     const location = useLocation();
@@ -10,7 +10,7 @@ const Header = () => {
         <header className={style.header}>
             <Link to={"/"}>
                 <div className={style.imgContainer}>
-                    <img src={white_logo} alt="" />
+                    <Logo color={"white"} size={100}/>
                 </div>
             </Link>
             {location.pathname !== "/login" &&
