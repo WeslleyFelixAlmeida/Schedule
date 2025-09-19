@@ -1,0 +1,93 @@
+.contentContainer {
+  width: 100%;
+  height: 100vh;
+  padding: 10px 0px;
+  display: flex;
+}
+.mainContainer {
+  display: flex;
+  align-items: center;
+  max-width: 1200px;
+}
+
+.containerLogo {
+  display: flex;
+  height: 100vh;
+}
+
+.logoContainer {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+  height: 60%;
+  min-height: 450px;
+}
+
+.containerLogo > a {
+  text-decoration: underline;
+  height: fit-content;
+}
+
+.contentContainer > form {
+  border: 1px solid var(--dark_blue);
+  border-radius: 20px;
+  height: 440px;
+  width: 90%;
+  max-width: 380px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 10px;
+  row-gap: 10px;
+  margin: 35px auto;
+}
+
+.contentContainer > form > input[type="password"],
+.contentContainer > form > input[type="email"] {
+  padding: 10px;
+  border-radius: 10px;
+  border: 1px solid var(--dark_blue);
+  width: 80%;
+}
+
+.contentContainer > form > input[type="password"]:focus,
+.contentContainer > form > input[type="email"]:focus {
+  outline-color: var(--golden_fonts);
+  color: var(--dark_blue);
+}
+
+.contentContainer > form > input[type="password"]::placeholder,
+.contentContainer > form > input[type="email"]::placeholder {
+  color: var(--dark_blue);
+  opacity: 50%;
+}
+
+.contentContainer > form > input[type="submit"] {
+  border-radius: 10px;
+  padding: 10px;
+  width: 120px;
+  border: none;
+  color: white;
+  background-color: var(--dark_blue);
+  margin-top: 10px;
+  align-self: center;
+  transition: background-color 0.5s ease;
+  cursor: pointer;
+}
+
+.contentContainer > form > input[type="submit"]:hover {
+  background-color: var(--light_blue_color);
+}
+
+.errorMessage {
+  display: block;
+  height: 10px;
+  color: red;
+}
+
+@media screen and (max-width: 810px) {
+  .logoContainer {
+    display: none;
+  }
+}

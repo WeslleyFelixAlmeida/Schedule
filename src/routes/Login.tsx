@@ -1,13 +1,54 @@
-// import { useForm } from "react-hook-form";
-// import { z } from "zod"
-// import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import { z } from "zod"
+import { zodResolver } from "@hookform/resolvers/zod";
+import { Link } from "react-router-dom";
+import Logo from "../components/Logo";
+import style from "./Login.module.css";
+
+const loginFormSchema = z.object({
+    email: z.email({ message: "Informe um e-mail válido" }),
+    userPassword: z.string().min(1, "O campo de senha está vazio"),
+});
+
+type LoginFormSchema = z.infer<typeof loginFormSchema>;
 
 
 const Login = () => {
+    const { register, handleSubmit, formState: { errors },
+    } = useForm<LoginFormSchema>({
+        resolver: zodResolver(loginFormSchema)
+    });
+
+    function loginFormFilter(data: LoginFormSchema) {
+        console.log(data);
+    }
     return (
-        <>
-            Login
-        </>
+        <div className={style.mainContainer}>
+            <div className={style.containerLogo}>
+                <Link to={"/"}>Home</Link>
+                <div className={style.logoContainer}>
+                    <h1>Seja bem-vindo ao Schedule</h1>
+                    <Logo size={300} color={"black"} />
+                </div>
+            </div>
+            <div className={style.contentContainer}>
+                <form method="POST" onSubmit={handleSubmit(loginFormFilter)}>
+                    <h2>Entre na sua conta</h2>
+                    <p>Informe suas credenciais de acesso.</p>
+                    <input type="email" placeholder="Informe o e-mail" {...register("email")} required />
+                    <p className={style.errorMessage}>
+                        {errors.email && errors.email.message}
+                    </p>
+                    <input type="password" placeholder="Informe sua senha" {...register("userPassword")} required />
+                    <p className={style.errorMessage}>
+                        {errors.userPassword && errors.userPassword.message}
+                    </p>
+
+                    <input type="submit" value="Entrar" />
+                    <Link to={"/register"}>Ainda não possui uma conta?</Link>
+                </form>
+            </div>
+        </div>
     )
 }
 
