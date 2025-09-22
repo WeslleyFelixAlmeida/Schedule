@@ -7,6 +7,7 @@ import Register from './routes/Register.tsx'
 import Login from './routes/Login.tsx'
 import ErrorPage from './routes/ErrorPage.tsx'
 import App from './App.tsx'
+import Schedules from './routes/Schedules.tsx'
 
 const router = createBrowserRouter([
   {
@@ -25,6 +26,10 @@ const router = createBrowserRouter([
       {
         path: "/login",
         element: <Login />
+      },
+      {
+        path: "/schedules",
+        element: <Schedules/>
       }
     ]
   },

@@ -2,7 +2,7 @@ import { useForm } from "react-hook-form";
 import { z } from "zod"
 import { zodResolver } from "@hookform/resolvers/zod";
 import style from "./Register.module.css";
-import { Link } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import Logo from "../components/Logo";
 
 const registerFormSchema = z.object({
@@ -18,13 +18,15 @@ const registerFormSchema = z.object({
 type RegisterFormSchema = z.infer<typeof registerFormSchema>;
 
 const Register = () => {
+    const navigate = useNavigate();
+
     const { register, handleSubmit, formState: { errors },
     } = useForm<RegisterFormSchema>({
         resolver: zodResolver(registerFormSchema)
     });
 
     function registerFormFilter(data: RegisterFormSchema) {
-        console.log(data);
+        navigate("/login");
     }
 
     return (
@@ -37,7 +39,7 @@ const Register = () => {
                 </div>
             </div>
             <div className={style.contentContainer}>
-                <form method="POST" onSubmit={handleSubmit(registerFormFilter)}>
+                <form method="POST" onSubmit={handleSubmit(registerFormFilter)} >
                     <h2>Criar uma nova conta</h2>
                     <p>Preencha os campos abaixo para criar sua conta.</p>
                     <input type="text" placeholder="Informe o nome de usuário" {...register("username")} required />

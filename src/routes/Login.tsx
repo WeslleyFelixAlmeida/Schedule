@@ -1,7 +1,7 @@
 import { useForm } from "react-hook-form";
 import { z } from "zod"
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Logo from "../components/Logo";
 import style from "./Login.module.css";
 
@@ -14,13 +14,15 @@ type LoginFormSchema = z.infer<typeof loginFormSchema>;
 
 
 const Login = () => {
+    const navigate = useNavigate();
+
     const { register, handleSubmit, formState: { errors },
     } = useForm<LoginFormSchema>({
         resolver: zodResolver(loginFormSchema)
     });
 
     function loginFormFilter(data: LoginFormSchema) {
-        console.log(data);
+        navigate(`/schedules?teste=${"data"}`);
     }
     return (
         <div className={style.mainContainer}>

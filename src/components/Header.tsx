@@ -4,16 +4,29 @@ import { VscAccount } from "react-icons/vsc";
 import { useLocation } from "react-router-dom";
 import Logo from "./Logo";
 
+const hiddenLoginContainerPages = ["/register", "/home", "/"];
+const showHomeLogoLink = ["/register", "/login"];
+
 const Header = () => {
     const location = useLocation();
+    console.log(hiddenLoginContainerPages.includes(location.pathname));
     return (
         <header className={style.header}>
-            <Link to={"/"}>
+            {showHomeLogoLink.includes(location.pathname) &&
+                <Link to={"/"}>
+                    <div className={style.imgContainer}>
+                        <Logo color={"white"} size={100} />
+                    </div>
+                </Link>
+            }
+
+            {(location.pathname !== "/register" && location.pathname !== "/login") &&
                 <div className={style.imgContainer}>
-                    <Logo color={"white"} size={100}/>
+                    <Logo color={"white"} size={100} />
                 </div>
-            </Link>
-            {location.pathname !== "/login" &&
+            }
+
+            {hiddenLoginContainerPages.includes(location.pathname) &&
                 <div className={style.loginContainer}>
                     <Link to={"/login"}>
                         <div className={style.loginButton}>

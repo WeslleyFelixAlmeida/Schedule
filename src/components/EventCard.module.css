@@ -1,0 +1,79 @@
+.containerMain {
+  display: grid;
+  justify-content: center;
+  grid-template-columns: 30% 30% 30%;
+  row-gap: 10px;
+}
+
+.containerCardSchedule {
+  border: solid 1px var(--dark_blue);
+  padding: 10px;
+  width: 350px;
+  height: 300px;
+  display: flex;
+  flex-direction: column;
+  row-gap: 10px;
+  border-radius: 10px;
+  box-shadow: 0px 0px 2px darkblue;
+}
+
+.elementsCardSchedule {
+  display: flex;
+  flex-direction: column;
+  row-gap: 5px;
+}
+
+.infoCardSchedule {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.containerText {
+  display: flex;
+  flex-direction: column;
+  row-gap: 10px;
+  align-items: flex-start;
+  max-width: 230px;
+}
+
+.containerStatusAndAmount {
+  width: 35%;
+  max-width: 120px;
+}
+
+.containerStatus,
+.containerAmount {
+  display: flex;
+  column-gap: 5px;
+  align-items: center;
+}
+
+.StatusAndAmountCircle {
+  width: 13px;
+  height: 13px;
+  border: solid 1px;
+  border-radius: 50%;
+}
+
+.containerButtonsCard {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.containerButtonsCard > input[type="button"] {
+  padding: 7px;
+  border-radius: 10px;
+  border: none;
+  color: var(--golden_fonts);
+  width: 50%;
+  max-width: 150px;
+  background-color: var(--dark_blue);
+  transition: background-color 0.5s ease;
+  cursor: pointer;
+}
+
+.containerButtonsCard > input[type="button"]:hover {
+  background-color: #254f87;
+}

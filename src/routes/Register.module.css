@@ -4,6 +4,7 @@
   padding: 10px 0px;
   display: flex;
 }
+
 .mainContainer {
   display: flex;
   align-items: center;
@@ -37,10 +38,15 @@
   max-width: 380px;
   display: flex;
   flex-direction: column;
+  justify-content: center;
   align-items: center;
   padding: 10px;
   row-gap: 10px;
   margin: 35px auto;
+}
+
+.contentContainer > form > a:hover {
+  text-decoration: underline;
 }
 
 .contentContainer > form > input[type="text"],
