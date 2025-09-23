@@ -8,6 +8,7 @@ import Login from './routes/Login.tsx'
 import ErrorPage from './routes/ErrorPage.tsx'
 import App from './App.tsx'
 import Schedules from './routes/Schedules.tsx'
+import ScheduleDetails from './routes/ScheduleDetails.tsx'
 
 const router = createBrowserRouter([
   {
@@ -30,6 +31,10 @@ const router = createBrowserRouter([
       {
         path: "/schedules",
         element: <Schedules/>
+      },
+      {
+        path: "/scheduleDetails",
+        element: <ScheduleDetails/>
       }
     ]
   },

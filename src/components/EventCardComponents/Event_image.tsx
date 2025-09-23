@@ -1,4 +1,4 @@
-import schedule_img from "./../assets/imgs/img_teste.jpg";
+import schedule_img from "./../../assets/imgs/img_teste.jpg";
 
 type Event_imageProps = {
     width: string;

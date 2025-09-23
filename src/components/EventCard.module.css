@@ -49,6 +49,15 @@
   align-items: center;
 }
 
+.containerAmount > p {
+  color: var(--golden_fonts);
+}
+
+.AmountCircle {
+  color: var(--golden_fonts);
+  background-color: var(--golden_fonts);
+}
+
 .StatusAndAmountCircle {
   width: 13px;
   height: 13px;
@@ -62,18 +71,31 @@
   justify-content: space-between;
 }
 
-.containerButtonsCard > input[type="button"] {
+.detailsAndJoinButton,
+.cancelButton {
   padding: 7px;
   border-radius: 10px;
   border: none;
-  color: var(--golden_fonts);
   width: 50%;
   max-width: 150px;
-  background-color: var(--dark_blue);
   transition: background-color 0.5s ease;
   cursor: pointer;
 }
 
-.containerButtonsCard > input[type="button"]:hover {
+.detailsAndJoinButton {
+  color: var(--golden_fonts);
+  background-color: var(--dark_blue);
+}
+
+.cancelButton {
+  background-color: #a30101;
+  color: white;
+}
+
+.detailsAndJoinButton:hover {
   background-color: #254f87;
+}
+
+.cancelButton:hover {
+  background-color: #ff3535;
 }

@@ -1,56 +1,39 @@
 import style from "./EventCard.module.css";
-import Event_image from "./Event_image";
+import Event_image from "./EventCardComponents/Event_image";
 
+import EventCard_status from "./EventCardComponents/EventCard_status";//
+import EventCard_amount from "./EventCardComponents/EventCard_amount";//
+import EventCard_title from "./EventCardComponents/EventCard_Title";//
+import EventCard_buttons from "./EventCardComponents/EventCard_buttons";//
 
-const statusStyle = [{
-    color: "green",
-    backgroundColor: "green",
-    borderColor: "green"
-},
-{
-    color: "green",
+type EventCardProps = {
+    title: string;
+    shortDescription: string;
+    currentStatus: "closed" | "open";
+    maxAmount: number;
+    currentAmount: number;
+    buttonsType: "cancel" | "join" | "scheduleDetails";
+    scheduleId: number
+}
 
-}];
+//Há a possíbilidade de haver eventos de dois tipos, os com um unico horário e os com varios horários
 
+const EventCard = (props: EventCardProps) => {
 
-const stylesAmount = [
-    {
-        color: "var(--golden_fonts)",
-        backgroundColor: "var(--golden_fonts)"
-    },
-    {
-        color: "var(--golden_fonts)",
-    }
-]
-
-const EventCard = () => {
     return (
         <div className={style.containerMain}>
             <div className={style.containerCardSchedule}>
                 <div className={style.elementsCardSchedule}>
                     <div className={style.infoCardSchedule}>
-                        <div className={style.containerText}>
-                            <h1>Cabeleireiro</h1>
-                            <p>Cabeleireiro - Cortes.LTDA, agende um horário</p>
-                        </div>
+                        <EventCard_title title={props.title} shortDescription={props.shortDescription} />
                         <div className={style.containerStatusAndAmount}>
-                            <div className={style.containerStatus}>
-                                <div className={style.StatusAndAmountCircle} style={statusStyle[0]}></div>
-                                <p style={statusStyle[1]}>Com vagas</p>
-                            </div>
-                            <div className={style.containerAmount}>
-                                <div className={style.StatusAndAmountCircle} style={stylesAmount[0]}></div>
-                                <p style={stylesAmount[1]}><span>10/12</span> Pessoas</p>
-                            </div>
+                            <EventCard_status currentStatus={props.currentStatus} />
+                            <EventCard_amount maxAmount={props.maxAmount} currentAmount={props.currentAmount} />
                         </div>
                     </div>
                     <Event_image width="150px" />
                 </div>
-                <div className={style.containerButtonsCard}>
-                    <input type="button" value="Participar" />
-                    {/* <input type="button" value="Cancelar" /> */}
-                    <input type="button" value="Detalhes" />
-                </div>
+                <EventCard_buttons buttons={props.buttonsType} scheduleId={props.scheduleId} />
             </div>
         </div>
     )
