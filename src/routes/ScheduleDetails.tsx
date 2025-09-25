@@ -38,7 +38,11 @@ const ScheduleDetails = () => {
                     <p>{scheduleData.description}</p>
                 </div>
             </div>
-            <EventCard_buttons buttons="join" scheduleId={scheduleId} />
+            <div className={style.containerDetailsButtons}>
+                <input type="button" value="Participar" className={`${style.detailsButtons} ${style.joinButton}`}/>
+                {/* <input type="button" value="Cancelar" className={`${style.detailsButtons} ${style.cancelButton}`}/> */}
+            </div>
+
         </div>
     )
 }

@@ -21,7 +21,7 @@ type EventCardProps = {
 const EventCard = (props: EventCardProps) => {
 
     return (
-        <div className={style.containerMain}>
+        // <div className={style.containerMain}>
             <div className={style.containerCardSchedule}>
                 <div className={style.elementsCardSchedule}>
                     <div className={style.infoCardSchedule}>
@@ -35,7 +35,7 @@ const EventCard = (props: EventCardProps) => {
                 </div>
                 <EventCard_buttons buttons={props.buttonsType} scheduleId={props.scheduleId} />
             </div>
-        </div>
+        // </div>
     )
 }
 

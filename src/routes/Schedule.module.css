@@ -1,3 +1,19 @@
-.containerSchedules{
-    padding: 10px 0px;
+.containerMain {
+  display: grid;
+  grid-template-columns: 30% 30% 30%;
+  row-gap: 10px;
+  padding: 10px 0px;
+  width: 100%;
+}
+
+@media screen and (max-width: 1330px) {
+  .containerMain {
+    grid-template-columns: 50% 50%;
+  }
+}
+
+@media screen and (max-width: 800px) {
+  .containerMain {
+    grid-template-columns: 100%;
+  }
 }
