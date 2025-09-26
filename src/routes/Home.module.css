@@ -36,3 +36,15 @@
   width: 600px;
   opacity: 50%;
 }
+
+.imageContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@media screen and (max-width: 700px) {
+  .imageContainer > img{
+    width: 80%;
+  }
+}

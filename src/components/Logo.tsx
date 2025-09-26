@@ -4,11 +4,12 @@ import dark_logo from "./../assets/imgs/icone_preto.png";
 type LogoProps = {
     size: number;
     color: "black" | "white";
+    classname?: string;
 }
 
-const Logo = ({ size, color }: LogoProps) => {
+const Logo = ({ size, color, classname }: LogoProps) => {
     return (
-        <div>
+        <div className={classname ? classname : ""}>
             {color === "black" &&
                 <img src={dark_logo} alt="logo" width={`${size}px`} />
             }

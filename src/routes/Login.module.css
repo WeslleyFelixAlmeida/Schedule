@@ -44,7 +44,7 @@
   margin: 35px auto;
 }
 
-.contentContainer > form > a:hover{
+.contentContainer > form > a:hover {
   text-decoration: underline;
 }
 
@@ -92,7 +92,24 @@
 }
 
 @media screen and (max-width: 810px) {
+  .mainContainer {
+    max-width: 1200px;
+    display: grid;
+    grid-template-rows: 10% 90%;
+  }
+
+  .containerLogo {
+    display: flex;
+    align-items: center;
+    height: 100%;
+  }
+
   .logoContainer {
     display: none;
+  }
+
+  .contentContainer > form {
+    margin: 0px auto;
+    padding: 0px;
   }
 }

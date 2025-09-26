@@ -11,7 +11,7 @@ const Home = () => {
                 <p>Comece a usar clicando aqui!</p>
             </Link>
 
-            <Logo color={"black"} size={180}/>
+            <Logo color={"black"} size={180} classname={style.imageContainer}/>
         </div>
     );
 }
