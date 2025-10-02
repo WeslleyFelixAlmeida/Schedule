@@ -1,0 +1,27 @@
+.occupiedScheduleContainer {
+  background-color: #d54444;
+}
+
+.hourOccupiedSchedule {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-right: 1px solid var(--dark_blue);
+  padding: 10px;
+  box-sizing: border-box;
+}
+
+.textOccupiedSchedule {
+  width: 90%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px;
+  box-sizing: border-box;
+}
+
+.occupiedScheduleContainer p {
+  color: white;
+  font-weight: bold;
+}

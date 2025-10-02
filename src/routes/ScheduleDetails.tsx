@@ -2,6 +2,7 @@ import { Link, useSearchParams } from "react-router-dom";
 import EventCard_buttons from "../components/EventCardComponents/EventCard_buttons";
 import schedule_img from "./../assets/imgs/img_teste.jpg";
 import style from "./ScheduleDetails.module.css";
+import Details_MultipleSchedule from "../components/ScheduleDetailsComponents/details_multipleSchedule";
 
 const ScheduleDetails = () => {
     const [params] = useSearchParams();
@@ -43,6 +44,7 @@ const ScheduleDetails = () => {
                 {/* <input type="button" value="Cancelar" className={`${style.detailsButtons} ${style.cancelButton}`}/> */}
             </div>
 
+            <Details_MultipleSchedule scheduleId={1}/>
         </div>
     )
 }

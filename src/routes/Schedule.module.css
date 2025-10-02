@@ -4,6 +4,8 @@
   row-gap: 10px;
   padding: 10px 0px;
   width: 100%;
+  max-width: 1800px;
+  justify-content: center;
 }
 
 @media screen and (max-width: 1330px) {
