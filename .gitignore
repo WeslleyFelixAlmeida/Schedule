@@ -25,3 +25,4 @@ dist-ssr
 
 
 src/assets/imgs/img_teste.jpg
+src/components/ScheduleDetailsComponents/dados.json
