@@ -9,7 +9,6 @@ const showHomeLogoLink = ["/register", "/login"];
 
 const Header = () => {
     const location = useLocation();
-    console.log(hiddenLoginContainerPages.includes(location.pathname));
     return (
         <header className={style.header}>
             {showHomeLogoLink.includes(location.pathname) &&

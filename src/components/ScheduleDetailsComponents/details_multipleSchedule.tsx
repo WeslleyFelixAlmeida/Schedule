@@ -1,7 +1,6 @@
 import style from "./Details_MultipleSchedule.module.css";
-import ScheduleLine_choosed from "./MultipleSchedule_lines/ScheduleLine_choosed";
-import ScheduleLine_occupied from "./MultipleSchedule_lines/ScheduleLine_occupied";
-import ScheduleLine_open from "./MultipleSchedule_lines/ScheduleLine_open";
+
+import { scheduleLine_open_element, scheduleLine_occupied_element, scheduleLine_choosed_element, participateEvent, getOutEvent } from "./Details_MultipleScheduleCards";
 
 import data from "./dados.json"; // Apagar depois, serve apenas para puxar dados ficticios.
 
@@ -9,65 +8,62 @@ type Details_MultipleScheduleProps = {
     scheduleId: number;
 }
 
-type scheduleLine_props = {
-    hour: string;
-    buttonFunction: Function;
-    keyID: number;
+type eventDataSchedules_props = {
+    eventID: number;
+    eventStatusId: number;
+    eventHour: string
 }
 
-const scheduleLine_open_element = (props: scheduleLine_props) => {
-    return <ScheduleLine_open hour={props.hour} buttonFunction={props.buttonFunction} key={props.keyID} />
-}
-
-const scheduleLine_occupied_element = (props: Pick<scheduleLine_props, "hour" | "keyID">) => {
-    return <ScheduleLine_occupied hour={props.hour} key={props.keyID} />
-}
-
-const scheduleLine_choosed_element = (props: scheduleLine_props) => {
-    return <ScheduleLine_choosed hour={props.hour} buttonFunction={props.buttonFunction} key={props.keyID} />
-}
-
-
-const mostrarCards = () => {
+const mostrarCards = (eventsData: eventDataSchedules_props[]) => {
+    /*
+    Status possíveis:
+    1 -> Livre
+    2 -> Ocupado
+    3 -> Participando
+    */
     let lines: any = []
-    lines.push(
-        scheduleLine_open_element(
-            {
-                buttonFunction: () => { console.log("Testando!") },
-                hour: "10:15",
-                keyID: 1
-            }
-        )
-    );
 
-    lines.push(
-
-        scheduleLine_occupied_element(
-            {
-                hour: "10:30",
-                keyID: 2
-            }
-        )
-    );
-
-    lines.push(
-        scheduleLine_choosed_element(
-            {
-                buttonFunction: () => { console.log("Testando!") },
-                hour: "10:45",
-                keyID: 3
-            }
-        )
-    );
+    eventsData.map((event, index) => {
+        switch (event.eventStatusId) {
+            case 1:
+                lines.push(
+                    scheduleLine_open_element(
+                        {
+                            buttonFunction: () => { participateEvent() },
+                            hour: event.eventHour,
+                            keyID: index
+                        }
+                    )
+                );
+                break;
+            case 2:
+                lines.push(
+                    scheduleLine_occupied_element(
+                        {
+                            hour: event.eventHour,
+                            keyID: index
+                        }
+                    )
+                );
+                break;
+            case 3:
+                lines.push(
+                    scheduleLine_choosed_element(
+                        {
+                            buttonFunction: () => { getOutEvent() },
+                            hour: event.eventHour,
+                            keyID: index
+                        }
+                    )
+                );
+                break;
+        }
+    })
 
     return lines;
 }
-
 const Details_MultipleSchedule = (props: Details_MultipleScheduleProps) => {
-
-    const teste = () => {
-        console.log("Teste")
-    }
+    let eventsData: eventDataSchedules_props[] = data; // Váriavel que vai puxar os dados da API
 
     return (
         <div className={style.containerMultipleSchedule}>
@@ -88,10 +84,7 @@ const Details_MultipleSchedule = (props: Details_MultipleScheduleProps) => {
                 </div>
                 <h2>Horários disponíveis:</h2>
                 <ul>
-                    {/* <ScheduleLine_open hour={"10:00"} buttonFunction={teste} key={1} />
-                    <ScheduleLine_occupied hour={"10:30"} key={2} />
-                    <ScheduleLine_choosed hour={"12:45"} buttonFunction={teste} key={3} /> */}
-                    {mostrarCards()}
+                    {mostrarCards(eventsData)}
                 </ul>
             </div>
         </div>

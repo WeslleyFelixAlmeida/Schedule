@@ -2,14 +2,14 @@ import { Link, useSearchParams } from "react-router-dom";
 import EventCard_buttons from "../components/EventCardComponents/EventCard_buttons";
 import schedule_img from "./../assets/imgs/img_teste.jpg";
 import style from "./ScheduleDetails.module.css";
-import Details_MultipleSchedule from "../components/ScheduleDetailsComponents/details_multipleSchedule";
+import Details_MultipleSchedule from "../components/ScheduleDetailsComponents/Details_multipleSchedule";
 
 const ScheduleDetails = () => {
     const [params] = useSearchParams();
     const scheduleId = Number(params.get("id"));
-    const eventType = ["uniqueSchedule", "multipleSchedule"] //Isso vai vir do banco de dados com as informações do agendamento
+    const eventType = ["uniqueSchedule", "multipleSchedule"] //Isso vai vir da API com as informações do agendamento
 
-    const scheduleData = {
+    const scheduleData = {//Isso deve vir da API
         title: "Cabeleireiro",
         shortDescription: "Cabeleireiro - Cortes.LTDA, agende um horário",
         currentStatus: "open",
@@ -40,11 +40,11 @@ const ScheduleDetails = () => {
                 </div>
             </div>
             <div className={style.containerDetailsButtons}>
-                <input type="button" value="Participar" className={`${style.detailsButtons} ${style.joinButton}`}/>
+                <input type="button" value="Participar" className={`${style.detailsButtons} ${style.joinButton}`} />
                 {/* <input type="button" value="Cancelar" className={`${style.detailsButtons} ${style.cancelButton}`}/> */}
             </div>
 
-            <Details_MultipleSchedule scheduleId={1}/>
+            <Details_MultipleSchedule scheduleId={1} />{/* Esse componente vai aparecer caso eventType seja "multipleSchedule" */}
         </div>
     )
 }

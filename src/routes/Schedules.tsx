@@ -16,16 +16,6 @@ import style from "./Schedule.module.css";
 const Schedules = () => {
     return (
         <div className={style.containerMain}>
-            {/* <EventCard
-                title={"Cabeleireiro"}
-                shortDescription={"Cabeleireiro - Cortes.LTDA, agende um horário"}
-                currentStatus={"open"}
-                maxAmount={12}
-                currentAmount={10}
-                buttonsType={"scheduleDetails"}
-                scheduleId={1}
-            /> */}
-
             {Array.from({ length: 15 }, (_, i) => (//Apagar depois
                 <EventCard
                     key={i}
