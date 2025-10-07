@@ -22,6 +22,7 @@
   border-radius: 10px;
   padding: 10px 0px;
   box-sizing: border-box;
+  overflow-x: hidden;
 }
 
 .topContainerList {
@@ -34,51 +35,6 @@
 .topContainerList > p {
   margin-left: auto;
   margin-right: 30px;
-}
-
-.containerDate {
-  width: 100%;
-  height: 120px;
-  background-color: #dfdfdf;
-  flex-shrink: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.containerDate > ul {
-  display: flex;
-  align-items: center;
-  padding: 0px 10px;
-  list-style: none;
-  column-gap: 10px;
-  width: 100%;
-  height: 100%;
-  overflow-x: scroll;
-}
-
-.containerDate > ul > li {
-  background-color: white;
-  height: 90px;
-  width: 90px;
-  flex-shrink: 0;
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-  border-radius: 10px;
-}
-
-.containerDate > ul > li > div {
-  border-radius: 10px 10px 0px 0px;
-  height: 20px;
-  background-color: var(--dark_blue);
-  width: 100%;
-}
-
-.containerDate > ul > li > p {
-  font-weight: bold;
-  font-size: 30px;
-  margin-top: 13px;
 }
 
 .containerList > ul {
@@ -107,6 +63,12 @@
   border: 2px solid var(--dark_blue);
   font-weight: bold;
   font-size: 20px;
+}
+
+.emptyCard {
+  justify-content: center;
+  color: var(--golden_fonts);
+  background-color: var(--dark_blue);
 }
 
 @media screen and (min-height: 890px) {

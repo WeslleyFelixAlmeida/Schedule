@@ -1,0 +1,117 @@
+.dateList {
+  display: flex;
+  align-items: center;
+  column-gap: 40px;
+  list-style: none;
+  width: 3990px;
+  height: 100%;
+  overflow-x: hidden;
+  transition: all 0.5s ease;
+}
+
+.dateList > li {
+  background-color: white;
+  height: 90px;
+  width: 90px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  border-radius: 10px;
+}
+
+.dateList > li > div {
+  border-radius: 10px 10px 0px 0px;
+  height: 20px;
+  background-color: var(--dark_blue);
+  width: 100%;
+}
+
+.dateList > li > p {
+  font-weight: bold;
+  font-size: 30px;
+  margin-top: 13px;
+}
+
+.coverContainers {
+  background-color: white;
+  opacity: 35%;
+  width: 355px;
+  max-width: 355px;
+  height: 100px;
+  position: absolute;
+  top: 60px;
+  z-index: 1;
+}
+
+.coverLeft {
+  right: calc(50% + 58px);
+}
+
+.coverRight {
+  left: calc(50% + 57px);
+}
+
+.buttonChangeDay {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-image: url(/src/assets/imgs/arrowImage.png?t=1759784848303);
+  background-position: center;
+  height: 82px;
+  border-radius: 10px;
+  border: solid 1px var(--dark_blue);
+  padding: 0px 12px;
+  cursor: pointer;
+  z-index: 2;
+  top: 70px;
+  position: absolute;
+}
+
+.buttonChangeDateLeft {
+  transform: rotate(180deg);
+  left: calc(50% - 75px);
+}
+
+.buttonChangeDateRight {
+  right: calc(50% - 75px);
+}
+
+.rollingDateCardsLeft {
+  transition: padding 0.5s;
+}
+
+.rollingDateCardsRight {
+  transition: padding 0.5s;
+}
+
+@media screen and (max-width: 850px) {
+  .coverContainers {
+    width: 100%;
+  }
+  .coverLeft {
+    right: 0px;
+    width: 40%;
+  }
+
+  .coverRight {
+    left: 0px;
+    width: 40%;
+  }
+}
+
+@media screen and (max-width: 555px) {
+  .coverLeft {
+    width: 35%;
+  }
+
+  .coverRight {
+    width: 35%;
+  }
+}
+
+@media screen and (max-width: 425px) {
+  .coverContainers {
+    width: 30%;
+  }
+}

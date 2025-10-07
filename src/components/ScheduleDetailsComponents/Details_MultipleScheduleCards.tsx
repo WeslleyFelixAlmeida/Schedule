@@ -23,11 +23,11 @@ const scheduleLine_choosed_element = (props: scheduleLine_props) => {
 }
 
 //Nestas duas funções vão estar as requests para deixar/participar do evento:
-const participateEvent = () => {
+const participateEvent = (id: number) => {
     console.log("Entrou no evento!");
 }
 
-const getOutEvent = () => {
+const getOutEvent = (id: number) => {
     console.log("Saiu do evento!");
 }
 
