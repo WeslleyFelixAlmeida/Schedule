@@ -9,6 +9,8 @@ import data from "./dados.json"; // Apagar depois, serve apenas para puxar dados
 
 type Details_MultipleScheduleProps = {
     scheduleId: number;
+    showMultipleSchedule: { display: string };
+    setShowMultipleSchedule: Function;
 }
 
 type eventDataSchedules_props = {
@@ -16,7 +18,7 @@ type eventDataSchedules_props = {
     eventID: number;
     eventStatusId: number;
     eventHour: string
-    eventDate?: string //Da para considerar os horários pela data exemplo 10/01/2025, apenas os horários deste dia serão apresentados
+    eventDate: string //Da para considerar os horários pela data exemplo 10/01/2025, apenas os horários deste dia serão apresentados
 }
 
 const showCards = (eventsData: eventDataSchedules_props[]) => {
@@ -27,8 +29,8 @@ const showCards = (eventsData: eventDataSchedules_props[]) => {
     3 -> Participando
     */
     let lines: any = []
-    if(!eventsData[0]){
-        return(
+    if (!eventsData[0]) {
+        return (
             <li key={0} className={style.emptyCard}>Não há horários disponíveis neste dia.</li>
         )
     }
@@ -81,7 +83,8 @@ const getDayData = async (day: number) => {
     return dayData;
 }
 
-const Details_MultipleSchedule = (props: Details_MultipleScheduleProps) => {    
+
+const Details_MultipleSchedule = (props: Details_MultipleScheduleProps) => {
     const [choosedDay, setChoosedDay] = useState<number>(currentDay);
 
     const [eventsData, setEventsData] = useState<eventDataSchedules_props[]>([]);
@@ -90,16 +93,15 @@ const Details_MultipleSchedule = (props: Details_MultipleScheduleProps) => {
         const changeDateData = async () => {
             const result = await getDayData(choosedDay);
             setEventsData(result);
-            console.log("teste")
         };
         changeDateData();
     }, [choosedDay])
 
     return (
-        <div className={style.containerMultipleSchedule}>
+        <div className={style.containerMultipleSchedule} style={props.showMultipleSchedule}>
             <div className={style.containerList}>
                 <div className={style.topContainerList}>
-                    <p>x</p> {/*Isso será um botão para fazer este container desaparecer*/}
+                    <p onClick={() => { props.setShowMultipleSchedule({ display: "none" }) }} className={style.exitButton}>x</p> {/*Isso será um botão para fazer este container desaparecer*/}
                     <h2>Datas disponíveis - {getMonthName(currentMonth - 1)}:</h2>
                 </div>
                 <div className={style.containerDate}>

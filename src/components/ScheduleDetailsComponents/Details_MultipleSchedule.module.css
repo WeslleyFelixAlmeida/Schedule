@@ -1,7 +1,7 @@
 .containerMultipleSchedule {
   position: absolute;
   left: 0;
-  display: flex;
+  display: none;
   justify-content: center;
   width: 100%;
   height: calc(100vh - 100px);
@@ -69,6 +69,24 @@
   justify-content: center;
   color: var(--golden_fonts);
   background-color: var(--dark_blue);
+}
+
+.exitButton {
+  background-color: var(--dark_blue);
+  font-size: 23px;
+  font-weight: bold;
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.5s;
+}
+
+.exitButton:hover {
+  background-color: var(--light_blue_color);
 }
 
 @media screen and (min-height: 890px) {

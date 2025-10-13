@@ -1,17 +1,18 @@
 import EventCard from "../components/EventCard";
 import style from "./Schedule.module.css";
 
-// const EventCardPropsTeste = {//Apagar
-//     title: "Cabeleireiro",
-//     shortDescription: "Cabeleireiro - Cortes.LTDA, agende um horário",
-//     currentStatus: "open",
-//     maxAmount: 12,
-//     currentAmount: 10,
-//     buttonsType: "join",
-//     scheduleId: 1,
-// }
-
-//const eventType = ["uniqueSchedule", "multipleSchedule"] //Isso vai vir do banco de dados com as informações do agendamento
+/*
+Dados esperados da API:
+    scheduleId: number
+    title: string;
+    shortDescription: string;
+    description: string;
+    maxAmount: number;
+    currentStatus: "closed" | "open";
+    currentAmount: number;
+    eventType: "multipleSchedule" | "uniqueSchedule"; //
+    isParticipating: "yes" | "no" | "multipleScheduleSituation"; //
+*/
 
 const Schedules = () => {
     return (
@@ -21,11 +22,12 @@ const Schedules = () => {
                     key={i}
                     title="Cabeleireiro"
                     shortDescription="Cabeleireiro - Cortes.LTDA, agende um horário"
-                    currentStatus="open"
+                    currentStatus="closed" //Estas 3 propriedades são o que definem os botões!
                     maxAmount={12}
                     currentAmount={10}
-                    buttonsType="scheduleDetails"
-                    scheduleId={1}
+                    scheduleId={i}
+                    isParticipating={"no"} //Estas 3 propriedades são o que definem os botões!
+                    eventType="uniqueSchedule" //Estas 3 propriedades são o que definem os botões!
                 />
             ))}
         </div>

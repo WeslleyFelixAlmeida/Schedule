@@ -92,6 +92,12 @@
   background-color: #ff3535;
 }
 
+.closedEventMessage {
+  margin-top: 10px;
+  font-weight: bold;
+  font-size: 20px;
+}
+
 @media screen and (max-width: 1260px) {
   .containerMain,
   .detailsTitleContainer {
@@ -117,6 +123,18 @@
   .containerDetailsButtons {
     justify-content: center;
     width: 100%;
+  }
+
+  .containerButtonsCard {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    row-gap: 10px;
+  }
+
+  .closedEventMessage {
+    margin-top: 0;
   }
 }
 

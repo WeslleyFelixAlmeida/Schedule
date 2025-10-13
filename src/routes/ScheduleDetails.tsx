@@ -1,25 +1,88 @@
-import { Link, useSearchParams } from "react-router-dom";
-import EventCard_buttons from "../components/EventCardComponents/EventCard_buttons";
-import schedule_img from "./../assets/imgs/img_teste.jpg";
 import style from "./ScheduleDetails.module.css";
+import schedule_img from "./../assets/imgs/img_teste.jpg";
+import { Link, useNavigate, useSearchParams } from "react-router-dom";
+import { useState } from "react";
 import Details_MultipleSchedule from "../components/ScheduleDetailsComponents/Details_multipleSchedule";
+import Button from "./../components/Button";
+import type { EventDataProps } from "../Utils/Types";
+import { exitEvent as exit, joinEvent as join } from "../Utils/ButtonsFunctions";
+import type { JSX } from "react";
+import EventCard_status from "../components/EventCardComponents/EventCard_status";
 
 const ScheduleDetails = () => {
     const [params] = useSearchParams();
     const scheduleId = Number(params.get("id"));
-    const eventType = ["uniqueSchedule", "multipleSchedule"] //Isso vai vir da API com as informações do agendamento
 
-    const scheduleData = {//Isso deve vir da API
+    const [showMultipleSchedule, setShowMultipleSchedule] = useState<{ display: string }>({
+        display: "none"
+    });
+
+    const scheduleData: EventDataProps = {//Isso deve vir da API
         title: "Cabeleireiro",
         shortDescription: "Cabeleireiro - Cortes.LTDA, agende um horário",
-        currentStatus: "open",
+        currentStatus: "closed", //"open",
         maxAmount: 12,
         currentAmount: 10,
-        buttonsType: "join",
         scheduleId: 1,
-        eventType: "uniqueSchedule",
-        description: "Cabeleireiro especializado em cuidados com os cabelos, oferecendo serviços de corte, coloração, hidratação, escova e penteados para diferentes ocasiões. Com atenção aos detalhes e foco na satisfação do cliente, busca realçar a beleza natural e proporcionar bem-estar em cada atendimento. Atua com técnicas atualizadas, produtos de qualidade e atendimento personalizado para todos os estilos e necessidades."
+        eventType: "uniqueSchedule", // "multipleSchedule",
+        description: "Cabeleireiro especializado em cuidados com os cabelos, oferecendo serviços de corte, coloração, hidratação, escova e penteados para diferentes ocasiões. Com atenção aos detalhes e foco na satisfação do cliente, busca realçar a beleza natural e proporcionar bem-estar em cada atendimento. Atua com técnicas atualizadas, produtos de qualidade e atendimento personalizado para todos os estilos e necessidades.",
+        isParticipating: "yes"
+    } as const
+
+    //------------------------------------------------------------------
+    const navigate = useNavigate();
+
+    const chooseButton = (conditionsCheck: Pick<EventDataProps, "eventType" | "isParticipating" | "currentStatus" | "scheduleId">) => {
+        const cancelButton = (
+            <Button buttonFunction={exit} buttons="cancel" key={1} />
+        );
+
+        const joinButtonMultiple = (
+            <Button buttonFunction={() => { setShowMultipleSchedule({ display: "flex" }) }} buttons="join" key={1} />
+        );
+
+        const joinButtonUnique = (
+            <Button buttonFunction={join} buttons="join" key={1} />
+        )
+
+        const buttons: JSX.Element[] = [];
+
+
+        if (conditionsCheck.eventType === "uniqueSchedule" &&
+            conditionsCheck.isParticipating === "no" &&
+            conditionsCheck.currentStatus === "open"
+        ) {
+            buttons.push(joinButtonUnique);
+
+        }
+        else if (conditionsCheck.eventType === "multipleSchedule" &&
+            conditionsCheck.isParticipating === "multipleScheduleSituation" &&
+            conditionsCheck.currentStatus === "open"
+        ) {
+            buttons.push(joinButtonMultiple);
+
+        }
+        else if (conditionsCheck.eventType === "uniqueSchedule" &&
+            conditionsCheck.isParticipating === "yes" &&
+            conditionsCheck.currentStatus === "open") {
+            buttons.push(cancelButton);
+
+        } else if (conditionsCheck.eventType === "uniqueSchedule" &&
+            conditionsCheck.isParticipating === "yes" &&
+            conditionsCheck.currentStatus === "closed") {
+            buttons.push(cancelButton);
+        }
+        if (conditionsCheck.currentStatus === "closed") {
+            buttons.push(<p className={style.closedEventMessage}>Evento fechado!</p>);
+        }
+
+        return (
+            <div className={style.containerButtonsCard}>
+                {buttons}
+            </div>
+        )
     }
+    //------------------------------------------------------------------
 
     return (
         <div className={style.containerMain}>
@@ -28,6 +91,8 @@ const ScheduleDetails = () => {
                 <h1>{scheduleData.title}</h1>
                 <h2>{scheduleData.shortDescription}</h2>
             </div>
+            <EventCard_status currentStatus={scheduleData.currentStatus} />
+
             <div className={style.centerDetailsContainer}>
                 <div className={style.imageContainer}>
                     <div className={style.mainImageContainer}>
@@ -39,12 +104,13 @@ const ScheduleDetails = () => {
                     <p>{scheduleData.description}</p>
                 </div>
             </div>
-            <div className={style.containerDetailsButtons}>
-                <input type="button" value="Participar" className={`${style.detailsButtons} ${style.joinButton}`} />
-                {/* <input type="button" value="Cancelar" className={`${style.detailsButtons} ${style.cancelButton}`}/> */}
-            </div>
 
-            <Details_MultipleSchedule scheduleId={1} />{/* Esse componente vai aparecer caso eventType seja "multipleSchedule" */}
+            {chooseButton({ currentStatus: scheduleData.currentStatus, eventType: scheduleData.eventType, isParticipating: scheduleData.isParticipating, scheduleId: scheduleData.scheduleId })}
+            {scheduleData.eventType === "multipleSchedule" &&
+                (
+                    <Details_MultipleSchedule scheduleId={1} setShowMultipleSchedule={setShowMultipleSchedule} showMultipleSchedule={showMultipleSchedule} />
+                )
+            }
         </div>
     )
 }
