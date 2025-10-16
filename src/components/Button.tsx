@@ -1,15 +1,51 @@
 import type { JSX } from "react";
 import style from "./Button.module.css";
+import { IoExitOutline } from "react-icons/io5";
+import { VscAccount } from "react-icons/vsc";
+import { FiSave } from "react-icons/fi";
 
 type EventCard_buttonProps = {
-    buttons: "cancel" | "join" | "details";
+    buttons: "cancel" | "join" | "details" | "profile" | "logout" | "schedules";
     buttonFunction: Function
 }
 
 const chooseButton = (buttonType: EventCard_buttonProps) => {
     let buttonChossed: JSX.Element = <></>;
-    
+
     switch (buttonType.buttons) {
+        case "schedules":
+            buttonChossed = (
+                <button
+                    onClick={() => buttonType.buttonFunction()}
+                    className={`${style.commomButton} ${style.schedulesButton}`}
+                >
+                    <FiSave />
+                    <p>Meus Agendamentos</p>
+                </button>
+            )
+            break;
+        case "logout":
+            buttonChossed = (
+                <button
+                    onClick={() => buttonType.buttonFunction()}
+                    className={`${style.commomButton} ${style.logoutButton}`}
+                >
+                    <IoExitOutline />
+                    Sair
+                </button>
+            )
+            break;
+        case "profile":
+            buttonChossed = (
+                <button
+                    onClick={() => buttonType.buttonFunction()}
+                    className={`${style.commomButton} ${style.profileButton}`}
+                >
+                    <VscAccount />
+                    Perfil
+                </button>
+            )
+            break;
         case 'join':
             buttonChossed = (
                 <input

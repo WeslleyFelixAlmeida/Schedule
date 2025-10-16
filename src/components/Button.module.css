@@ -26,3 +26,37 @@
 .cancelButton:hover {
   background-color: #ff3535;
 }
+
+.commomButton {
+  padding: 7px;
+  border-radius: 10px;
+  border: none;
+  transition: background-color 0.5s ease;
+  cursor: pointer;
+  width: 200px;
+  height: 35px;
+  background-color: var(--dark_blue);
+  color: var(--golden_fonts);
+  display: flex;
+  align-items: center;
+  justify-content: left;
+  column-gap: 10px;
+  font-size: 15px;
+  font-weight: bold;
+}
+
+.commomButton:hover {
+  background-color: #254f87;
+}
+
+.commomButton > svg {
+  font-size: 26px;
+}
+
+.logoutButton > svg {
+  font-size: 30px;
+}
+
+.schedulesButton > p {
+  width: 100%;
+}
