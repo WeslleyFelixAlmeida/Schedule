@@ -3,25 +3,97 @@ import { Link, useNavigate } from "react-router-dom";
 import { VscAccount } from "react-icons/vsc";
 import { useLocation } from "react-router-dom";
 import Logo from "./Logo";
-import perfilImage from "./../assets/imgs/ta.jpg";
 import Button from "./Button";
+import { useEffect, useState } from "react";
+import type { PerfilOptionsProps } from "../Utils/Types";
+import type { JSX } from "react";
 
+import { userData } from "./../Utils/UserDataExample"; //Apagar depois, isso vai vir da API
 
 const hiddenLoginContainerPages = ["/register", "/home", "/"];
 const showHomeLogoLink = ["/register", "/login"];
-const showPerfilOptions = ["/schedules", "/scheduleDetails"];
+const notShowPerfilOptions = ["/aboutUs", "/Login", "/Register", "/", "/login", "/register"];
 
 const isLogged = false;
+
 
 const Header = () => {
     const location = useLocation();
     const navigate = useNavigate();
+    const [perfilOptions, setPerfilOptions] = useState<PerfilOptionsProps>({
+        transition: "none",
+        backgroundColor: "transparent",
+        height: "80px"
+    });
+
+    const presentPerfilOptions = () => {
+        if (perfilOptions.height === "80px") {
+            setPerfilOptions({
+                transition: "height 0.5s ease",
+                backgroundColor: "white",
+                height: "300px"
+            });
+        }
+        else {
+            setPerfilOptions({
+                transition: "none",
+                backgroundColor: "transparent",
+                height: "80px"
+            });
+        }
+    }
+
+    const profileButton: JSX.Element = <Button
+        buttonFunction={() => navigate("/profile")}
+        buttons="profile" key={0}/>;
+
+    const personalSchedulesButton: JSX.Element = <Button
+        buttonFunction={() => navigate("/userSchedules")}
+        buttons="schedules" key={1}/>;
+
+    const exitButton: JSX.Element = <Button
+        buttonFunction={() => console.log("Botão de sair")}
+        buttons="logout" key={2}/>;
+
+    const showButtons = () => {
+        const chosedButtons: JSX.Element[] = []
+
+        switch (location.pathname) {
+            case "/profile":
+                chosedButtons.push(personalSchedulesButton);
+                chosedButtons.push(exitButton);
+                break;
+            case "/userSchedules":
+                chosedButtons.push(profileButton);
+                chosedButtons.push(exitButton);;
+                break;
+            default:
+                chosedButtons.push(profileButton);
+                chosedButtons.push(personalSchedulesButton);
+                chosedButtons.push(exitButton);
+                break;
+        }
+
+        return (
+            <div className={style.options}>
+                {chosedButtons}
+            </div>
+        )
+    }
+
+    useEffect(() => {
+        setPerfilOptions({
+            transition: "none",
+            backgroundColor: "transparent",
+            height: "80px"
+        });
+    }, [location.pathname]);
 
     return (
         <header className={style.header}>
             {showHomeLogoLink.includes(location.pathname) &&
                 <Link to={"/"}>
-                    <div className={style.imgContainer}>
+                    <div className={style.imgContainer} >
                         <Logo color={"white"} size={100} />
                     </div>
                 </Link>
@@ -43,18 +115,14 @@ const Header = () => {
                     </Link>
                 </div>
             }
-            {showPerfilOptions.includes(location.pathname) &&
-                <div className={style.perfilOptionsContainer}>
-                    <div className={style.containerImage}>
-                        <img src={perfilImage} alt="Imagem de perfil" />
+            {!notShowPerfilOptions.includes(location.pathname) &&
+                <div className={style.perfilOptionsContainer} style={perfilOptions}>
+                    <div className={style.containerImage} onClick={() => presentPerfilOptions()} >
+                        <img src={userData.userImage} alt="Imagem de perfil" />
                         {/* Aqui vai vir um imagem do usuário atual! */}
                     </div>
-                    <p>Usuário1</p>
-                    <div className={style.options}>
-                        <Button buttonFunction={() => navigate("/profile")} buttons="profile" />
-                        <Button buttonFunction={() => navigate("/userSchedules")} buttons="schedules" />
-                        <Button buttonFunction={() => console.log("Botão de sair")} buttons="logout" />
-                    </div>
+                    <p>{userData.username}</p>
+                    {showButtons()}
                 </div>
             }
         </header>

@@ -10,3 +10,9 @@ export type EventDataProps = {
     isParticipating: "yes" | "no" | "multipleScheduleSituation"; //
     // buttonsType: "cancel" | "join" | "details"; //
 }
+
+export type PerfilOptionsProps = {
+    transition: "height 0.5s ease" | "none";
+    backgroundColor: "white" | "transparent";
+    height: "300px" | "80px";
+}

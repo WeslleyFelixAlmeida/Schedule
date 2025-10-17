@@ -5,7 +5,8 @@ import { VscAccount } from "react-icons/vsc";
 import { FiSave } from "react-icons/fi";
 
 type EventCard_buttonProps = {
-    buttons: "cancel" | "join" | "details" | "profile" | "logout" | "schedules";
+    buttons: "cancel" | "join" | "details" |
+    "profile" | "logout" | "schedules"
     buttonFunction: Function
 }
 

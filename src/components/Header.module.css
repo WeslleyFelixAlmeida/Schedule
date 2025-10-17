@@ -48,10 +48,12 @@ a {
   display: flex;
   flex-direction: column;
   align-items: center;
-  height: 300px;
   border: solid 1px var(--dark_blue);
   border-radius: 10px;
-  background-color: white;
+  overflow: hidden;
+  /* height: 300px; */
+  /* background-color: white; */
+  height: 80px;
 }
 
 .perfilOptionsContainer > p {
@@ -60,6 +62,7 @@ a {
   border-right-width: 0px;
   width: 100%;
   height: 35px;
+  min-height: 35px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -69,13 +72,13 @@ a {
 }
 
 .containerImage {
-  margin-right: 20px;
-  margin-left: 145px;
   margin-top: 15px;
+  cursor: pointer;
 }
 
 .containerImage > img {
   width: 60px;
+  height: 57px;
   border-radius: 50%;
   border: none;
 }
