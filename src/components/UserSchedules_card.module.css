@@ -1,0 +1,54 @@
+.choosedScheduleContainer {
+  background-color: white;
+}
+
+.hourChoosedSchedule {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  border-right: 1px solid green;
+  padding: 10px;
+  box-sizing: border-box;
+  width: 80px;
+  font-size: 15px;
+}
+
+.textChoosedSchedule {
+  width: 90%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px;
+  box-sizing: border-box;
+  flex-direction: column;
+  row-gap: 5px;
+}
+
+.choosedScheduleContainer p {
+  color: green;
+  font-weight: bold;
+}
+
+.textChoosedSchedule > input[type="button"] {
+  width: 100%;
+  max-width: 250px;
+  background-color: #c12121;
+  color: white;
+  border-radius: 10px;
+  border: none;
+  height: 30px;
+  cursor: pointer;
+  transition: background-color 0.5s ease;
+}
+
+.textChoosedSchedule > input[type="button"]:hover {
+  background-color: #d12525;
+}
+
+@media screen and (max-width: 475px) {
+  .textChoosedSchedule > p {
+    font-size: 12px;
+  }
+}

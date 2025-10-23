@@ -1,0 +1,124 @@
+.containerCreateUniqueSchedule {
+  display: flex;
+  flex-direction: column;
+  row-gap: 10px;
+}
+
+.formCreateEvent {
+  display: flex;
+  flex-direction: column;
+  row-gap: 10px;
+  width: 70%;
+}
+/**/
+.containerFormImage {
+  display: flex;
+  flex-direction: column;
+  row-gap: 10px;
+  height: 380px;
+}
+
+.containerFormImage > img {
+  width: 300px;
+  border: solid 2px gray;
+  border-radius: 10px;
+}
+
+.containerFormImage > input[type="file"] {
+  display: none;
+}
+
+.containerFormImage > p {
+  font-weight: bold;
+}
+
+.containerFormImage > label {
+  position: relative;
+  border: solid 1px var(--golden_fonts);
+  background-color: var(--dark_blue);
+  font-weight: bold;
+  width: 100%;
+  max-width: 300px;
+  padding: 5px;
+  border-radius: 10px;
+  cursor: pointer;
+  display: flex;
+  column-gap: 10px;
+  align-items: center;
+  padding: 10px;
+  transition: background-color 0.5s ease;
+}
+
+.containerFormImage > label:hover {
+  background-color: var(--light_blue_color);
+}
+
+.containerFormImage > label > svg {
+  font-size: 20px;
+}
+
+/**/
+.containerEventFormUnique {
+  display: flex;
+  flex-direction: column;
+  row-gap: 10px;
+}
+
+.containerEventFormUnique > p {
+  font-weight: bold;
+}
+
+.containerEventFormUnique input,
+.containerCreateUniqueSchedule textarea {
+  height: 30px;
+  width: 100%;
+  max-width: 500px;
+  padding: 5px;
+  border: solid 1px var(--dark_blue);
+  border-radius: 10px;
+  color: var(--golden_fonts);
+}
+
+.containerEventFormUnique > textarea {
+  height: 150px;
+}
+
+.containerEventFormUnique input:focus,
+.containerCreateUniqueSchedule textarea:focus {
+  outline-color: var(--dark_blue);
+  color: var(--golden_fonts);
+}
+
+.containerEventFormUnique input::placeholder,
+.containerCreateUniqueSchedule textarea::placeholder {
+  color: var(--golden_fonts);
+  opacity: 60%;
+}
+
+.formCreateEvent > input[type="submit"] {
+  padding: 7px;
+  border-radius: 10px;
+  border: none;
+  transition: background-color 0.5s ease;
+  cursor: pointer;
+  width: 200px;
+  height: 35px;
+  background-color: var(--dark_blue);
+  color: var(--golden_fonts);
+  display: flex;
+  align-items: center;
+  justify-content: left;
+  column-gap: 10px;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.formCreateEvent > input[type="submit"]:hover {
+  background-color: #254f87;
+}
+
+@media screen and (max-width: 450px) {
+  .containerFormImage {
+    height: 410px;
+  }
+}

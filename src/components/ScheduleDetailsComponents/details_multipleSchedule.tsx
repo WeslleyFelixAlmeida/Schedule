@@ -15,7 +15,7 @@ type Details_MultipleScheduleProps = {
 
 type eventDataSchedules_props = {
     id: number;
-    eventID: number;
+    scheduleId: number;
     eventStatusId: number;
     eventHour: string
     eventDate: string //Da para considerar os horários pela data exemplo 10/01/2025, apenas os horários deste dia serão apresentados

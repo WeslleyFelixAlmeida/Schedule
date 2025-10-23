@@ -11,6 +11,8 @@ import Schedules from './routes/Schedules.tsx'
 import ScheduleDetails from './routes/ScheduleDetails.tsx'
 import Profile from './routes/Profile.tsx'
 import UserSchedules from './routes/UserSchedules.tsx'
+import CreateSchedule from './routes/CreateSchedule.tsx'
+import UserCreatedSchedules from './routes/UserCreatedSchedules.tsx'
 
 const router = createBrowserRouter([
   {
@@ -45,6 +47,14 @@ const router = createBrowserRouter([
       {
         path: "/userSchedules",
         element: <UserSchedules />
+      },
+      {
+        path: "/createSchedule",
+        element: <CreateSchedule />
+      },
+      {
+        path: "/userCreatedSchedules",
+        element: <UserCreatedSchedules />
       }
     ]
   },

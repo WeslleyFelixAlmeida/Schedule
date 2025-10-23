@@ -1,7 +1,18 @@
-const Profile_home = () => {
+import style from "./Profile_home.module.css";
+
+type Profile_home_profile = {
+    profile_image: string;
+    username: string;
+}
+
+const Profile_home = (props: Profile_home_profile) => {
     return (
-        <section>
-            HOME
+        <section className={style.containerProfileHome}>
+            <div className={style.containerTopHome}>
+                <img src={props.profile_image} alt="imagem de perfil" />
+                <h1>Olá, {props.username}</h1>
+            </div>
+            <p>Nesta seção você consegue ver seus dados e realizar alterações como imagem de perfil, nome de usuário e senha.</p>
         </section>
     )
 }

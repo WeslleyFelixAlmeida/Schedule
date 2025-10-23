@@ -1,0 +1,113 @@
+.containerUserSchedules {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  row-gap: 10px;
+  width: 100%;
+  height: 100%;
+  min-height: 785px;
+  background-color: rgba(255, 255, 255, 0.589);
+  padding: 10px 0px;
+}
+
+.containerUserSchedules > a{ 
+  align-self: flex-start;
+  text-decoration: underline;
+}
+
+.containerList {
+  width: 100%;
+  max-width: 825px;
+  min-width: 325px;
+  max-height: 700px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  row-gap: 10px;
+  background-color: #f1f1f1;
+  border-radius: 10px;
+  padding: 10px 0px;
+  box-sizing: border-box;
+  overflow-x: hidden;
+}
+
+.containerList > h1 {
+  border-bottom: solid 1px gray;
+  padding-bottom: 5px;
+}
+
+.topContainerList {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+.topContainerList > p {
+  margin-left: auto;
+  margin-right: 30px;
+}
+
+.containerList > ul {
+  display: flex;
+  flex-direction: column;
+  height: fit-content;
+  row-gap: 10px;
+  list-style: none;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 0px 5px;
+}
+
+.containerList > ul > li {
+  width: 100%;
+  min-width: 320px;
+  height: 70px;
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+  border-radius: 10px;
+  padding: 5px;
+  box-sizing: border-box;
+  border: 2px solid var(--dark_blue);
+  font-weight: bold;
+  font-size: 20px;
+}
+
+.emptyCard {
+  justify-content: center;
+  color: var(--golden_fonts);
+  background-color: var(--dark_blue);
+}
+
+.exitButton {
+  background-color: var(--dark_blue);
+  font-size: 23px;
+  font-weight: bold;
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.5s;
+}
+
+.exitButton:hover {
+  background-color: var(--light_blue_color);
+}
+
+@media screen and (min-height: 890px) {
+  .containerUserSchedules {
+    height: calc(100vh - 125px);
+  }
+}
+
+@media screen and (max-width: 425px) {
+  .containerUserSchedules {
+    height: calc(100% - 5px);
+  }
+}

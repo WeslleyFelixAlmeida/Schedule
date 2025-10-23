@@ -10,11 +10,20 @@ import Button from "./Button";
 import { exitEvent as exit, joinEvent as join } from "../Utils/ButtonsFunctions";
 import type { JSX } from "react";
 
-type EventCardProps = Omit<EventDataProps, "description" | "buttonsType">;
+type EventCardProps = Pick<
+    EventDataProps,
+    | "scheduleId"
+    | "title"
+    | "shortDescription"
+    | "eventType"
+    | "isParticipating"
+    | "currentStatus"
+    | "maxAmount"
+    | "currentAmount"
+>;
 
 const EventCard = (props: EventCardProps) => {
     const navigate = useNavigate();
-
     const chooseButton = (conditionsCheck: Pick<EventDataProps, "eventType" | "isParticipating" | "currentStatus">) => {
         const detailsButton = (
             <Button buttonFunction={() => navigate(`/scheduleDetails?id${props.scheduleId}`)} buttons="details" key={0} />
@@ -36,7 +45,7 @@ const EventCard = (props: EventCardProps) => {
             conditionsCheck.currentStatus === "open"
         ) {
             buttons.push(joinButton);
-
+            
         } else if (conditionsCheck.eventType === "uniqueSchedule" &&
             conditionsCheck.isParticipating === "yes" &&
             conditionsCheck.currentStatus === "open") {
@@ -47,7 +56,7 @@ const EventCard = (props: EventCardProps) => {
             conditionsCheck.currentStatus === "closed") {
             buttons.push(cancelButton);
         }
-        
+
         buttons.push(detailsButton);
         return (
             <div className={style.containerButtonsCard}>
@@ -63,7 +72,12 @@ const EventCard = (props: EventCardProps) => {
                     <EventCard_title title={props.title} shortDescription={props.shortDescription} />
                     <div className={style.containerStatusAndAmount}>
                         <EventCard_status currentStatus={props.currentStatus} />
-                        <EventCard_amount maxAmount={props.maxAmount} currentAmount={props.currentAmount} />
+                        {props.eventType === "uniqueSchedule" && (
+                            <EventCard_amount
+                                maxAmount={props.maxAmount}
+                                currentAmount={props.currentAmount}
+                            />
+                        )}
                     </div>
                 </div>
                 <Event_image width="150px" />

@@ -31,7 +31,7 @@ const Header = () => {
             setPerfilOptions({
                 transition: "height 0.5s ease",
                 backgroundColor: "white",
-                height: "300px"
+                height: "390px"
             });
         }
         else {
@@ -45,35 +45,61 @@ const Header = () => {
 
     const profileButton: JSX.Element = <Button
         buttonFunction={() => navigate("/profile")}
-        buttons="profile" key={0}/>;
+        buttons="profile" key={0} />;
 
     const personalSchedulesButton: JSX.Element = <Button
         buttonFunction={() => navigate("/userSchedules")}
-        buttons="schedules" key={1}/>;
+        buttons="schedules" key={1} />;
 
     const exitButton: JSX.Element = <Button
         buttonFunction={() => console.log("Botão de sair")}
-        buttons="logout" key={2}/>;
+        buttons="logout" key={2} />;
+
+    const createScheduleButton: JSX.Element = <Button
+        buttonFunction={() => navigate("/createSchedule")}
+        buttons="createSchedule" key={3} />;
+
+    const userCreatedSchedulesButton: JSX.Element = <Button
+        buttonFunction={() => navigate("/userCreatedSchedules")}
+        buttons="userCreatedSchedules" key={4} />;
 
     const showButtons = () => {
         const chosedButtons: JSX.Element[] = []
-
         switch (location.pathname) {
             case "/profile":
-                chosedButtons.push(personalSchedulesButton);
-                chosedButtons.push(exitButton);
+                chosedButtons.push(
+                    personalSchedulesButton,
+                    createScheduleButton,
+                    userCreatedSchedulesButton,
+                    exitButton);
                 break;
             case "/userSchedules":
-                chosedButtons.push(profileButton);
-                chosedButtons.push(exitButton);;
+                chosedButtons.push(profileButton,
+                    createScheduleButton,
+                    userCreatedSchedulesButton,
+                    exitButton);
+                break;
+            case "/createSchedule":
+                chosedButtons.push(profileButton,
+                    personalSchedulesButton,
+                    userCreatedSchedulesButton,
+                    exitButton);
+                break;
+            case "/userCreatedSchedules":
+                chosedButtons.push(profileButton,
+                    personalSchedulesButton,
+                    createScheduleButton,
+                    exitButton);
                 break;
             default:
-                chosedButtons.push(profileButton);
-                chosedButtons.push(personalSchedulesButton);
-                chosedButtons.push(exitButton);
+                chosedButtons.push(profileButton,
+                    personalSchedulesButton,
+                    createScheduleButton,
+                    userCreatedSchedulesButton,
+                    exitButton);
                 break;
         }
-
+        
         return (
             <div className={style.options}>
                 {chosedButtons}

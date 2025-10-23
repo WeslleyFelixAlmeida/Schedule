@@ -9,6 +9,22 @@ import { exitEvent as exit, joinEvent as join } from "../Utils/ButtonsFunctions"
 import type { JSX } from "react";
 import EventCard_status from "../components/EventCardComponents/EventCard_status";
 
+import { eventData } from "../Utils/UserDataExample";
+
+type ScheduleDetailsProps = Pick<
+    EventDataProps,
+    | "title"
+    | "shortDescription"
+    | "description"
+    | "eventType"
+    | "isParticipating"
+    | "currentStatus"
+    | "scheduleId"
+    | "maxAmount"
+    | "currentAmount"
+>;
+
+
 const ScheduleDetails = () => {
     const [params] = useSearchParams();
     const scheduleId = Number(params.get("id"));
@@ -17,17 +33,8 @@ const ScheduleDetails = () => {
         display: "none"
     });
 
-    const scheduleData: EventDataProps = {//Isso deve vir da API
-        title: "Cabeleireiro",
-        shortDescription: "Cabeleireiro - Cortes.LTDA, agende um horário",
-        currentStatus: "closed", //"open",
-        maxAmount: 12,
-        currentAmount: 10,
-        scheduleId: 1,
-        eventType: "uniqueSchedule", // "multipleSchedule",
-        description: "Cabeleireiro especializado em cuidados com os cabelos, oferecendo serviços de corte, coloração, hidratação, escova e penteados para diferentes ocasiões. Com atenção aos detalhes e foco na satisfação do cliente, busca realçar a beleza natural e proporcionar bem-estar em cada atendimento. Atua com técnicas atualizadas, produtos de qualidade e atendimento personalizado para todos os estilos e necessidades.",
-        isParticipating: "yes"
-    } as const
+    const scheduleData: ScheduleDetailsProps = eventData; //Isso deve vir da API
+    console.log(scheduleData);
 
     //------------------------------------------------------------------
     const navigate = useNavigate();
@@ -53,14 +60,11 @@ const ScheduleDetails = () => {
             conditionsCheck.currentStatus === "open"
         ) {
             buttons.push(joinButtonUnique);
-
         }
         else if (conditionsCheck.eventType === "multipleSchedule" &&
-            conditionsCheck.isParticipating === "multipleScheduleSituation" &&
             conditionsCheck.currentStatus === "open"
         ) {
             buttons.push(joinButtonMultiple);
-
         }
         else if (conditionsCheck.eventType === "uniqueSchedule" &&
             conditionsCheck.isParticipating === "yes" &&
@@ -73,7 +77,7 @@ const ScheduleDetails = () => {
             buttons.push(cancelButton);
         }
         if (conditionsCheck.currentStatus === "closed") {
-            buttons.push(<p className={style.closedEventMessage}>Evento fechado!</p>);
+            buttons.push(<p className={style.closedEventMessage} key={2}>Evento fechado!</p>);
         }
 
         return (
