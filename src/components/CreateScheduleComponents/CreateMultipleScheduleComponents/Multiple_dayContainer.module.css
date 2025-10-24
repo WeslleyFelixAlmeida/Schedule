@@ -1,0 +1,76 @@
+.containerShowDays {
+  padding: 10px;
+  box-sizing: border-box;
+  border: solid 1px var(--dark_blue);
+  border-radius: 10px;
+  width: fit-content;
+  display: flex;
+  flex-direction: column;
+  row-gap: 10px;
+}
+
+.containerShowDays > p {
+  font-weight: bold;
+  font-size: 20px;
+}
+
+.checkBoxContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: fit-content;
+  column-gap: 5px;
+  padding: 2px;
+  border: solid 2px var(--dark_blue);
+  width: 40px;
+  border-radius: 5px;
+  font-weight: bold;
+}
+
+.containerDays {
+  display: grid;
+  grid-template-columns: repeat(10, 0fr);
+  grid-template-rows: repeat(5, 1fr);
+  gap: 8px;
+  width: 100%;
+  max-width: 600px;
+}
+
+.checkBoxContainer > input[type="checkbox"] {
+  display: none;
+  cursor: pointer;
+  position: relative;
+}
+
+.checkBoxContainer > label {
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
+  text-align: center;
+}
+
+.checkBoxContainer > input[type="checkbox"]:checked + label {
+  background-color: var(--light_blue_color);
+}
+
+.containerShowDays > input[type="button"] {
+  padding: 7px;
+  border-radius: 10px;
+  border: none;
+  transition: background-color 0.5s ease;
+  cursor: pointer;
+  width: 200px;
+  height: 35px;
+  background-color: var(--dark_blue);
+  color: var(--golden_fonts);
+  display: flex;
+  align-items: center;
+  justify-content: left;
+  column-gap: 10px;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.containerShowDays > input[type="button"]:hover {
+  background-color: #254f87;
+}

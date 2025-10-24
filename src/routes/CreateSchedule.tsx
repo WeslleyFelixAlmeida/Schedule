@@ -1,13 +1,13 @@
 import { useState, type ChangeEvent } from "react";
 import style from "./CreateSchedule.module.css";
 import { Link } from "react-router-dom";
-import CreateUniqueSchedule from "../components/CreateScheduleComponents/createUniqueSchedule";
+import CreateUniqueSchedule from "../components/CreateScheduleComponents/CreateUniqueSchedule";
 import CreateMultipleSchedule from "../components/CreateScheduleComponents/CreateMultipleSchedule";
 
 type EventType = "unique" | "multiple";
 
 const CreateSchedule = () => {
-    const [eventType, setEventType] = useState<EventType>("unique");
+    const [eventType, setEventType] = useState<EventType>("multiple");//Mudar para unique como padrão depois!
 
     const handleTypeChange = (e: ChangeEvent<HTMLInputElement>) => {
         setEventType(e.target.value as EventType);

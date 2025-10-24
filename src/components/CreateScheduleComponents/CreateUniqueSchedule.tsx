@@ -6,7 +6,7 @@ import { MdUploadFile } from "react-icons/md";
 type CreateUniqueSchedule_props = {
 
 }
-
+//FAZER VALIDAÇÕES COM ZOD!!!!
 const CreateUniqueSchedule = (props: CreateUniqueSchedule_props) => {
     const [eventImage, setEventImage] = useState();
 
@@ -40,7 +40,7 @@ const CreateUniqueSchedule = (props: CreateUniqueSchedule_props) => {
                 </div>
 
                 <div className={`${style.containerFormMaxAmount} ${style.containerEventFormUnique}`}>
-                    <p>Quantidade máxima</p>
+                    <p>Quantidade máxima:</p>
                     <input type="number" name="maxAmount" id="maxAmount" placeholder="Quantidade máxima de pessoas" />
                 </div>
 
