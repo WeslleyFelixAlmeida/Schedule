@@ -1,0 +1,145 @@
+.containerDayInterval {
+  display: flex;
+  flex-direction: column;
+  row-gap: 10px;
+  border: solid 1px var(--dark_blue);
+  border-radius: 10px;
+  padding: 10px;
+  box-sizing: border-box;
+}
+
+.containerDayInterval > p {
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  column-gap: 10px;
+}
+
+.containerInputsDayInterval {
+  display: flex;
+  column-gap: 10px;
+  align-items: center;
+  font-weight: bold;
+  padding: 10px 0px;
+  border-bottom: solid 1px gray;
+}
+
+.containerInputsDayInterval > input[type="time"],
+.containerInputsDayInterval > input[type="number"] {
+  height: 30px;
+  width: 100%;
+  max-width: 100px;
+  padding: 5px;
+  box-sizing: border-box;
+  border-radius: 5px;
+  border: solid 2px var(--golden_fonts);
+  text-align: center;
+  color: var(--dark_blue);
+  font-weight: bold;
+}
+
+.choosePersonalizedDay {
+  max-width: 50px !important;
+}
+
+.containerInputsDayInterval > input[type="text"]:focus {
+  outline-color: var(--dark_blue);
+}
+
+.containerDayInterval > input[type="button"],
+.containerInputsDayInterval > input[type="button"] {
+  padding: 7px;
+  border-radius: 10px;
+  border: none;
+  transition: background-color 0.5s ease;
+  cursor: pointer;
+  width: 100%;
+  max-width: 150px;
+  height: 30px;
+  background-color: var(--dark_blue);
+  color: var(--golden_fonts);
+  display: flex;
+  align-items: center;
+  justify-content: left;
+  column-gap: 10px;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.containerDayInterval > input[type="button"]:hover,
+.containerInputsDayInterval > input[type="button"]:hover {
+  background-color: #254f87;
+}
+
+.dayInterval {
+  list-style: none;
+  overflow-y: scroll;
+  display: flex;
+  flex-direction: column;
+  row-gap: 10px;
+  height: 150px;
+}
+
+.dayInterval > li {
+  display: flex;
+  column-gap: 10px;
+  align-items: center;
+  font-weight: bold;
+}
+
+.intervalName {
+  width: 100%;
+  max-width: 50px;
+  height: 30px;
+  padding: 5px;
+  box-sizing: border-box;
+  border-radius: 5px;
+  border: solid 2px var(--golden_fonts);
+  color: var(--dark_blue);
+  font-weight: bold;
+  cursor: pointer;
+  background-color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.dayInterval > li > input[type="button"] {
+  padding: 5px;
+  border-radius: 10px;
+  border: none;
+  transition: background-color 0.5s ease;
+  cursor: pointer;
+  width: 100%;
+  max-width: 150px;
+  height: 30px;
+  background-color: var(--dark_blue);
+  color: var(--golden_fonts);
+  display: flex;
+  align-items: center;
+  justify-content: left;
+  column-gap: 10px;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.dayInterval > li > input[type="button"]:hover {
+  background-color: #254f87;
+}
+
+.dayInterval > li > div {
+  width: 100%;
+  max-width: 120px;
+  height: 30px;
+  padding: 5px;
+  box-sizing: border-box;
+  border-radius: 5px;
+  border: solid 2px var(--golden_fonts);
+  color: var(--dark_blue);
+  font-weight: bold;
+  cursor: pointer;
+  background-color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

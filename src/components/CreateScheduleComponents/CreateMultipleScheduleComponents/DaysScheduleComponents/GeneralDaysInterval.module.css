@@ -1,0 +1,126 @@
+.containerPersonalizedDayInterval {
+  display: flex;
+  flex-direction: column;
+  row-gap: 10px;
+  border: solid 1px var(--dark_blue);
+  border-radius: 10px;
+  padding: 10px;
+  box-sizing: border-box;
+}
+
+.containerPersonalizedDayInterval > p {
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  column-gap: 10px;
+}
+
+.containerInputsPersonalized {
+  display: flex;
+  column-gap: 10px;
+  align-items: center;
+  font-weight: bold;
+  padding: 10px 0px;
+  border-bottom: solid 1px gray;
+}
+
+.containerInputsPersonalized > input[type="time"] {
+  height: 30px;
+  width: 100%;
+  max-width: 100px;
+  padding: 5px;
+  box-sizing: border-box;
+  border-radius: 5px;
+  border: solid 2px var(--golden_fonts);
+  text-align: center;
+  color: var(--dark_blue);
+  font-weight: bold;
+}
+
+.containerSchedulingInteval > input[type="time"]:focus {
+  outline-color: var(--dark_blue);
+}
+
+.containerInputsPersonalized > input[type="button"] {
+  padding: 7px;
+  border-radius: 10px;
+  border: none;
+  transition: background-color 0.5s ease;
+  cursor: pointer;
+  width: 100%;
+  max-width: 150px;
+  height: 30px;
+  background-color: var(--dark_blue);
+  color: var(--golden_fonts);
+  display: flex;
+  align-items: center;
+  justify-content: left;
+  column-gap: 10px;
+  font-size: 14px;
+  font-weight: bold;
+}
+.containerInputsPersonalized > input[type="button"]:hover {
+  background-color: #254f87;
+}
+
+.intervalList {
+  list-style: none;
+  overflow-y: scroll;
+  display: flex;
+  flex-direction: column;
+  row-gap: 10px;
+  height: 120px;
+}
+
+.intervalList > li {
+  display: flex;
+  column-gap: 10px;
+  align-items: center;
+  font-weight: bold;
+}
+
+.intervalName {
+  width: 100px;
+}
+
+.intervalList > li > input[type="button"],
+.containerPersonalizedDayInterval > input[type="button"] {
+  padding: 5px;
+  border-radius: 10px;
+  border: none;
+  transition: background-color 0.5s ease;
+  cursor: pointer;
+  width: 100%;
+  max-width: 150px;
+  height: 30px;
+  background-color: var(--dark_blue);
+  color: var(--golden_fonts);
+  display: flex;
+  align-items: center;
+  justify-content: left;
+  column-gap: 10px;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.intervalList > li > input[type="button"]:hover,
+.containerPersonalizedDayInterval > input[type="button"]:hover {
+  background-color: #254f87;
+}
+
+.intervalList > li > div {
+  width: 100%;
+  max-width: 120px;
+  height: 30px;
+  padding: 5px;
+  box-sizing: border-box;
+  border-radius: 5px;
+  border: solid 2px var(--golden_fonts);
+  color: var(--dark_blue);
+  font-weight: bold;
+  cursor: pointer;
+  background-color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

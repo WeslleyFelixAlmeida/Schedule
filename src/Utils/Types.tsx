@@ -62,8 +62,34 @@ export type EventDataProps = (uniqueScheduleProps | multipleScheduleProps) & {
 //     //No caso se multipleSchedule o isParticipating vai automaticamente ser multipleScheduleSituation, e caso seja uniqueSchedule isParticipating poderá assumir yes ou no
 // }
 
-export type PerfilOptionsProps = {
+export type ProfileOptionsProps = {
     transition: "height 0.5s ease" | "none";
     backgroundColor: "white" | "transparent";
     height: "390px" | "80px";
+}
+
+export type DaySchedule = {
+    day: number;
+    checked: boolean;
+    schedules: {
+        schedullingHour: string;
+    }[];
+};
+
+export type multipleSchedulesProps = {
+    days: DaySchedule[];
+    setDays: Function;
+}
+
+export type schedulesRulers = {
+    SchedulingInterval: { from: string, to: string } | null,
+    SchedulingIntervalType: { time: number, type: "hour" | "minutes" } | null;
+    GeneralDaysInterval: { from: string, to: string }[] | null;
+    DayInterval: { day: number, from: string, to: string }[] | null;
+    SpecificScheduling: { day: number, from: string, to: string }[] | null;
+}
+
+export type schedulesRulers_props = {
+    schedulesRulers: schedulesRulers;
+    setSchedulesRulers: Function;
 }

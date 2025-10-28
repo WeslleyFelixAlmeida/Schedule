@@ -5,7 +5,7 @@ import { useLocation } from "react-router-dom";
 import Logo from "./Logo";
 import Button from "./Button";
 import { useEffect, useState } from "react";
-import type { PerfilOptionsProps } from "../Utils/Types";
+import type { ProfileOptionsProps } from "../Utils/Types";
 import type { JSX } from "react";
 
 import { userData } from "./../Utils/UserDataExample"; //Apagar depois, isso vai vir da API
@@ -20,7 +20,7 @@ const isLogged = false;
 const Header = () => {
     const location = useLocation();
     const navigate = useNavigate();
-    const [perfilOptions, setPerfilOptions] = useState<PerfilOptionsProps>({
+    const [perfilOptions, setPerfilOptions] = useState<ProfileOptionsProps>({
         transition: "none",
         backgroundColor: "transparent",
         height: "80px"
