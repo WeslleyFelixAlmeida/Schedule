@@ -34,6 +34,7 @@
   cursor: pointer;
 }
 
+.containerShowSchedulingInterval > input[type="button"],
 .schedulingIntervalAmount > input[type="button"] {
   padding: 7px;
   border-radius: 10px;
@@ -53,6 +54,7 @@
   font-weight: bold;
 }
 
+.containerShowSchedulingInterval > input[type="button"]:hover,
 .schedulingIntervalAmount > input[type="button"]:hover {
   background-color: #254f87;
 }
@@ -89,7 +91,7 @@
   align-items: center;
 }
 
-.choosedSchedulingInterval{
+.choosedSchedulingInterval {
   display: block;
   border: solid 2px var(--dark_blue);
   border-radius: 5px;

@@ -25,8 +25,9 @@ const SchedulingInterval = (props: schedulesRulers_props) => {
         time: number,
         type: "hour" | "minutes"
     }>(
-        { time: 0, type: "minutes" }
+        { time: 1, type: "minutes" }
     );
+
 
     const [checkedButton, setCheckedButton] = useState<checkedButtonsType[]>(buttonsArray());
 
@@ -51,12 +52,14 @@ const SchedulingInterval = (props: schedulesRulers_props) => {
 
         switch (clickedButton) {
             case 0:
-                setSchedulingInterval({ ...schedulingIntervalType, type: "minutes" });
+                setSchedulingInterval({ time: 1, type: "minutes" });
                 break
             case 1:
-                setSchedulingInterval({ ...schedulingIntervalType, type: "hour" });
+                setSchedulingInterval({ time: 1, type: "hour" });
                 break
         }
+
+
     }
 
     const inputNumberRule = (e: any) => {
@@ -67,11 +70,21 @@ const SchedulingInterval = (props: schedulesRulers_props) => {
 
         const num = Number(value);
 
-        if (num > 23) { e.currentTarget.value = "23" };
+        if (schedulingIntervalType.type === "hour") {
+            if (num > 23) { e.currentTarget.value = "23" };
 
-        if (num === 0 && value.length === 1) { e.currentTarget.value = "1" };
+            if (num === 0 && value.length === 1) { e.currentTarget.value = "1" };
 
-        setSchedulingInterval(prev => ({ ...prev, time: num }));
+            setSchedulingInterval(prev => ({ ...prev, time: num }));
+        }
+        else {
+            if (num > 59) { e.currentTarget.value = "59" };
+
+            if (num === 0 && value.length === 1) { e.currentTarget.value = "1" };
+
+            setSchedulingInterval(prev => ({ ...prev, time: num }));
+        }
+
     }
 
     const confirmScheduleInterval = () => {
@@ -90,8 +103,19 @@ const SchedulingInterval = (props: schedulesRulers_props) => {
         }
     }
 
+    const cancelScheduleInterval = () => {
+        setSchedulesRulers((prev: schedulesRulers) => ({
+            ...prev,
+            SchedulingIntervalType: { time: 0, type: "minutes" }
+        }));
+
+        setIsConfirmed(false);
+    }
+
+
     useEffect(() => {
         // console.log(`schedulingIntervalType.type: ${schedulingIntervalType.type}`);
+        // console.log(schedulingIntervalType);
     }, [schedulingIntervalType])
 
     return (
@@ -115,11 +139,13 @@ const SchedulingInterval = (props: schedulesRulers_props) => {
                     <p>Tempo:</p>
                     <input type="number"
                         name="schedulingIntervalType"
-                        id="schedulingIntervalType" 
+                        id="schedulingIntervalType"
                         inputMode="numeric"
                         pattern="[0-9]*"
                         onInput={inputNumberRule}
-                        onBlur={inputNumberRule}
+                        // onBlur={inputNumberRule}
+                        value={schedulingIntervalType.time}
+                        onChange={inputNumberRule}
                         min={1}
                         max={23}
                     />
@@ -132,6 +158,7 @@ const SchedulingInterval = (props: schedulesRulers_props) => {
                 <div className={style.containerShowSchedulingInterval}>
                     <p>Intervalo estabelecido:</p>
                     <p className={style.choosedSchedulingInterval}>{schedulingIntervalType.time} {schedulingIntervalType.type === "minutes" ? "Minuto(s)" : "Hora(s)"}</p>
+                    <input type="button" value="Cancelar" onClick={cancelScheduleInterval} />
                 </div>}
         </div>
     )

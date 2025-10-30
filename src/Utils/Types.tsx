@@ -83,7 +83,7 @@ export type multipleSchedulesProps = {
 
 export type schedulesRulers = {
     SchedulingInterval: { from: string, to: string } | null,
-    SchedulingIntervalType: { time: number, type: "hour" | "minutes" } | null;
+    SchedulingIntervalType: { time: number, type: "hour" | "minutes" };
     GeneralDaysInterval: { from: string, to: string }[] | null;
     DayInterval: { day: number, from: string, to: string }[] | null;
     SpecificScheduling: { day: number, from: string, to: string }[] | null;

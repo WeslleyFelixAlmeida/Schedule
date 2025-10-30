@@ -1,5 +1,5 @@
 import { FaQuestionCircle } from "react-icons/fa";
-import { currentDate, currentDay, differenceMounthXCurrentDay, daysMonthAmount } from "../../ScheduleDetailsComponents/Date";
+import { daysMonthAmount } from "../../ScheduleDetailsComponents/Date";
 import style from "./Multiple_dayContainer.module.css";
 import { useEffect, useState } from "react";
 import type { multipleSchedulesProps } from "../../../Utils/Types";
@@ -7,7 +7,6 @@ import type { multipleSchedulesProps } from "../../../Utils/Types";
 type Multiple_dayContainer_props = multipleSchedulesProps;
 
 const Multiple_dayContainer = (props: Multiple_dayContainer_props) => {
-    // const [days, setDays] = useState<{ day: number, checked: boolean }[]>([]);
     const days = props.days;
     const setDays = props.setDays;
 
@@ -54,7 +53,11 @@ const Multiple_dayContainer = (props: Multiple_dayContainer_props) => {
     }, []);
 
     // useEffect(() => {//Apagar
-    //     console.log(days);
+    //     if (days.some(day => day.checked)) {
+    //         console.log(" Tem ao menos 1 dia selecionado!");
+    //     } else {
+    //         console.log(" Nenhum dia selecionado!");
+    //     }
     // }, [days])
 
     return (
@@ -77,6 +80,9 @@ const Multiple_dayContainer = (props: Multiple_dayContainer_props) => {
             </div>
             <input type="button" value="Selecionar todos" onClick={() => selectAllDays()} />
             <input type="button" value="Desmarcar todos" onClick={() => removeAlldays()} />
+            {!days.some(day => day.checked) &&
+                <p style={{ color: "red" }}>*É necessário adicionar ao menos um dia!</p>
+            }
         </div>
     )
 }

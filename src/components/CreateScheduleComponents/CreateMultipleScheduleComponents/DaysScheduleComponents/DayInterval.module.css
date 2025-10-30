@@ -78,6 +78,8 @@
   flex-direction: column;
   row-gap: 10px;
   height: 150px;
+  margin-bottom: 10px;
+  border-bottom: solid 1px gray;
 }
 
 .dayInterval > li {

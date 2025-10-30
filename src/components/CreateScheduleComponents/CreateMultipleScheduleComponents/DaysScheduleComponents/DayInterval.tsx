@@ -6,12 +6,6 @@ import { daysMonthAmount } from "../../../ScheduleDetailsComponents/Date";
 
 
 const DayInterval = (props: schedulesRulers_props) => {
-    // const [dayInterval, setDayInterval] = useState<{
-    //     day: number,
-    //     from: string,
-    //     to: string
-    // }[]>([]);
-
     const schedulesRulers = props.schedulesRulers;
     const setSchedulesRulers = props.setSchedulesRulers;
 
@@ -84,7 +78,7 @@ const DayInterval = (props: schedulesRulers_props) => {
     useEffect(() => {
         console.log(personalizedDayIntervals);
     }, [personalizedDayIntervals])
-    
+
     return (
         <div className={style.containerDayInterval}>
             <p>Intervalo em dia específico <FaQuestionCircle /></p>
@@ -106,7 +100,8 @@ const DayInterval = (props: schedulesRulers_props) => {
                     <p>Até</p>
                     <input type="time" name="personalizedDayIntervalMax" id="personalizedDayIntervalMax" value={dayTimeMax} onChange={handleDayTimeChange} />
                     <input type="button" value="+ Adicionar" onClick={addDaysInterval} />
-                </div>}
+                </div>
+            }
             <ul className={style.dayInterval}>
                 {personalizedDayIntervals.map((dayInterval, index) => (
                     <li key={index}>
@@ -124,7 +119,7 @@ const DayInterval = (props: schedulesRulers_props) => {
             {!personalizedDayIntervalsConfirmed &&
                 <input type="button" value="Confirmar" onClick={confirmDaysIntervals} />
             }
-            
+
             {personalizedDayIntervalsConfirmed &&
                 <input type="button" value="Cancelar" onClick={cancelDaysIntervals} />
             }

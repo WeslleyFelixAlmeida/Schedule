@@ -90,6 +90,7 @@ const GeneralDaysInterval = (props: schedulesRulers_props) => {
             {personalizedIntervalsConfirmed &&
                 <input type="button" value="Cancelar" onClick={cancelDaysIntervals} />
             }
+
         </div>
     )
 }

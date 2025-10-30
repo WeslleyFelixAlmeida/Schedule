@@ -115,7 +115,7 @@ const Multiple_daysSchedule = (props: schedulesRulers_props) => {
     }
 
     // useEffect(() => {
-    //     console.log(schedulesRulers);
+    //     console.log(schedulesRulers.SchedulingIntervalType.time > 0);
     // }, [schedulesRulers]);
 
     return (
@@ -138,7 +138,9 @@ const Multiple_daysSchedule = (props: schedulesRulers_props) => {
                     <input type="button" value="Cancelar" onClick={scheduleIntervalConfirm} />
                 </div>
             }
-            <h2>Com intervalo de:</h2>
+            {!scheduleIsConfirmed &&
+                <p style={{ color: "red" }}>*É necessário estabelecer um horário de início e de fim!</p>
+            }
             <div className={style.containerButtonsInterval}>
                 <input type="button" value="5 Minutos" id="0" key={0}
                     onClick={chooseButtonInterval}
@@ -169,16 +171,21 @@ const Multiple_daysSchedule = (props: schedulesRulers_props) => {
                     style={checkedButton[6].checked ? buttonStyles[0] : buttonStyles[1]}
                 />
             </div>
+
+            {schedulesRulers.SchedulingIntervalType.time < 1 &&
+                <p style={{ color: "red" }}>*É necessário estabelecer o intervalo padrão entre as escalas!</p>
+            }
             {generalDaysContainer &&
                 (
                     [
                         <SchedulingInterval key={0} schedulesRulers={props.schedulesRulers} setSchedulesRulers={props.setSchedulesRulers} />,
-                        // <GeneralDaysInterval key={1} schedulesRulers={props.schedulesRulers} setSchedulesRulers={props.setSchedulesRulers} />,
+                        <GeneralDaysInterval key={1} schedulesRulers={props.schedulesRulers} setSchedulesRulers={props.setSchedulesRulers} />,
                         <DayInterval key={2} schedulesRulers={props.schedulesRulers} setSchedulesRulers={props.setSchedulesRulers} />,
-                        // <SpecificScheduling key={3} schedulesRulers={props.schedulesRulers} setSchedulesRulers={props.setSchedulesRulers} />
+                        <SpecificScheduling key={3} schedulesRulers={props.schedulesRulers} setSchedulesRulers={props.setSchedulesRulers} />
                     ]
                 )
             }
+
         </div>
 
     )
