@@ -120,7 +120,10 @@ const SchedulingInterval = (props: schedulesRulers_props) => {
 
     return (
         <div className={style.containerSchedulingInterval}>
-            <h2>Informe o intervalo entre os horários: <FaQuestionCircle /></h2>
+            <h2>
+                Informe o intervalo entre os horários: <FaQuestionCircle />
+                <p style={{ color: "red" }}>* </p>
+            </h2>
             {!isConfirmed &&
                 <div className={style.schedulingIntervalButtons}>
                     <p>Intervalo em:</p>
@@ -147,7 +150,7 @@ const SchedulingInterval = (props: schedulesRulers_props) => {
                         value={schedulingIntervalType.time}
                         onChange={inputNumberRule}
                         min={1}
-                        max={23}
+                        max={checkedButton[0].checked ? 59 : 24}
                     />
                     {!isConfirmed &&
                         <input type="button" value="Confirmar" onClick={confirmScheduleInterval} />

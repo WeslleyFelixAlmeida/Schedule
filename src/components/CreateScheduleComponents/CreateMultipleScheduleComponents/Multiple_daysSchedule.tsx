@@ -7,6 +7,7 @@ import DayInterval from "./DaysScheduleComponents/DayInterval";
 import SchedulingInterval from "./DaysScheduleComponents/SchedulingInterval";
 import type { schedulesRulers_props, schedulesRulers } from "../../../Utils/Types";
 
+import Message from "../../Message";
 
 type checkedButtonsType = {
     button: number, checked: boolean
@@ -114,23 +115,44 @@ const Multiple_daysSchedule = (props: schedulesRulers_props) => {
         }
     }
 
-    // useEffect(() => {
-    //     console.log(schedulesRulers.SchedulingIntervalType.time > 0);
-    // }, [schedulesRulers]);
+    useEffect(() => {
+        console.log(schedulesRulers.SchedulingIntervalType.time > 0);
+    }, [schedulesRulers]);
+
+    const showMessage = { display: "flex" } as const;
+
+    const message = [
+        "*É necessário estabelecer um horário de início e de fim!",
+        "*É necessário estabelecer o intervalo padrão entre as escalas!",
+        "O tempo de 'início' deve ser menor que o de 'fim'!"
+    ];
+
 
     return (
         <div className={style.multipleDaysContainer}>
-            <h2>Evento vai ocorrer entre os horários: <FaQuestionCircle /></h2>
+            <h2>
+                Evento vai ocorrer entre os horários: <FaQuestionCircle />
+                <p style={{ color: "red" }}>* </p>
+            </h2>
             {!scheduleIsConfirmed &&
-                <div className={style.containerSchedulingInteval}>
+                <div className={style.containerSchedulingInterval}>
                     <input type="time" name="scheduleHourBegin" id="scheduleHourBegin" onChange={handleTimeChange} value={scheduleHourBegin} />
                     <p>Até</p>
                     <input type="time" name="scheduleHourEnd" id="scheduleHourEnd" onChange={handleTimeChange} value={scheduleHourEnd} />
                     <input type="button" value="Confirmar" onClick={scheduleIntervalConfirm} />
                 </div>
             }
+
+            {!scheduleIsConfirmed &&
+                <Message message={message[0]} type={"alert"} display={showMessage} />
+            }
+
+            {scheduleHourBegin >= scheduleHourEnd &&
+                <Message message={message[2]} type={"error"} display={showMessage} />
+            }
+
             {scheduleIsConfirmed &&
-                <div className={style.containerSchedulingIntevalChoosed}>
+                <div className={style.containerSchedulingIntervalChoosed}>
                     <p>Intervalo escolhido: </p>
                     <div>{scheduleHourBegin}</div>
                     <p>Até</p>
@@ -138,9 +160,8 @@ const Multiple_daysSchedule = (props: schedulesRulers_props) => {
                     <input type="button" value="Cancelar" onClick={scheduleIntervalConfirm} />
                 </div>
             }
-            {!scheduleIsConfirmed &&
-                <p style={{ color: "red" }}>*É necessário estabelecer um horário de início e de fim!</p>
-            }
+
+
             <div className={style.containerButtonsInterval}>
                 <input type="button" value="5 Minutos" id="0" key={0}
                     onClick={chooseButtonInterval}
@@ -173,8 +194,9 @@ const Multiple_daysSchedule = (props: schedulesRulers_props) => {
             </div>
 
             {schedulesRulers.SchedulingIntervalType.time < 1 &&
-                <p style={{ color: "red" }}>*É necessário estabelecer o intervalo padrão entre as escalas!</p>
+                <Message message={message[1]} type={"alert"} display={showMessage} />
             }
+
             {generalDaysContainer &&
                 (
                     [

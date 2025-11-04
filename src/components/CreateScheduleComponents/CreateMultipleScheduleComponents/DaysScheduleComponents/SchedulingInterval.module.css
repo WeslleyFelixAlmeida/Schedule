@@ -98,3 +98,11 @@
   width: fit-content;
   padding: 5px;
 }
+
+@media screen and (max-width: 640px) {
+  .containerShowSchedulingInterval {
+    align-items: center;
+    row-gap: 10px;
+    flex-direction: column;
+  }
+}

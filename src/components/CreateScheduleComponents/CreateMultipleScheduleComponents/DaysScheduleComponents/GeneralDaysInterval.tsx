@@ -2,6 +2,7 @@ import { FaQuestionCircle } from "react-icons/fa";
 import style from "./GeneralDaysInterval.module.css";
 import type { schedulesRulers_props } from "../../../../Utils/Types";
 import { useEffect, useState } from "react";
+import Message from "../../../Message";
 
 const GeneralDaysInterval = (props: schedulesRulers_props) => {
     const schedulesRulers = props.schedulesRulers;
@@ -59,6 +60,12 @@ const GeneralDaysInterval = (props: schedulesRulers_props) => {
     //     console.log(`timeMax: ${timeMax}`);
     // }, [timeMin, timeMax])
 
+    const showMessage = { display: "flex" } as const;
+
+    const message = [
+        "O valor de 'início' deve ser menor que o valor 'fim'!"
+    ];
+
     return (
         <div className={style.containerPersonalizedDayInterval}>
             <p>Intervalo(s) geral: <FaQuestionCircle /></p>
@@ -91,6 +98,9 @@ const GeneralDaysInterval = (props: schedulesRulers_props) => {
                 <input type="button" value="Cancelar" onClick={cancelDaysIntervals} />
             }
 
+            {timeMin <= timeMax &&
+                <Message message={message[0]} type={"alert"} display={showMessage} />
+            }
         </div>
     )
 }

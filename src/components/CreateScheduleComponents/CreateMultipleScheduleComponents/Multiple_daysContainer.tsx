@@ -4,6 +4,8 @@ import style from "./Multiple_dayContainer.module.css";
 import { useEffect, useState } from "react";
 import type { multipleSchedulesProps } from "../../../Utils/Types";
 
+import Message from "../../Message";
+
 type Multiple_dayContainer_props = multipleSchedulesProps;
 
 const Multiple_dayContainer = (props: Multiple_dayContainer_props) => {
@@ -52,18 +54,24 @@ const Multiple_dayContainer = (props: Multiple_dayContainer_props) => {
         setDays(fillArray);
     }, []);
 
-    // useEffect(() => {//Apagar
-    //     if (days.some(day => day.checked)) {
-    //         console.log(" Tem ao menos 1 dia selecionado!");
-    //     } else {
-    //         console.log(" Nenhum dia selecionado!");
-    //     }
-    // }, [days])
+    const [message, setMessage] = useState<string>("");
+    const [showMessage, setShowMessage] = useState<{ display: "none" | "flex" }>({ display: "none" });
+
+    useEffect(() => {
+        if (days.some(day => day.checked)) {
+            setMessage("");
+            setShowMessage({ display: "none" });
+        } else {
+            setMessage("Você deve selecionar ao menos um dia!");
+            setShowMessage({ display: "flex" });
+        }
+    }, [days]);
 
     return (
         <div className={style.containerShowDays}>
             <p>
                 Escolha os dias: <FaQuestionCircle />
+                <p style={{ color: "red" }}>* </p>
             </p>
             <div className={style.containerDays}>
                 {days.map((day, index) => (
@@ -80,9 +88,8 @@ const Multiple_dayContainer = (props: Multiple_dayContainer_props) => {
             </div>
             <input type="button" value="Selecionar todos" onClick={() => selectAllDays()} />
             <input type="button" value="Desmarcar todos" onClick={() => removeAlldays()} />
-            {!days.some(day => day.checked) &&
-                <p style={{ color: "red" }}>*É necessário adicionar ao menos um dia!</p>
-            }
+
+            <Message message={message} setDisplay={setShowMessage} type={"alert"} display={showMessage} />
         </div>
     )
 }

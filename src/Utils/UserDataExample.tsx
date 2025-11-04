@@ -32,7 +32,7 @@ const eventData1: propsExample = {
   currentAmount: 10,
   scheduleId: 1,
   description: "Cabeleireiro especializado em cuidados com os cabelos, oferecendo serviços de corte, coloração, hidratação, escova e penteados para diferentes ocasiões. Com atenção aos detalhes e foco na satisfação do cliente, busca realçar a beleza natural e proporcionar bem-estar em cada atendimento. Atua com técnicas atualizadas, produtos de qualidade e atendimento personalizado para todos os estilos e necessidades.",
-  
+
   currentStatus: "open",
   eventType: "uniqueSchedule",
   isParticipating: "yes"
@@ -46,7 +46,7 @@ const eventData2: propsExample = {
   currentAmount: 10,
   scheduleId: 1,
   description: "Cabeleireiro especializado em cuidados com os cabelos, oferecendo serviços de corte, coloração, hidratação, escova e penteados para diferentes ocasiões. Com atenção aos detalhes e foco na satisfação do cliente, busca realçar a beleza natural e proporcionar bem-estar em cada atendimento. Atua com técnicas atualizadas, produtos de qualidade e atendimento personalizado para todos os estilos e necessidades.",
-  
+
   currentStatus: "closed",
   eventType: "uniqueSchedule",
   isParticipating: "yes"

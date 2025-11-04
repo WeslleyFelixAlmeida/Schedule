@@ -145,3 +145,25 @@
   align-items: center;
   justify-content: center;
 }
+
+@media screen and (max-width: 640px) {
+  .containerInputsPersonalizedSchedule {
+    align-items: center;
+    row-gap: 10px;
+    flex-direction: column;
+  }
+
+  .personalizedDayList {
+    height: 320px;
+  }
+
+  .personalizedDayList > li {
+    flex-direction: column;
+    border: solid 1px var(--golden_fonts);
+    border-radius: 10px;
+    padding: 10px;
+    box-sizing: border-box;
+    row-gap: 10px;
+    margin: 10px;
+  }
+}

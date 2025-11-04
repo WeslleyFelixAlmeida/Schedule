@@ -3,6 +3,7 @@ import style from "./DayInterval.module.css";
 import type { schedulesRulers_props } from "../../../../Utils/Types";
 import { useEffect, useState } from "react";
 import { daysMonthAmount } from "../../../ScheduleDetailsComponents/Date";
+import Message from "../../../Message";
 
 
 const DayInterval = (props: schedulesRulers_props) => {
@@ -75,9 +76,15 @@ const DayInterval = (props: schedulesRulers_props) => {
         setChosedDay(num);
     }
 
-    useEffect(() => {
-        console.log(personalizedDayIntervals);
-    }, [personalizedDayIntervals])
+    // useEffect(() => {
+    //     console.log(personalizedDayIntervals);
+    // }, [personalizedDayIntervals])
+    const showMessage = { display: "flex" } as const;
+
+    const message = [
+        "O valor de 'início' deve ser menor que o valor 'fim'!",
+        "Você deve informar um dia!",
+    ];
 
     return (
         <div className={style.containerDayInterval}>
@@ -122,6 +129,14 @@ const DayInterval = (props: schedulesRulers_props) => {
 
             {personalizedDayIntervalsConfirmed &&
                 <input type="button" value="Cancelar" onClick={cancelDaysIntervals} />
+            }
+
+            {dayTimeMin >= dayTimeMax &&
+                <Message message={message[0]} type={"alert"} display={showMessage} />
+            }
+
+            {choosedDay === 0 &&
+                <Message message={message[1]} type={"alert"} display={showMessage} />
             }
         </div>
     )

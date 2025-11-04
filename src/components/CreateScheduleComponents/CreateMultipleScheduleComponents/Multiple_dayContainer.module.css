@@ -78,3 +78,16 @@
 .containerShowDays > input[type="button"]:hover {
   background-color: #254f87;
 }
+
+@media screen and (max-width: 640px) {
+  .containerDays {
+    grid-template-columns: repeat(5, 0fr);
+    grid-template-rows: repeat(10, 1fr);
+    justify-content: center;
+  }
+
+  .containerShowDays {
+    max-width: 100%;
+    align-items: center;
+  }
+}
