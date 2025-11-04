@@ -1,12 +1,13 @@
 .containerMessage {
-  width: 100%;
+  /* width: 100%; */
   height: fit-content;
   display: flex;
   align-items: center;
   justify-content: center;
   border: solid 2px;
   border-radius: 10px;
-  padding: 5px 0px;
+  padding: 10px;
+  box-sizing: border-box;
   font-weight: bold;
 }
 

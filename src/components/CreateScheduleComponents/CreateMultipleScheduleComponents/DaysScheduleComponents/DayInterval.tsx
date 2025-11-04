@@ -4,6 +4,7 @@ import type { schedulesRulers_props } from "../../../../Utils/Types";
 import { useEffect, useState } from "react";
 import { daysMonthAmount } from "../../../ScheduleDetailsComponents/Date";
 import Message from "../../../Message";
+import { isValidTime } from "../../../../Utils/UtilsFunctions";
 
 
 const DayInterval = (props: schedulesRulers_props) => {
@@ -36,6 +37,10 @@ const DayInterval = (props: schedulesRulers_props) => {
     const buttonCondition = !personalizedDayIntervalsConfirmed ? { display: "block" } : { display: "none" };
 
     const addDaysInterval = () => {
+        if (!isValidTime(dayTimeMin) || !isValidTime(dayTimeMax)) {
+            return null
+        }
+
         if (dayTimeMin < dayTimeMax && choosedDay > 0) {
             const newArray = [...personalizedDayIntervals];
             newArray.push({ day: choosedDay, from: dayTimeMin, to: dayTimeMax });
@@ -84,6 +89,7 @@ const DayInterval = (props: schedulesRulers_props) => {
     const message = [
         "O valor de 'início' deve ser menor que o valor 'fim'!",
         "Você deve informar um dia!",
+        "Verifique se o formato de tempo está como HH:MM."
     ];
 
     return (
@@ -137,6 +143,10 @@ const DayInterval = (props: schedulesRulers_props) => {
 
             {choosedDay === 0 &&
                 <Message message={message[1]} type={"alert"} display={showMessage} />
+            }
+
+            {(!isValidTime(dayTimeMin) || !isValidTime(dayTimeMax)) &&
+                <Message message={message[2]} type={"alert"} display={showMessage} />
             }
         </div>
     )

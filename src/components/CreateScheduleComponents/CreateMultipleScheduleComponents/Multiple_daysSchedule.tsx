@@ -8,6 +8,7 @@ import SchedulingInterval from "./DaysScheduleComponents/SchedulingInterval";
 import type { schedulesRulers_props, schedulesRulers } from "../../../Utils/Types";
 
 import Message from "../../Message";
+import { isValidTime } from "../../../Utils/UtilsFunctions";
 
 type checkedButtonsType = {
     button: number, checked: boolean
@@ -96,6 +97,10 @@ const Multiple_daysSchedule = (props: schedulesRulers_props) => {
     };
 
     const scheduleIntervalConfirm = () => {
+        if (!isValidTime(scheduleHourBegin) || !isValidTime(scheduleHourEnd)) {
+            return null
+        }
+
         if (scheduleIsConfirmed) {
             setScheduleHourBegin("00:00");
             setScheduleHourEnd("00:00");
@@ -115,16 +120,17 @@ const Multiple_daysSchedule = (props: schedulesRulers_props) => {
         }
     }
 
-    useEffect(() => {
-        console.log(schedulesRulers.SchedulingIntervalType.time > 0);
-    }, [schedulesRulers]);
+    // useEffect(() => {
+    //     console.log(schedulesRulers.SchedulingIntervalType.time > 0);
+    // }, [schedulesRulers]);
 
     const showMessage = { display: "flex" } as const;
 
     const message = [
         "*É necessário estabelecer um horário de início e de fim!",
         "*É necessário estabelecer o intervalo padrão entre as escalas!",
-        "O tempo de 'início' deve ser menor que o de 'fim'!"
+        "O tempo de 'início' deve ser menor que o de 'fim'!",
+        "Verifique se o formato de tempo está como HH:MM."
     ];
 
 
@@ -132,7 +138,7 @@ const Multiple_daysSchedule = (props: schedulesRulers_props) => {
         <div className={style.multipleDaysContainer}>
             <h2>
                 Evento vai ocorrer entre os horários: <FaQuestionCircle />
-                <p style={{ color: "red" }}>* </p>
+                <span style={{ color: "red" }}>* </span>
             </h2>
             {!scheduleIsConfirmed &&
                 <div className={style.containerSchedulingInterval}>
@@ -149,6 +155,10 @@ const Multiple_daysSchedule = (props: schedulesRulers_props) => {
 
             {scheduleHourBegin >= scheduleHourEnd &&
                 <Message message={message[2]} type={"error"} display={showMessage} />
+            }
+
+            {(!isValidTime(scheduleHourBegin) || !isValidTime(scheduleHourEnd)) &&
+                <Message message={message[3]} type={"alert"} display={showMessage} />
             }
 
             {scheduleIsConfirmed &&

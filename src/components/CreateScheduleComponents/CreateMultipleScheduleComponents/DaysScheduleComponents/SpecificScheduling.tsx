@@ -4,6 +4,7 @@ import type { schedulesRulers_props } from "../../../../Utils/Types";
 import { daysMonthAmount } from "../../../ScheduleDetailsComponents/Date";
 import { useEffect, useState } from "react";
 import Message from "../../../Message";
+import { isValidTime } from "../../../../Utils/UtilsFunctions";
 
 const SpecificScheduling = (props: schedulesRulers_props) => {
     const schedulesRulers = props.schedulesRulers;
@@ -35,6 +36,10 @@ const SpecificScheduling = (props: schedulesRulers_props) => {
     const buttonCondition = !personalizedDaySchedulingConfirmed ? { display: "block" } : { display: "none" };
 
     const addDaysScheduling = () => {
+        if (!isValidTime(daySchedulingMin) || !isValidTime(daySchedulingMax)) {
+            return null;
+        }
+
         if (daySchedulingMin < daySchedulingMax && choosedDay > 0) {
             const newArray = [...personalizedDayScheduling];
             newArray.push({ day: choosedDay, from: daySchedulingMin, to: daySchedulingMax });
@@ -83,6 +88,7 @@ const SpecificScheduling = (props: schedulesRulers_props) => {
     const message = [
         "O valor de 'início' deve ser menor que o valor 'fim'!",
         "Você deve informar um dia!",
+        "Verifique se o formato de tempo está como HH:MM."
     ];
 
     return (
@@ -137,6 +143,10 @@ const SpecificScheduling = (props: schedulesRulers_props) => {
 
             {choosedDay === 0 &&
                 <Message message={message[1]} type={"alert"} display={showMessage} />
+            }
+            
+            {(!isValidTime(daySchedulingMin) || !isValidTime(daySchedulingMax)) &&
+                <Message message={message[2]} type={"alert"} display={showMessage} />
             }
         </div>
     )

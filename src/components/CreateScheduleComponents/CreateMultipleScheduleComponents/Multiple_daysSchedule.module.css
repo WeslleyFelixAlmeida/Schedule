@@ -118,7 +118,7 @@
     height: 225px;
   }
 
-  .containerSchedulingIntervalChoosed {
+  .containerSchedulingInterval {
     flex-direction: column;
     row-gap: 10px;
   }

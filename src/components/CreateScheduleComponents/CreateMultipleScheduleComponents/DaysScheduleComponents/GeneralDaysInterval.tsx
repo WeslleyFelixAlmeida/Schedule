@@ -3,6 +3,7 @@ import style from "./GeneralDaysInterval.module.css";
 import type { schedulesRulers_props } from "../../../../Utils/Types";
 import { useEffect, useState } from "react";
 import Message from "../../../Message";
+import { isValidTime } from "../../../../Utils/UtilsFunctions";
 
 const GeneralDaysInterval = (props: schedulesRulers_props) => {
     const schedulesRulers = props.schedulesRulers;
@@ -17,6 +18,8 @@ const GeneralDaysInterval = (props: schedulesRulers_props) => {
 
     const buttonCondition = !personalizedIntervalsConfirmed ? { display: "block" } : { display: "none" };
 
+
+
     const handleTimeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         let value = e.target.value;
         let targetId = e.target.id;
@@ -29,6 +32,10 @@ const GeneralDaysInterval = (props: schedulesRulers_props) => {
     };
 
     const addDaysInterval = () => {
+        if (!isValidTime(timeMin) || !isValidTime(timeMax)) {
+            console.log("Entrou !   ")
+            return null;
+        }
         if (timeMin < timeMax) {
             console.log("teste");
             const newArray = [...personalizedIntervals];
@@ -63,7 +70,8 @@ const GeneralDaysInterval = (props: schedulesRulers_props) => {
     const showMessage = { display: "flex" } as const;
 
     const message = [
-        "O valor de 'início' deve ser menor que o valor 'fim'!"
+        "O valor de 'início' deve ser menor que o valor 'fim'!",
+        "Verifique se o formato de tempo está como HH:MM."
     ];
 
     return (
@@ -98,8 +106,12 @@ const GeneralDaysInterval = (props: schedulesRulers_props) => {
                 <input type="button" value="Cancelar" onClick={cancelDaysIntervals} />
             }
 
-            {timeMin <= timeMax &&
+            {timeMin >= timeMax &&
                 <Message message={message[0]} type={"alert"} display={showMessage} />
+            }
+
+            {(!isValidTime(timeMin) || !isValidTime(timeMax)) &&
+                <Message message={message[1]} type={"alert"} display={showMessage} />
             }
         </div>
     )

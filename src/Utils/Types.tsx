@@ -71,9 +71,10 @@ export type ProfileOptionsProps = {
 export type DaySchedule = {
     day: number;
     checked: boolean;
-    schedules: {
-        schedullingHour: string;
-    }[];
+    schedules: number[] | string[]
+    // {
+    //     schedullingHour: string | number;
+    // }[];
 };
 
 export type multipleSchedulesProps = {
@@ -82,11 +83,11 @@ export type multipleSchedulesProps = {
 }
 
 export type schedulesRulers = {
-    SchedulingInterval: { from: string, to: string } | null,
+    SchedulingInterval: { from: string, to: string },
     SchedulingIntervalType: { time: number, type: "hour" | "minutes" };
-    GeneralDaysInterval: { from: string, to: string }[] | null;
-    DayInterval: { day: number, from: string, to: string }[] | null;
-    SpecificScheduling: { day: number, from: string, to: string }[] | null;
+    GeneralDaysInterval: { from: string, to: string }[] | [];
+    DayInterval: { day: number, from: string, to: string }[] | [];
+    SpecificScheduling: { day: number, from: string, to: string }[] | [];
 }
 
 export type schedulesRulers_props = {
