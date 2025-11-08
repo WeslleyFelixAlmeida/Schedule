@@ -120,7 +120,7 @@
   border: solid 2px var(--golden_fonts);
   color: var(--dark_blue);
   font-weight: bold;
-  cursor: pointer;
+  /* cursor: pointer; */
   background-color: white;
   display: flex;
   align-items: center;

@@ -28,7 +28,7 @@ const buttonStyles = [
 ];
 
 const Multiple_daysSchedule = (props: schedulesRulers_props) => {
-    const [generalDaysContainer, setGeneralDaysContainer] = useState<boolean>(true);//deixar como false por padrão
+    const [generalDaysContainer, setGeneralDaysContainer] = useState<boolean>(false);//deixar como false por padrão
     const [checkedButton, setCheckedButton] = useState<checkedButtonsType[]>(buttonsArray());
     const [scheduleHourBegin, setScheduleHourBegin] = useState<string>("00:00");
     const [scheduleHourEnd, setScheduleHourEnd] = useState<string>("00:00");

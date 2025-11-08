@@ -4,6 +4,9 @@ import type { DaySchedule, schedulesRulers } from "../../Utils/Types";
 import Multiple_dayContainer from "./CreateMultipleScheduleComponents/Multiple_daysContainer";
 import Multiple_daysSchedule from "./CreateMultipleScheduleComponents/Multiple_daysSchedule";
 import Message from "../Message";
+import ShowSchedulesResume from "./CreateMultipleScheduleComponents/ShowSchedulesOverview";
+import data from "./CreateMultipleScheduleComponents/ShowSchedules_Ex.json";
+import { disableScroll, enableScroll } from "../../Utils/UtilsFunctions";
 
 const getTimeInMinutes = (hour: string) => {
     const getTimeHourAndMinutes = hour.split(":");
@@ -12,7 +15,19 @@ const getTimeInMinutes = (hour: string) => {
     return conversion;
 }
 
+const getTimeInHours = (minutes: number) => {
+    const hours = Math.floor(minutes / 60);
+    const mins = minutes % 60;
+
+    const conversion = `${String(hours).padStart(2, "0")}:${String(mins).padStart(2, "0")}`;
+
+    return conversion;
+}
+
+
 const CreateMultipleSchedule = () => {
+    const [userSchedulesFormated, setUserSchedulesFormated] = useState<Pick<DaySchedule, "schedules" | "day">[]>(data); //Por padrão deve ser um array vazio: [], data é apenas um exemplo de dados
+
     const [userSchedules, setUserSchedules] = useState<DaySchedule[]>([]);
 
     const [schedulesRulers, setSchedulesRulers] = useState<schedulesRulers>({
@@ -22,6 +37,8 @@ const CreateMultipleSchedule = () => {
         DayInterval: [],
         SpecificScheduling: []
     });
+
+    const [showResume, setShowResume] = useState<{ display: "flex" } | { display: "none" }>({ display: "flex" });
 
     // useEffect(() => {
     // console.log(`Mudou! ${userSchedules}`);
@@ -58,7 +75,7 @@ const CreateMultipleSchedule = () => {
         }
 
         createSchedulesArray();
-        return true;
+        // return true;
     }
 
     const createSchedulesArray = () => {
@@ -114,20 +131,6 @@ const CreateMultipleSchedule = () => {
                 });
             }
 
-            //Intervalo(s) gerais
-            if (schedulesRulers.GeneralDaysInterval.length > 0) {
-                schedulesRulers.GeneralDaysInterval.forEach((day, i) => {
-                    let intervalInit = getTimeInMinutes(schedulesRulers.GeneralDaysInterval[i].from);
-                    let intervalEnd = getTimeInMinutes(schedulesRulers.GeneralDaysInterval[i].to);
-
-                    let applyInterval = newDaysArray[index].schedules.filter((schedule) => (
-                        (schedule as number) < intervalInit || (schedule as number) >= intervalEnd
-                    ));
-
-                    newDaysArray[index].schedules = applyInterval as number[];
-                });
-            }
-
             //Intervalo em dia específico
             if (schedulesRulers.DayInterval.length > 0) {
                 schedulesRulers.DayInterval.forEach((interval) => {
@@ -145,8 +148,43 @@ const CreateMultipleSchedule = () => {
                     }
                 });
             }
+
+            //Intervalo(s) gerais
+            if (schedulesRulers.GeneralDaysInterval.length > 0) {
+                schedulesRulers.GeneralDaysInterval.forEach((day, i) => {
+                    let intervalInit = getTimeInMinutes(schedulesRulers.GeneralDaysInterval[i].from);
+                    let intervalEnd = getTimeInMinutes(schedulesRulers.GeneralDaysInterval[i].to);
+
+                    let applyInterval = newDaysArray[index].schedules.filter((schedule) => (
+                        (schedule as number) < intervalInit || (schedule as number) >= intervalEnd
+                    ));
+
+                    newDaysArray[index].schedules = applyInterval as number[];
+                });
+            }
         });
+
+        //Convertendo novamente para horas as escalas:
+        let userSchedulesConversion: Pick<DaySchedule, "schedules" | "day">[] = []
+
+        newDaysArray.map((day, i) => {
+            let array: string[] = []
+
+            day.schedules.map((schedule, j) => {
+                array.push(getTimeInHours(schedule as number));
+            });
+
+            userSchedulesConversion.push({
+                ...day,
+                schedules: array
+            });
+        });
+
+        setUserSchedulesFormated(userSchedulesConversion);
+        disableScroll();
+        setShowResume({ display: "flex" })
     }
+
 
     return (
         <div className={style.containerMultipleScheduleEvent}>
@@ -163,6 +201,12 @@ const CreateMultipleSchedule = () => {
 
             <Multiple_dayContainer days={userSchedules} setDays={setUserSchedules} />
             <Multiple_daysSchedule schedulesRulers={schedulesRulers} setSchedulesRulers={setSchedulesRulers} />
+
+
+            {userSchedulesFormated.length > 0 &&
+                <ShowSchedulesResume userSchedules={userSchedulesFormated} setUserSchedules={setUserSchedulesFormated} showResume={showResume} setShowResume={setShowResume} />
+            }
+            {/* Container de resumo ^^ */}
         </div>
     )
 }
