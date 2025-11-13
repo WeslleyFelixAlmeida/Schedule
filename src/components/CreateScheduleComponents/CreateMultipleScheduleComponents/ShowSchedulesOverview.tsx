@@ -5,7 +5,7 @@ import { daysMonthAmount, currentDay } from "../../ScheduleDetailsComponents/Dat
 import { enableScroll } from "../../../Utils/UtilsFunctions";
 import { IoIosArrowBack } from "react-icons/io";
 import { IoIosArrowForward } from "react-icons/io";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 type ShowSchedulesOverview_props = {
     userSchedules: Pick<DaySchedule, "schedules" | "day">[]
@@ -15,22 +15,27 @@ type ShowSchedulesOverview_props = {
 }
 
 
-
 const ShowSchedulesOverview = (props: ShowSchedulesOverview_props) => {
     const [listIndex, setListIndex] = useState<number>(0);
-
+    
     const userSchedules = props.userSchedules;
-    // const setUserSchedules = props.setUserSchedules;
+    const setUserSchedules = props.setUserSchedules;
 
-    // const removeDay = (day: number, schedule: string) => {
-
-    //     // setUserSchedules() usar isso para remover o dia após criar um novo array
-    // }
-
-    const removeDay = (scheduleId: number, ScheduleDay: number
+    const removeDay = (ScheduleDayIndex: number, scheduleHour: string
     ) => {
-        console.log(`scheduleId: ${scheduleId}`);
-        console.log(`ScheduleDay: ${ScheduleDay}`);
+        let newArray: Pick<DaySchedule, "schedules" | "day">[] = [...userSchedules];
+
+        userSchedules.map((day, i) => {
+            if (ScheduleDayIndex === i) {
+                day.schedules.map((schedule, j) => {
+                    if (schedule === scheduleHour) {
+                        newArray[i].schedules.splice(j, 1);
+                    }
+                });
+            }
+        });
+
+        setUserSchedules(newArray);
     }
 
     const cancel = () => {
@@ -40,14 +45,19 @@ const ShowSchedulesOverview = (props: ShowSchedulesOverview_props) => {
 
     const confirm = () => {
         console.log("confirmado!");
+        //Função que vai fazer a request para API para criar o evento!
     }
 
     const goAhead = () => {
-        console.log("Foi para frente!");
+        if (listIndex !== userSchedules.length - 1) {
+            setListIndex((listIndex + 1));
+        }
     }
 
     const goBack = () => {
-        console.log("Foi para trás!");
+        if (listIndex !== 0) {
+            setListIndex((listIndex - 1));
+        }
     }
 
     return (
@@ -64,7 +74,7 @@ const ShowSchedulesOverview = (props: ShowSchedulesOverview_props) => {
                         <IoIosArrowBack />
                     </button>
 
-                    <h2>Escalas do dia: <span>{userSchedules[0].day}</span></h2>
+                    <h2>Escalas do dia: <span>{userSchedules[listIndex].day}</span></h2>
 
                     <button onClick={goAhead}>
                         <IoIosArrowForward />
@@ -74,10 +84,10 @@ const ShowSchedulesOverview = (props: ShowSchedulesOverview_props) => {
 
                     <ul className={style.overviewMultipleSchedulesList}>
                         {
-                            userSchedules[0].schedules.map((schedule, index) => (
+                            userSchedules[listIndex].schedules.map((schedule, index) => (
                                 <li key={index}>
                                     <p>{schedule}</p>
-                                    <button onClick={() => removeDay(index, listIndex)}>
+                                    <button onClick={() => removeDay(listIndex, schedule as string)}>
                                         <FaRegTrashAlt />
                                     </button>
                                 </li>

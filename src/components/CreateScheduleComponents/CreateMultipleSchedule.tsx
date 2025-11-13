@@ -7,6 +7,9 @@ import Message from "../Message";
 import ShowSchedulesResume from "./CreateMultipleScheduleComponents/ShowSchedulesOverview";
 import data from "./CreateMultipleScheduleComponents/ShowSchedules_Ex.json";
 import { disableScroll, enableScroll } from "../../Utils/UtilsFunctions";
+import { MdUploadFile } from "react-icons/md";
+
+import imagem from "../../assets/imgs/img_teste.jpg"; // Apagar depois!
 
 const getTimeInMinutes = (hour: string) => {
     const getTimeHourAndMinutes = hour.split(":");
@@ -24,9 +27,15 @@ const getTimeInHours = (minutes: number) => {
     return conversion;
 }
 
+type ScheduleInfo_type = {
+    eventImage: string;
+    eventName: string;
+    eventShortDesc: string;
+    eventLongDesc: string;
+}
 
 const CreateMultipleSchedule = () => {
-    const [userSchedulesFormated, setUserSchedulesFormated] = useState<Pick<DaySchedule, "schedules" | "day">[]>(data); //Por padrão deve ser um array vazio: [], data é apenas um exemplo de dados
+    const [userSchedulesEventFormated, setUserSchedulesEventFormated] = useState<Pick<DaySchedule, "schedules" | "day">[]>([]); //Por padrão deve ser um array vazio: [], data é apenas um exemplo de dados
 
     const [userSchedules, setUserSchedules] = useState<DaySchedule[]>([]);
 
@@ -38,6 +47,8 @@ const CreateMultipleSchedule = () => {
         SpecificScheduling: []
     });
 
+    const [scheduleInfo, setScheduleInfo] = useState<ScheduleInfo_type>({ eventImage: "", eventName: "", eventShortDesc: "", eventLongDesc: "" });
+
     const [showResume, setShowResume] = useState<{ display: "flex" } | { display: "none" }>({ display: "flex" });
 
     // useEffect(() => {
@@ -45,6 +56,28 @@ const CreateMultipleSchedule = () => {
     // }, [userSchedules])
 
     const [message, setMessage] = useState<{ message: string, display: "flex" | "none" }>({ message: "", display: "none" });
+
+    const handleChanges = (e: any) => {
+        const { id, value, files, type } = e.target as HTMLInputElement;
+
+        if (type === "file" && files && files.length > 0) {
+            const file = files[0];
+
+            const fileURL = URL.createObjectURL(file);
+
+            setScheduleInfo((prev) => ({
+                ...prev,
+                [id]: fileURL,
+            }));
+
+            return;
+        }
+
+        setScheduleInfo(prev => ({
+            ...prev,
+            [id]: value
+        }));
+    }
 
     const showMessage = (message: string) => {
         setMessage({
@@ -59,10 +92,21 @@ const CreateMultipleSchedule = () => {
     }
 
     const errorMessages = [
-        "Erro ao criar tarefa, verifique se todas as informações obrigatórias foram preenchidas!"
+        "Erro ao criar tarefa, verifique se todos os campos obrigatórios foram preenchidos!"
     ];
 
     const checkEventCreateConditions = () => {
+        console.log(scheduleInfo.eventImage);
+
+        if ((!scheduleInfo.eventImage) ||
+            (!scheduleInfo.eventShortDesc) ||
+            (!scheduleInfo.eventLongDesc) ||
+            (!scheduleInfo.eventName)
+        ) {
+            showMessage(errorMessages[0]);
+            return false;
+        }
+
         if (schedulesRulers.SchedulingInterval.from >= schedulesRulers.SchedulingInterval.to) {
             showMessage(errorMessages[0]);
             return false;
@@ -75,32 +119,31 @@ const CreateMultipleSchedule = () => {
         }
 
         createSchedulesArray();
-        // return true;
     }
 
     const createSchedulesArray = () => {
         const choosedDays = userSchedules.filter(userSchedule => userSchedule.checked);
         let newDaysArray: Pick<DaySchedule, "day" | "schedules">[] = [];
 
-        //Pegando o valor de inicio e fim geral e formatando para número e transformando em minutos:
+        //Pegando o valor de inicio e fim geral e Eventatando para número e transEventando em minutos:
         const SchedIntervalFrom = getTimeInMinutes(schedulesRulers.SchedulingInterval.from);
         const SchedIntervalTo = getTimeInMinutes(schedulesRulers.SchedulingInterval.to);
 
         //Pegando o tempo de intervalo entre os horários:
         const getInvertalTime = Number(schedulesRulers.SchedulingIntervalType.time);
 
-        //Formatando este tempo de intervalo caso seja em horas para minutos:
-        const intervalTimeFormated = schedulesRulers.SchedulingIntervalType.type === "hour" ? getInvertalTime * 60 : getInvertalTime;
+        //Eventatando este tempo de intervalo caso seja em horas para minutos:
+        const intervalTimeEventated = schedulesRulers.SchedulingIntervalType.type === "hour" ? getInvertalTime * 60 : getInvertalTime;
 
         choosedDays.forEach((day, index) => {
             let scheduleDayArray = [];
             let controlLooping = SchedIntervalFrom;
 
             while (controlLooping <= SchedIntervalTo) {
-                if ((controlLooping % intervalTimeFormated) === 0) {
+                if ((controlLooping % intervalTimeEventated) === 0) {
                     scheduleDayArray.push(controlLooping);
                 }
-                controlLooping += intervalTimeFormated;
+                controlLooping += intervalTimeEventated;
             }
 
             newDaysArray.push({ day: day.day, schedules: scheduleDayArray });
@@ -180,7 +223,7 @@ const CreateMultipleSchedule = () => {
             });
         });
 
-        setUserSchedulesFormated(userSchedulesConversion);
+        setUserSchedulesEventFormated(userSchedulesConversion);
         disableScroll();
         setShowResume({ display: "flex" })
     }
@@ -199,12 +242,39 @@ const CreateMultipleSchedule = () => {
                 <Message message={message.message} type={"error"} display={{ display: message.display }} />
             </div>
 
+            <div className={`${style.containerEventImage}`}>
+                <p>Imagem do evento: <span style={{ color: "red" }}>* </span></p>
+                <label htmlFor="eventImage">
+                    <MdUploadFile />
+                    Clique aqui para adicionar
+                </label>
+                <input type="file" name="eventImage" id="eventImage" accept="image/*" onChange={handleChanges} />
+                {scheduleInfo.eventImage && (
+                    <img src={scheduleInfo.eventImage} alt="Pré-visualização" />
+                )}
+            </div>
+
+            <div className={`${style.containerMultipleLine}`}>
+                <p>Nome: <span style={{ color: "red" }}>* </span></p>
+                <input type="text" name="eventName" id="eventName" placeholder="Nome do evento" onChange={handleChanges} value={scheduleInfo.eventName} />
+            </div>
+
+            <div className={`${style.containerMultipleLine}`}>
+                <p>Descrição curta: <span style={{ color: "red" }}>* </span></p>
+                <input type="text" name="eventShortDesc" id="eventShortDesc" placeholder="Descrição curta" onChange={handleChanges} value={scheduleInfo.eventShortDesc} />
+            </div>
+
+            <div className={`${style.containerMultipleLine}`}>
+                <p>Descrição longa: <span style={{ color: "red" }}>* </span></p>
+                <textarea name="eventLongDesc" id="eventLongDesc" placeholder="Descrição longa" onChange={handleChanges} value={scheduleInfo.eventLongDesc}></textarea>
+            </div>
+
             <Multiple_dayContainer days={userSchedules} setDays={setUserSchedules} />
             <Multiple_daysSchedule schedulesRulers={schedulesRulers} setSchedulesRulers={setSchedulesRulers} />
 
 
-            {userSchedulesFormated.length > 0 &&
-                <ShowSchedulesResume userSchedules={userSchedulesFormated} setUserSchedules={setUserSchedulesFormated} showResume={showResume} setShowResume={setShowResume} />
+            {userSchedulesEventFormated.length > 0 &&
+                <ShowSchedulesResume userSchedules={userSchedulesEventFormated} setUserSchedules={setUserSchedulesEventFormated} showResume={showResume} setShowResume={setShowResume} />
             }
             {/* Container de resumo ^^ */}
         </div>
