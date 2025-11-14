@@ -5,11 +5,9 @@ import Multiple_dayContainer from "./CreateMultipleScheduleComponents/Multiple_d
 import Multiple_daysSchedule from "./CreateMultipleScheduleComponents/Multiple_daysSchedule";
 import Message from "../Message";
 import ShowSchedulesResume from "./CreateMultipleScheduleComponents/ShowSchedulesOverview";
-import data from "./CreateMultipleScheduleComponents/ShowSchedules_Ex.json";
 import { disableScroll, enableScroll } from "../../Utils/UtilsFunctions";
 import { MdUploadFile } from "react-icons/md";
 
-import imagem from "../../assets/imgs/img_teste.jpg"; // Apagar depois!
 
 const getTimeInMinutes = (hour: string) => {
     const getTimeHourAndMinutes = hour.split(":");
@@ -35,7 +33,7 @@ type ScheduleInfo_type = {
 }
 
 const CreateMultipleSchedule = () => {
-    const [userSchedulesEventFormated, setUserSchedulesEventFormated] = useState<Pick<DaySchedule, "schedules" | "day">[]>([]); //Por padrão deve ser um array vazio: [], data é apenas um exemplo de dados
+    const [userSchedulesEventFormated, setUserSchedulesEventFormated] = useState<Pick<DaySchedule, "schedules" | "day">[]>([]);
 
     const [userSchedules, setUserSchedules] = useState<DaySchedule[]>([]);
 
@@ -50,10 +48,6 @@ const CreateMultipleSchedule = () => {
     const [scheduleInfo, setScheduleInfo] = useState<ScheduleInfo_type>({ eventImage: "", eventName: "", eventShortDesc: "", eventLongDesc: "" });
 
     const [showResume, setShowResume] = useState<{ display: "flex" } | { display: "none" }>({ display: "flex" });
-
-    // useEffect(() => {
-    // console.log(`Mudou! ${userSchedules}`);
-    // }, [userSchedules])
 
     const [message, setMessage] = useState<{ message: string, display: "flex" | "none" }>({ message: "", display: "none" });
 
@@ -96,8 +90,6 @@ const CreateMultipleSchedule = () => {
     ];
 
     const checkEventCreateConditions = () => {
-        console.log(scheduleInfo.eventImage);
-
         if ((!scheduleInfo.eventImage) ||
             (!scheduleInfo.eventShortDesc) ||
             (!scheduleInfo.eventLongDesc) ||
