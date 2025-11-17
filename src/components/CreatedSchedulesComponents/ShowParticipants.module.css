@@ -1,0 +1,159 @@
+.showParticipantsPage {
+  display: flex;
+  height: 100%;
+  width: 100%;
+  flex-direction: column;
+  padding: 10px;
+  box-sizing: border-box;
+}
+
+.showParticipantsPage > button {
+  align-self: flex-start;
+}
+
+.containerShowParticipants {
+  align-self: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  row-gap: 10px;
+  height: 100%;
+  width: 100%;
+  max-width: 500px;
+  margin-top: 50px;
+}
+
+.showParticipantsPage > button {
+  padding: 7px;
+  border-radius: 10px;
+  border: none;
+  transition: background-color 0.5s ease;
+  cursor: pointer;
+  width: 200px;
+  height: 35px;
+  background-color: var(--dark_blue);
+  color: var(--golden_fonts);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  column-gap: 10px;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.showParticipantsPage > button:hover {
+  background-color: #254f87;
+}
+
+.containerChangeDayButtons {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  border: solid 2px var(--golden_fonts);
+  border-radius: 10px;
+  padding: 10px;
+  box-sizing: border-box;
+  background-color: white;
+}
+
+.containerChangeDayButtons > h2 {
+  text-align: center;
+  width: 170px;
+}
+
+.containerChangeDayButtons > h2 > span {
+  color: var(--dark_blue);
+  text-decoration: underline;
+}
+
+.containerChangeDayButtons > button {
+  padding: 50px 0px;
+  width: 30px;
+  height: 100px;
+  border-radius: 10px;
+  border: none;
+  box-shadow: 0px 0px 2px #dbdbdb;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.containerChangeDayButtons > button > svg {
+  font-size: 30px;
+  color: var(--dark_blue);
+}
+
+.containerParticipantsList {
+  display: flex;
+  height: 100%;
+  width: 100%;
+  justify-content: space-around;
+  border: solid 2px var(--golden_fonts);
+  border-radius: 10px;
+  padding: 10px;
+  box-sizing: border-box;
+  background-color: white;
+}
+
+.participantsList {
+  width: 100%;
+  height: 100%;
+  list-style: none;
+  padding: 10px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  row-gap: 10px;
+  overflow-y: scroll;
+}
+
+.participantsList > li {
+  width: 100%;
+  border: solid 1px var(--dark_blue);
+  border-radius: 10px;
+  padding: 10px;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.participantsList > li > p {
+  font-weight: bold;
+  color: var(--dark_blue);
+}
+
+.participantsList > li > button {
+  background-color: transparent;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  column-gap: 10px;
+  border: none;
+  border-radius: 10px;
+  padding: 10px;
+  background-color: #df1d1d;
+  transition: background-color 0.5s ease;
+  color: white;
+  font-weight: bold;
+  box-shadow: 0px 0px 1px #bfbfbf;
+}
+
+.participantsList > li > button > svg {
+  color: white;
+  font-size: 15px;
+}
+
+.participantsList > li > button:hover {
+  background-color: #b31414;
+}
+
+@media screen and (max-width: 400px) {
+  .participantsList > li {
+    font-size: 11px;
+  }
+}

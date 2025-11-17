@@ -1,30 +1,33 @@
 import style from "./UserCreatedSchedules.module.css";
-import { Link } from "react-router-dom";
-import image from "../assets/imgs/img_teste.jpg";
+import { useState } from "react";
+import ShowParticipants from "../components/CreatedSchedulesComponents/ShowParticipants";
+import CreatedSchedules from "../components/CreatedSchedulesComponents/CreatedSchedules";
 
 const UserCreatedSchedules = () => {
-    return (
-        <div className={style.containerCreatedEvents}>
-            <Link to={"/schedules"}>Voltar</Link>
-            <h2>Seus eventos criados:</h2>
-            <ul className={style.createdEvents}>
-                <li>
-                    <p>Cabelereiro</p>
-                    <div className={style.containerImage}
-                    >
-                        <div className={style.image}
-                        style={{
-                            backgroundImage: `url(${image})`
-                        }}
-                        ></div>
+    const [createdSchedules, setCreatedSchedules] = useState<boolean>(false);//Por padrão deve iniciar com true
+    const [showParticipants, setShowParticipants] = useState<boolean>(true);//Por padrão deve iniciar com false
+    const [eventId, setEventId] = useState<number>(-1);
 
-                        <div className={style.containerButtons}>
-                            <input type="button" value="Ver participantes" />
-                            <input type="button" value="Detalhes" />
-                        </div>
-                    </div>
-                </li>
-            </ul>
+    return (
+        <div className={style.containerUserCreatedSchedules}>
+            {createdSchedules &&
+                <CreatedSchedules
+                    createdSchedules={createdSchedules}
+                    setCreatedSchedules={setCreatedSchedules}
+                    eventId={eventId}
+                    setEventId={setEventId}
+                    setShowParticipants={setShowParticipants}
+                />
+            }
+
+            {showParticipants &&
+                <ShowParticipants
+                    setCreatedSchedules={setCreatedSchedules}
+                    setShowParticipants={setShowParticipants}
+                    eventId={eventId}
+                    setEventId={setEventId}
+                />
+            }
         </div>
     )
 }
