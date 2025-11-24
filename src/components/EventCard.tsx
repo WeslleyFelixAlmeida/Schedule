@@ -1,14 +1,14 @@
 import style from "./EventCard.module.css";
-import Event_image from "./EventCardComponents/Event_image";
 import { useNavigate } from "react-router-dom";
 
 import type { EventDataProps } from "../Utils/Types";
 import EventCard_status from "./EventCardComponents/EventCard_status";//
-import EventCard_amount from "./EventCardComponents/EventCard_amount";//
-import EventCard_title from "./EventCardComponents/EventCard_Title";//
 import Button from "./Button";
 import { exitEvent as exit, joinEvent as join } from "../Utils/ButtonsFunctions";
 import type { JSX } from "react";
+
+import schedule_img from "./../assets/imgs/img_teste.jpg";
+
 
 type EventCardProps = Pick<
     EventDataProps,
@@ -45,7 +45,7 @@ const EventCard = (props: EventCardProps) => {
             conditionsCheck.currentStatus === "open"
         ) {
             buttons.push(joinButton);
-            
+
         } else if (conditionsCheck.eventType === "uniqueSchedule" &&
             conditionsCheck.isParticipating === "yes" &&
             conditionsCheck.currentStatus === "open") {
@@ -67,21 +67,20 @@ const EventCard = (props: EventCardProps) => {
 
     return (
         <div className={style.containerCardSchedule}>
-            <div className={style.elementsCardSchedule}>
-                <div className={style.infoCardSchedule}>
-                    <EventCard_title title={props.title} shortDescription={props.shortDescription} />
-                    <div className={style.containerStatusAndAmount}>
-                        <EventCard_status currentStatus={props.currentStatus} />
-                        {props.eventType === "uniqueSchedule" && (
-                            <EventCard_amount
-                                maxAmount={props.maxAmount}
-                                currentAmount={props.currentAmount}
-                            />
-                        )}
-                    </div>
+            <div className={style.infoCardSchedule}>
+                <div className={style.containerText}>
+                    <h2>{props.title}</h2>
+                    <p>{props.shortDescription}</p>
                 </div>
-                <Event_image width="150px" />
+                <EventCard_status currentStatus={props.currentStatus} />
+                {props.eventType === "uniqueSchedule" && (
+                    <div className={style.containerAmount}>
+                        <div className={`${style.AmountCircle} ${style.StatusAndAmountCircle}`}></div>
+                        <p><span>{props.currentAmount}/{props.maxAmount}</span> Pessoas</p>
+                    </div>
+                )}
             </div>
+            <img src={schedule_img} alt="Imagem do evento" />
             {chooseButton({ eventType: props.eventType, isParticipating: props.isParticipating, currentStatus: props.currentStatus })}
         </div>
     )

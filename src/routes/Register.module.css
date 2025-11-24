@@ -1,3 +1,20 @@
+.mainContainer {
+  --label_top_username: 20%;
+  --label_top_username_focused: 17%;
+
+  --label_top_email: 35.5%;
+  --label_top_email_focused: 32%;
+
+  --label_top_password: 51%;
+  --label_top_password_focused: 47.5%;
+
+  --label_top_passwordConfirm: 66.5%;
+  --label_top_passwordConfirm_focused: 63.5%;
+
+  --label_left: 14%;
+  --label_left_focused: 12%;
+}
+
 .contentContainer {
   width: 100%;
   height: 100vh;
@@ -33,7 +50,7 @@
 .contentContainer > form {
   border: 1px solid var(--dark_blue);
   border-radius: 20px;
-  height: 440px;
+  height: 485px;
   width: 90%;
   max-width: 380px;
   display: flex;
@@ -43,6 +60,7 @@
   padding: 10px;
   row-gap: 10px;
   margin: 35px auto;
+  position: relative;
 }
 
 .contentContainer > form > a:hover {
@@ -57,6 +75,70 @@
   border: 1px solid var(--dark_blue);
   width: 80%;
 }
+
+/*Labels- inicio*/
+.labelForm {
+  position: absolute;
+  opacity: 60%;
+  pointer-events: none;
+  transition: top 0.5s ease, left 0.5s ease;
+  left: var(--label_left);
+  background-color: white;
+}
+
+.usernameLabel {
+  top: var(--label_top_username);
+}
+
+.emailLabel {
+  top: var(--label_top_email);
+}
+
+.passwordLabel {
+  top: var(--label_top_password);
+}
+
+.confirmPasswordLabel {
+  top: var(--label_top_passwordConfirm);
+}
+
+.username:focus + .usernameLabel,
+.username:not(:placeholder-shown) + .usernameLabel {
+  top: var(--label_top_username_focused);
+  opacity: 100%;
+  font-size: 13px;
+  left: var(--label_left_focused);
+  padding: 0px 5px;
+}
+
+.email:focus + .emailLabel,
+.email:not(:placeholder-shown) + .emailLabel {
+  top: var(--label_top_email_focused);
+  opacity: 100%;
+  font-size: 13px;
+  left: var(--label_left_focused);
+  padding: 0px 5px;
+}
+
+.password:focus + .passwordLabel,
+.password:not(:placeholder-shown) + .passwordLabel {
+  top: var(--label_top_password_focused);
+  opacity: 100%;
+  font-size: 13px;
+  left: var(--label_left_focused);
+  padding: 0px 5px;
+}
+
+.confirmPassword:focus + .confirmPasswordLabel,
+.confirmPassword:not(:placeholder-shown) + .confirmPasswordLabel {
+  top: var(--label_top_passwordConfirm_focused);
+  opacity: 100%;
+  font-size: 13px;
+  left: var(--label_left_focused);
+  padding: 0px 5px;
+}
+
+/*Labels- fim*/
 
 .contentContainer > form > input[type="text"]:focus,
 .contentContainer > form > input[type="password"]:focus,
@@ -91,7 +173,7 @@
 
 .errorMessage {
   display: block;
-  height: 10px;
+  height: 20px;
   color: red;
 }
 
@@ -114,6 +196,34 @@
 
   .contentContainer > form {
     margin: 0px auto;
-    padding: 0px;
+    padding: 0;
+    border: none;
+  }
+
+  .mainContainer {
+    --label_top_username: 19%;
+    --label_top_username_focused: 15.5%;
+
+    --label_top_email: 35%;
+    --label_top_email_focused: 31.5%;
+
+    --label_top_passwordConfirm: 67.3%;
+    --label_top_passwordConfirm_focused: 63.5%;
+  }
+}
+
+@media screen and (max-width: 430px) {
+  .mainContainer {
+    --label_top_username: 21%;
+    --label_top_username_focused: 17.5%;
+
+    --label_top_email: 37%;
+    --label_top_email_focused: 34%;
+
+    --label_top_password: 53.5%;
+    --label_top_password_focused: 49.5%;
+
+    --label_top_passwordConfirm: 69.3%;
+    --label_top_passwordConfirm_focused: 65.5%;
   }
 }

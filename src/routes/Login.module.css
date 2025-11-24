@@ -1,9 +1,21 @@
 .contentContainer {
+  --label_top_email: 34.5%;
+  --label_top_email_focused: 30.5%;
+
+  --label_top_password: 51.5%;
+  --label_top_password_focused: 47.5%;
+
+  --label_left: 14%;
+  --label_left_focused: 12%;
+}
+
+.contentContainer {
   width: 100%;
   height: 100vh;
   padding: 10px 0px;
   display: flex;
 }
+
 .mainContainer {
   display: flex;
   align-items: center;
@@ -42,6 +54,7 @@
   padding: 10px;
   row-gap: 10px;
   margin: 35px auto;
+  position: relative;
 }
 
 .contentContainer > form > a:hover {
@@ -56,6 +69,49 @@
   width: 80%;
 }
 
+/*Labels- inicio*/
+.labelForm {
+  position: absolute;
+  opacity: 60%;
+  pointer-events: none;
+  transition: top 0.5s ease, left 0.5s ease;
+  left: var(--label_left);
+  background-color: white;
+}
+
+.emailLabel {
+  top: var(--label_top_email);
+}
+
+.passwordLabel {
+  top: var(--label_top_password);
+}
+
+.contentContainer > form > input[type="email"]:focus + .emailLabel,
+.contentContainer
+  > form
+  > input[type="email"]:not(:placeholder-shown)
+  + .emailLabel {
+  top: var(--label_top_email_focused);
+  opacity: 100%;
+  font-size: 13px;
+  left: var(--label_left_focused);
+  padding: 0px 5px;
+}
+
+.contentContainer > form > input[type="password"]:focus + .passwordLabel,
+.contentContainer
+  > form
+  > input[type="password"]:not(:placeholder-shown)
+  + .passwordLabel {
+  top: var(--label_top_password_focused);
+  opacity: 100%;
+  font-size: 13px;
+  left: var(--label_left_focused);
+  padding: 0px 5px;
+}
+
+/*Labels- fim*/
 .contentContainer > form > input[type="password"]:focus,
 .contentContainer > form > input[type="email"]:focus {
   outline-color: var(--golden_fonts);
@@ -87,7 +143,7 @@
 
 .errorMessage {
   display: block;
-  height: 10px;
+  height: 20px;
   color: red;
 }
 
@@ -111,5 +167,11 @@
   .contentContainer > form {
     margin: 0px auto;
     padding: 0px;
+    border: none;
   }
+
+  .contentContainer {
+  --label_top_email: 33.7%;
+  --label_top_email_focused: 29.5%;
+}
 }

@@ -11,16 +11,26 @@
   margin: 0 auto;
 }
 
-.elementsCardSchedule {
-  display: flex;
-  flex-direction: column;
-  row-gap: 5px;
+.infoCardSchedule {
+  display: grid;
+  grid-template-columns: 225px 125px;
+  grid-template-rows: 40px 55px;
+  grid-template-areas:
+    "containerText containerStatus"
+    "containerText containerAmount";
+  align-items: center;
 }
 
-.infoCardSchedule {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+.containerText {
+  grid-area: containerText;
+}
+
+.containerStatus {
+  grid-area: containerStatus;
+}
+
+.containerAmount {
+  grid-area: containerAmount;
 }
 
 .containerText {
@@ -29,11 +39,6 @@
   row-gap: 10px;
   align-items: flex-start;
   max-width: 230px;
-}
-
-.containerStatusAndAmount {
-  width: 35%;
-  max-width: 120px;
 }
 
 .containerStatus,
@@ -53,7 +58,7 @@
 }
 
 .StatusAndAmountCircle {
-  width: 13px;
+  min-width: 13px;
   height: 13px;
   border: solid 1px;
   border-radius: 50%;
@@ -65,33 +70,10 @@
   justify-content: space-between;
 }
 
-.detailsAndJoinButton,
-.cancelButton {
-  padding: 7px;
-  border-radius: 10px;
-  border: none;
-  width: 50%;
-  max-width: 150px;
-  transition: background-color 0.5s ease;
-  cursor: pointer;
-}
-
-.detailsAndJoinButton {
-  color: var(--golden_fonts);
-  background-color: var(--dark_blue);
-}
-
-.cancelButton {
-  background-color: #a30101;
-  color: white;
-}
-
-.detailsAndJoinButton:hover {
-  background-color: #254f87;
-}
-
-.cancelButton:hover {
-  background-color: #ff3535;
+.containerCardSchedule > img {
+  width: 100%;
+  aspect-ratio: 11 / 5;
+  object-fit: cover;
 }
 
 @media screen and (max-width: 400px) {
@@ -100,8 +82,7 @@
     height: 300px;
   }
 
-  .StatusAndAmountCircle{
-    width: 10px;
-    height: 7px;
+  .infoCardSchedule {
+    grid-template-columns: 210px 95px;
   }
 }

@@ -37,11 +37,22 @@ const Login = () => {
                 <form method="POST" onSubmit={handleSubmit(loginFormFilter)}>
                     <h2>Entre na sua conta</h2>
                     <p>Informe suas credenciais de acesso.</p>
-                    <input type="email" placeholder="Informe o e-mail" {...register("email")} required />
+                    <input type="email" placeholder="" {...register("email")} required id="userEmail" name="userEmail" />
+                    <label htmlFor="userEmail"
+                        className={`${style.labelForm} ${style.emailLabel}`}
+                    >
+                        E-mail
+                    </label>
+
                     <p className={style.errorMessage}>
                         {errors.email && errors.email.message}
                     </p>
-                    <input type="password" placeholder="Informe sua senha" {...register("userPassword")} required />
+                    <input type="password" placeholder="" {...register("userPassword")} required id="userPassword" name="userPassword" />
+
+                    <label htmlFor="userPassword"
+                        className={`${style.labelForm} ${style.passwordLabel}`}>
+                        Senha
+                    </label>
                     <p className={style.errorMessage}>
                         {errors.userPassword && errors.userPassword.message}
                     </p>
