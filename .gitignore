@@ -28,3 +28,4 @@ src/assets/imgs/img_teste.jpg
 src/components/ScheduleDetailsComponents/dados.json
 src/assets/imgs/ta.jpg
 src/components/CreateScheduleComponents/CreateMultipleScheduleComponents/ShowSchedules_Ex.json
+.env

@@ -41,6 +41,20 @@
   height: fit-content;
 }
 
+.contentContainer{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.contentContainer> p{
+  color: green;
+  font-weight: bold;
+  background-color: lightgreen;
+  padding: 10px;
+  margin-top: 10px;
+}
+
 .contentContainer > form {
   border: 1px solid var(--dark_blue);
   border-radius: 20px;
