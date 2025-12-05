@@ -5,7 +5,10 @@ const date: Date = new Date();
 const currentMonth = date.getMonth() + 1;
 const currentDay = date.getDate();
 const currentYear = date.getFullYear();
-const currentDate = `${currentYear}-${currentMonth}-${currentDay}`;
+const currentDate = `${String(currentYear).padStart(2, "0")
+    }-${String(currentMonth).padStart(2, "0")
+    }-${String(currentDay).padStart(2, "0")
+    }`;
 
 const daysMonthAmount = new Date(currentYear, currentMonth, 0).getDate();
 const differenceMounthXCurrentDay = daysMonthAmount - currentDay;
