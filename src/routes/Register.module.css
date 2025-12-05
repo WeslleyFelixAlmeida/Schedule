@@ -26,6 +26,7 @@
   display: flex;
   align-items: center;
   max-width: 1200px;
+  margin-top: 20px;
 }
 
 .containerLogo {
@@ -59,7 +60,7 @@
   align-items: center;
   padding: 10px;
   row-gap: 10px;
-  margin: 35px auto;
+  margin: 40px auto;
   position: relative;
 }
 
@@ -176,6 +177,25 @@
   height: 20px;
   color: red;
 }
+
+.contentContainer > p {
+  font-weight: bold;
+  padding: 10px;
+  position: absolute;
+  top: 115px;
+  left: 50%;
+  transform: translate(-50%, 0px);
+}
+
+.alertMessage {
+  color: #a9a900;
+  background-color: #f9f9ab;
+}
+
+/* .sucessMessage {
+  color: green;
+  background-color: lightgreen;
+} */
 
 @media screen and (max-width: 810px) {
   .mainContainer {

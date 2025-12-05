@@ -5,6 +5,8 @@ import style from "./Register.module.css";
 import { Link, Navigate, useNavigate } from "react-router-dom";
 import Logo from "../components/Logo";
 import { API_URL } from "../config";
+import { useEffect, useState } from "react";
+import { timeOut } from "../Utils/UtilsFunctions";
 
 const registerFormSchema = z.object({
     username: z.string().min(5, "O usuário deve ter pelo menos 5 caracteres"),
@@ -20,6 +22,7 @@ type RegisterFormSchema = z.infer<typeof registerFormSchema>;
 
 const Register = () => {
     const navigate = useNavigate();
+    const [alertMessage, setAlertMessage] = useState(false);
 
     const { register, handleSubmit, formState: { errors },
     } = useForm<RegisterFormSchema>({
@@ -40,12 +43,18 @@ const Register = () => {
                 if (data.success) {
                     navigate(`/login?registerMessage=true`);
                 } else {
-                    console.log("Erro de registro:", data.error);
+                    setAlertMessage(true);
                 }
             })
             .catch((err) => console.log(err));
     }
 
+    useEffect(() => {
+        if (alertMessage) {
+            timeOut(() => setAlertMessage(false), 3000);
+        }
+
+    }, [alertMessage]);
     return (
         <div className={style.mainContainer}>
             <div className={style.containerLogo}>
@@ -56,6 +65,9 @@ const Register = () => {
                 </div>
             </div>
             <div className={style.contentContainer}>
+                {alertMessage &&
+                    <p className={style.alertMessage}>Erro: Já existe uma conta associada a este e-mail, tente novamente!</p>
+                }
                 <form method="POST" onSubmit={handleSubmit(registerFormFilter)} >
                     <h2>Criar uma nova conta</h2>
                     <p>Preencha os campos abaixo para criar sua conta.</p>

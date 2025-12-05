@@ -5,7 +5,8 @@ import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import Logo from "../components/Logo";
 import style from "./Login.module.css";
 import { API_URL } from "../config";
-import { useEffect } from "react";
+import { useEffect, useRef, useState } from "react";
+import { timeOut } from "../Utils/UtilsFunctions";
 
 const loginFormSchema = z.object({
     email: z.string().email({ message: "Informe um e-mail válido" }),
@@ -18,6 +19,7 @@ type LoginFormSchema = z.infer<typeof loginFormSchema>;
 const Login = () => {
     const navigate = useNavigate();
     const [ulrParams] = useSearchParams();
+    const [alertMessage, setAlertMessage] = useState(false);
 
     const { register, handleSubmit, formState: { errors },
     } = useForm<LoginFormSchema>({
@@ -25,37 +27,35 @@ const Login = () => {
     });
 
     async function loginFormFilter(data: LoginFormSchema) {
-        // fetch(`${API_URL}/user/login`, {
-        //     method: "POST",
-        //     headers: {
-        //         "Content-Type": "application/json"
-        //     },
-        //     credentials: "include",
-        //     body: JSON.stringify(data)
-        // })
-        //     .then((data) => data.json())
-        //     .then((data) => {
-        //         if (data.success) {
-        //             console.log("Usuário autenticado!");
-        //             navigate(`/schedules`);
-
-        //         } else {
-        //             console.log("Erro de login:", data.error);
-        //         }
-        //     })
-        //     .catch((err) => console.log(err));
+        fetch(`${API_URL}/user/login`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            credentials: "include",
+            body: JSON.stringify(data)
+        })
+            .then((data) => data.json())
+            .then((data) => {
+                if (data.success) {
+                    navigate(`/schedules`);
+                } else {
+                    setAlertMessage(true);
+                }
+            })
+            .catch((err) => console.log(err));
     }
 
     useEffect(() => {
         if (ulrParams.get("registerMessage")) {
-
-            const timeout = setTimeout(() => {
-                navigate(window.location.pathname, { replace: true });
-            }, 3000);
-
-            return () => clearTimeout(timeout);
+            timeOut(() => navigate(window.location.pathname, { replace: true }), 3000)
         }
-    }, [ulrParams, navigate]);
+
+        if (alertMessage) {
+            timeOut(() => setAlertMessage(false), 3000);
+        }
+
+    }, [ulrParams, navigate, alertMessage]);
 
     return (
         <div className={style.mainContainer}>
@@ -68,7 +68,10 @@ const Login = () => {
             </div>
             <div className={style.contentContainer}>
                 {ulrParams.get("registerMessage") &&
-                    <p>Conta criada com sucesso!</p>
+                    <p className={style.sucessMessage}>Conta criada com sucesso!</p>
+                }
+                {alertMessage &&
+                    <p className={style.alertMessage}>Credenciais inválidas, verifique e tente novamente!</p>
                 }
                 <form method="POST" onSubmit={handleSubmit(loginFormFilter)}>
                     <h2>Entre na sua conta</h2>
@@ -79,7 +82,6 @@ const Login = () => {
                         {...register("email")}
                         required
                         id="email"
-                    // name="userEmail" 
                     />
                     <label htmlFor="email"
                         className={`${style.labelForm} ${style.emailLabel}`}
@@ -96,7 +98,6 @@ const Login = () => {
                         {...register("password")}
                         required
                         id="password"
-                    // name="userPassword"
                     />
 
                     <label htmlFor="password"

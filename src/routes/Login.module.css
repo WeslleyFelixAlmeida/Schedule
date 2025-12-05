@@ -14,6 +14,7 @@
   height: 100vh;
   padding: 10px 0px;
   display: flex;
+  position: relative;
 }
 
 .mainContainer {
@@ -41,18 +42,10 @@
   height: fit-content;
 }
 
-.contentContainer{
+.contentContainer {
   display: flex;
   flex-direction: column;
   align-items: center;
-}
-
-.contentContainer> p{
-  color: green;
-  font-weight: bold;
-  background-color: lightgreen;
-  padding: 10px;
-  margin-top: 10px;
 }
 
 .contentContainer > form {
@@ -67,7 +60,7 @@
   align-items: center;
   padding: 10px;
   row-gap: 10px;
-  margin: 35px auto;
+  margin: 40px auto;
   position: relative;
 }
 
@@ -161,6 +154,23 @@
   color: red;
 }
 
+.contentContainer > p {
+  font-weight: bold;
+  padding: 10px;
+  position: absolute;
+  top: 5px;
+}
+
+.alertMessage {
+  color: #a9a900;
+  background-color: #f9f9ab;
+}
+
+.sucessMessage {
+  color: green;
+  background-color: lightgreen;
+}
+
 @media screen and (max-width: 810px) {
   .mainContainer {
     max-width: 1200px;
@@ -185,7 +195,7 @@
   }
 
   .contentContainer {
-  --label_top_email: 33.7%;
-  --label_top_email_focused: 29.5%;
-}
+    --label_top_email: 33.7%;
+    --label_top_email_focused: 29.5%;
+  }
 }
