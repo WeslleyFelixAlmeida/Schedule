@@ -22,6 +22,8 @@
   width: 300px;
   border: solid 2px gray;
   border-radius: 10px;
+  aspect-ratio: 11 / 10;
+  object-fit: cover;
 }
 
 .containerFormImage > input[type="file"] {

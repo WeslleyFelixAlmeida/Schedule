@@ -4,6 +4,7 @@ import { MdUploadFile } from "react-icons/md";
 import { currentDate } from "../ScheduleDetailsComponents/Date";
 import { z, ZodError } from "zod"
 import { timeOut } from "../../Utils/UtilsFunctions";
+import { convertImageToBase64 } from "../../Utils/UtilsFunctions";
 
 type CreateUniqueSchedule_props = {
 
@@ -22,18 +23,18 @@ const uniqueScheduleSchema = z.object({
 });
 
 
-const convertImageToBase64 = (file: File) => {
-    return new Promise<string>((resolve, reject) => {
-        const reader = new FileReader();
+// const convertImageToBase64 = (file: File) => {
+//     return new Promise<string>((resolve, reject) => {
+//         const reader = new FileReader();
 
-        reader.onload = () => resolve(reader.result as string);
+//         reader.onload = () => resolve(reader.result as string);
 
-        reader.onerror = () =>
-            reject(new Error("Falha ao ler o arquivo"));
+//         reader.onerror = () =>
+//             reject(new Error("Falha ao ler o arquivo"));
 
-        reader.readAsDataURL(file);
-    });
-};
+//         reader.readAsDataURL(file);
+//     });
+// };
 
 
 const CreateUniqueSchedule = (props: CreateUniqueSchedule_props) => {

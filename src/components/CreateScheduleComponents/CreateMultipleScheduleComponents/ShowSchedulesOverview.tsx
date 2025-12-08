@@ -1,25 +1,27 @@
 import style from "./ShowSchedulesOverview.module.css";
 import { FaRegTrashAlt } from "react-icons/fa";
 import type { DaySchedule } from "../../../Utils/Types";
-import { daysMonthAmount, currentDay } from "../../ScheduleDetailsComponents/Date";
-import { enableScroll } from "../../../Utils/UtilsFunctions";
 import { IoIosArrowBack } from "react-icons/io";
 import { IoIosArrowForward } from "react-icons/io";
 import { useEffect, useState } from "react";
+import { timeOut } from "../../../Utils/UtilsFunctions";
+import { API_URL } from "../../../config";
 
 type ShowSchedulesOverview_props = {
     userSchedules: Pick<DaySchedule, "schedules" | "day">[]
     setUserSchedules: Function;
     showResume: { display: "flex" } | { display: "none" };
     setShowResume: Function;
+    scheduleInfo: { eventImage: string, eventName: string, eventShortDesc: string, eventLongDesc: string }
 }
-
 
 const ShowSchedulesOverview = (props: ShowSchedulesOverview_props) => {
     const [listIndex, setListIndex] = useState<number>(0);
-    
+    const [errorMessage, setErrorMessage] = useState<boolean>(false);
+
     const userSchedules = props.userSchedules;
     const setUserSchedules = props.setUserSchedules;
+    const scheduleInfo = props.scheduleInfo;
 
     const removeDay = (ScheduleDayIndex: number, scheduleHour: string
     ) => {
@@ -39,13 +41,7 @@ const ShowSchedulesOverview = (props: ShowSchedulesOverview_props) => {
     }
 
     const cancel = () => {
-        enableScroll();
         props.setShowResume({ display: "none" });
-    }
-
-    const confirm = () => {
-        console.log("confirmado!");
-        //Função que vai fazer a request para API para criar o evento!
     }
 
     const goAhead = () => {
@@ -60,13 +56,54 @@ const ShowSchedulesOverview = (props: ShowSchedulesOverview_props) => {
         }
     }
 
+    const confirm = () => {
+        //Função que vai fazer a request para API para criar o evento!
+        const eventData = { days: [...userSchedules], ...scheduleInfo };
+        let isValidated = false;
+
+        eventData.days.map((day) => {
+            if (day.schedules.length > 0) {
+                isValidated = true;
+            }
+        });
+
+        if (!isValidated) {
+            setErrorMessage(true);
+            timeOut(() => setErrorMessage(false), 3000);
+
+            return null;
+        }
+
+        console.log("Existem escalas!");
+        console.log(eventData);
+        fetch(`${API_URL}/event/create/multiple`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            credentials: "include",
+            body: JSON.stringify(eventData)
+        })
+            .then((data) => data.json())
+            .then((data) => {
+                console.log(data);
+            })
+            .catch((err) => console.log(err));
+    }
+
+
     return (
         <div className={style.containerOverviewPage} style={props.showResume}>
             <div className={style.containerOverviewContent}>
-                <h2>Verifique as escalas que serão criadas:</h2>
-                <div className={style.containerConfirmAndCancel}>
-                    <input type="button" value="Cancelar" onClick={cancel} />
-                    <input type="button" value="Confirmar" onClick={confirm} />
+                <div className={style.containerTopPreview}>
+                    {errorMessage &&
+                        <p className={style.errorMessage}>Erro ao criar tarefa, verifique se há escalas nos dias apresentados.</p>
+                    }
+                    <h2>Verifique as escalas que serão criadas:</h2>
+                    <div className={style.containerConfirmAndCancel}>
+                        <input type="button" value="Cancelar" onClick={cancel} />
+                        <input type="button" value="Confirmar" onClick={confirm} />
+                    </div>
                 </div>
 
                 <div className={style.containerChangeDayButtons}>

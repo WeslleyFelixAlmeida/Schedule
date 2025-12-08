@@ -12,4 +12,17 @@ const timeOut = (func: Function, time: number) => {
     return () => clearTimeout(timeout);
 }
 
-export { isValidTime, disableScroll, enableScroll, timeOut };
+const convertImageToBase64 = (file: File) => {
+    return new Promise<string>((resolve, reject) => {
+        const reader = new FileReader();
+
+        reader.onload = () => resolve(reader.result as string);
+
+        reader.onerror = () =>
+            reject(new Error("Falha ao ler o arquivo"));
+
+        reader.readAsDataURL(file);
+    });
+};
+
+export { isValidTime, disableScroll, enableScroll, timeOut, convertImageToBase64 };

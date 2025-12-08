@@ -7,12 +7,12 @@ import CreateMultipleSchedule from "../components/CreateScheduleComponents/Creat
 type EventType = "unique" | "multiple";
 
 const CreateSchedule = () => {
-    const [eventType, setEventType] = useState<EventType>("multiple");//Mudar para unique como padrão depois!
+    const [eventType, setEventType] = useState<EventType>("unique");
 
     const handleTypeChange = (e: ChangeEvent<HTMLInputElement>) => {
         setEventType(e.target.value as EventType);
     };
-
+    
     return (
         <div className={style.containerCreateSchedule}>
             <Link to={"/schedules"}>Voltar</Link>
