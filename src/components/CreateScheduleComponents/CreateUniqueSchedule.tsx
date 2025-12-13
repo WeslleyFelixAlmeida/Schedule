@@ -1,45 +1,40 @@
-import { useEffect, useState } from "react";
 import style from "./CreateUniqueSchedule.module.css";
+import { useEffect, useState, type ChangeEvent } from "react";
 import { MdUploadFile } from "react-icons/md";
 import { currentDate } from "../ScheduleDetailsComponents/Date";
 import { z, ZodError } from "zod"
 import { timeOut } from "../../Utils/UtilsFunctions";
 import { convertImageToBase64 } from "../../Utils/UtilsFunctions";
+import { API_URL } from "../../config";
 
 type CreateUniqueSchedule_props = {
 
 }
 
 const uniqueScheduleSchema = z.object({
-    name: z.string().min(5).max(60),
-    shortDescription: z.string().min(1).max(55),
-    longDescription: z.string().min(1).max(400),
+    eventName: z.string().min(5).max(60),
+    eventShortDesc: z.string().min(1).max(55),
+    eventLongDesc: z.string().min(1).max(400),
     maxAmount: z.coerce.number().min(1),
-    date: z.coerce.date(),
-    image: z.string().regex(
+    date: z.string().regex(
+        /^\d{4}-\d{2}-\d{2}$/,
+        "Data inválida. Use o formato YYYY-MM-DD"
+    ),
+    eventImage: z.string().regex(
         /^data:image\/(png|jpe?g|gif|webp);base64,[A-Za-z0-9+/=]+$/,
         "Imagem inválida"
-    )
+    ),
+    hour: z.string().regex(
+        /^([01]\d|2[0-3]):([0-5]\d)$/,
+        "Horário inválido. Use o formato HH:mm"
+    ),
 });
-
-
-// const convertImageToBase64 = (file: File) => {
-//     return new Promise<string>((resolve, reject) => {
-//         const reader = new FileReader();
-
-//         reader.onload = () => resolve(reader.result as string);
-
-//         reader.onerror = () =>
-//             reject(new Error("Falha ao ler o arquivo"));
-
-//         reader.readAsDataURL(file);
-//     });
-// };
-
 
 const CreateUniqueSchedule = (props: CreateUniqueSchedule_props) => {
     const [eventImage, setEventImage] = useState<string>("");
     const [errorMessage, setErrorMessage] = useState<string>("");
+    const [scheduleHourBegin, setScheduleHourBegin] = useState<string>("00:00");
+
     const errorMessages = [
         "Ocorreu um erro ao tentar criar o evento.",
         "Há campos vazios ou com informações inválidas, verifique os campos e tente novamente."
@@ -60,6 +55,10 @@ const CreateUniqueSchedule = (props: CreateUniqueSchedule_props) => {
         }
     };
 
+    const handleTimeChange = (e: ChangeEvent<HTMLInputElement>) => {
+        setScheduleHourBegin(e.target.value);
+    };
+
     const createEvent = async (e: any) => {
         e.preventDefault();
         const formData = new FormData(e.currentTarget);
@@ -77,17 +76,33 @@ const CreateUniqueSchedule = (props: CreateUniqueSchedule_props) => {
         }
 
         const formObj = {
-            name: formData.get("eventName"),
-            shortDescription: formData.get("eventShortDesc"),
-            longDescription: formData.get("eventLongDesc"),
+            eventName: formData.get("eventName"),
+            eventShortDesc: formData.get("eventShortDesc"),
+            eventLongDesc: formData.get("eventLongDesc"),
             maxAmount: formData.get("maxAmount"),
-            date: formData.get("eventDate"),
-            image: base64Image,
+            date: formData.get("eventDate") as string,
+            hour: formData.get("scheduleHourBegin"),
+            eventImage: base64Image,
         };
 
         try {
             const validate = uniqueScheduleSchema.parse(formObj);
             console.log(validate);
+            //Fazer a request da API aqui:
+            fetch(`${API_URL}/event/create/unique`, {
+                method: "POST",
+                body: JSON.stringify(validate),
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                credentials: "include"
+            })
+                .then((data) => data.json())
+                .then((data) => {
+                    console.log(data);
+                })
+                .catch((err) => console.log(err));
+
         } catch (err: any) {
             if (err instanceof ZodError) {
                 setErrorMessage(errorMessages[1]);
@@ -150,6 +165,10 @@ const CreateUniqueSchedule = (props: CreateUniqueSchedule_props) => {
                     <input type="date" name="eventDate" id="eventDate" required max="9999-12-31"
                         min={currentDate}
                     />
+                </div>
+                <div className={`${style.containerFormDate} ${style.containerEventFormUnique}`}>
+                    <p><span style={{ color: "red" }}>* </span> Horário do evento:</p>
+                    <input type="time" name="scheduleHourBegin" id="scheduleHourBegin" onChange={handleTimeChange} value={scheduleHourBegin} />
                 </div>
                 <input type="submit" value="Criar evento" />
             </form>

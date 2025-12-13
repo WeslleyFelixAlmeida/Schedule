@@ -6,6 +6,7 @@ import { IoIosArrowForward } from "react-icons/io";
 import { useEffect, useState } from "react";
 import { timeOut } from "../../../Utils/UtilsFunctions";
 import { API_URL } from "../../../config";
+import { currentMonth } from "../../ScheduleDetailsComponents/Date";
 
 type ShowSchedulesOverview_props = {
     userSchedules: Pick<DaySchedule, "schedules" | "day">[]
@@ -58,9 +59,14 @@ const ShowSchedulesOverview = (props: ShowSchedulesOverview_props) => {
 
     const confirm = () => {
         //Função que vai fazer a request para API para criar o evento!
-        const eventData = { days: [...userSchedules], ...scheduleInfo };
-        let isValidated = false;
+        const eventData = {
+            days: [...userSchedules],
+            ...scheduleInfo,
+            month: currentMonth
+        };
 
+        let isValidated = false;
+        //Validando se há escalas nos dias citados para não criar um evento sem escala
         eventData.days.map((day) => {
             if (day.schedules.length > 0) {
                 isValidated = true;
@@ -76,6 +82,7 @@ const ShowSchedulesOverview = (props: ShowSchedulesOverview_props) => {
 
         console.log("Existem escalas!");
         console.log(eventData);
+        
         fetch(`${API_URL}/event/create/multiple`, {
             method: "POST",
             headers: {
