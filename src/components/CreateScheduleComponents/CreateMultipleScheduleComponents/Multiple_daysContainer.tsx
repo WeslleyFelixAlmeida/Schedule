@@ -70,8 +70,8 @@ const Multiple_dayContainer = (props: Multiple_dayContainer_props) => {
     return (
         <div className={style.containerShowDays}>
             <p>
-                Escolha os dias: <FaQuestionCircle />
                 <span style={{ color: "red" }}>* </span>
+                Escolha os dias: <FaQuestionCircle />
             </p>
             <div className={style.containerDays}>
                 {days.map((day, index) => (

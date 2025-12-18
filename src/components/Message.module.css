@@ -1,10 +1,9 @@
 .containerMessage {
-  /* width: 100%; */
   height: fit-content;
   display: flex;
   align-items: center;
   justify-content: center;
-  border: solid 2px;
+  border: none;
   border-radius: 10px;
   padding: 10px;
   box-sizing: border-box;
@@ -14,23 +13,20 @@
 .errorMessage {
   background-color: #f7a6a6;
   color: red;
-  border-color: #ff3838;
 }
 
 .alertMessage {
   background-color: #ffff9c;
   color: var(--golden_fonts);
-  border-color: #b1b100;
+  border: none;
 }
 
 .successMessage {
   background-color: #a7f9a7;
   color: green;
-  border-color: green;
 }
 
 .defaultMessage {
   background-color: var(--dark_blue);
   color: var(--golden_fonts);
-  border-color: transparent;
 }

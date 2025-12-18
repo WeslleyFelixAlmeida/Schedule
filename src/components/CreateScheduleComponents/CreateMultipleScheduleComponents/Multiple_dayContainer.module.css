@@ -1,8 +1,8 @@
 .containerShowDays {
   padding: 10px;
   box-sizing: border-box;
-  border: solid 1px var(--dark_blue);
-  border-radius: 10px;
+  border-bottom: solid 1px var(--dark_blue);
+  border-top: solid 1px var(--dark_blue);
   width: 100%;
   max-width: 620px;
   display: flex;
@@ -25,10 +25,11 @@
   width: fit-content;
   column-gap: 5px;
   padding: 2px;
-  border: solid 2px var(--dark_blue);
   width: 40px;
-  border-radius: 5px;
   font-weight: bold;
+  border: none;
+  box-shadow: 0px 1px 3px var(--dark_blue);
+  border-radius: 5px;
 }
 
 .containerDays {
@@ -51,6 +52,7 @@
   height: 100%;
   cursor: pointer;
   text-align: center;
+  border-radius: 5px;
 }
 
 .checkBoxContainer > input[type="checkbox"]:checked + label {

@@ -136,10 +136,10 @@ const Multiple_daysSchedule = (props: schedulesRulers_props) => {
 
     return (
         <div className={style.multipleDaysContainer}>
-            <h2>
-                Evento vai ocorrer entre os horários: <FaQuestionCircle />
+            <p>
                 <span style={{ color: "red" }}>* </span>
-            </h2>
+                Evento vai ocorrer entre os horários: <FaQuestionCircle />
+            </p>
             {!scheduleIsConfirmed &&
                 <div className={style.containerSchedulingInterval}>
                     <input type="time" name="scheduleHourBegin" id="scheduleHourBegin" onChange={handleTimeChange} value={scheduleHourBegin} />

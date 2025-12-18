@@ -8,9 +8,8 @@
   display: flex;
   flex-direction: column;
   row-gap: 10px;
-  width: 70%;
 }
-/**/
+
 .containerFormImage {
   display: flex;
   flex-direction: column;
@@ -32,6 +31,7 @@
 
 .containerFormImage > p {
   font-weight: bold;
+  font-size: 1.13em;
 }
 
 .containerFormImage > label {
@@ -59,7 +59,6 @@
   font-size: 20px;
 }
 
-/**/
 .containerEventFormUnique {
   display: flex;
   flex-direction: column;
@@ -70,13 +69,14 @@
   font-weight: bold;
 }
 
-.containerEventFormUnique input,
-.containerCreateUniqueSchedule textarea {
-  height: 30px;
+.formInputs {
   width: 100%;
   max-width: 500px;
+  height: 40px;
+  box-sizing: border-box;
   padding: 5px;
-  border: solid 1px var(--dark_blue);
+  border: none;
+  box-shadow: 0px 1px 3px var(--dark_blue);
   border-radius: 10px;
   color: var(--golden_fonts);
 }
@@ -85,16 +85,13 @@
   height: 150px;
 }
 
-.containerEventFormUnique input:focus,
-.containerCreateUniqueSchedule textarea:focus {
+.formInputs:focus {
   outline-color: var(--dark_blue);
   color: var(--golden_fonts);
 }
 
-.containerEventFormUnique input::placeholder,
-.containerCreateUniqueSchedule textarea::placeholder {
+.formInputs::placeholder {
   color: var(--golden_fonts);
-  opacity: 60%;
 }
 
 .formCreateEvent > input[type="submit"] {
@@ -128,7 +125,6 @@
 
 .containerCreateUniqueSchedule > p {
   color: red;
-  border: solid 1px red;
   background-color: #f7a6a6;
   text-align: center;
   border-radius: 10px;
@@ -137,8 +133,25 @@
   font-weight: bold;
 }
 
+@media screen and (max-width: 1030px) {
+  .formInputs {
+    max-width: 800px;
+  }
+}
+
 @media screen and (max-width: 450px) {
   .containerFormImage {
     height: 410px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+  }
+
+  .containerFormImage > p {
+    align-self: flex-start;
+  }
+
+  .formCreateEvent > input[type="submit"] {
+    align-self: center;
   }
 }

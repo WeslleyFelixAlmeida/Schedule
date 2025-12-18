@@ -1,5 +1,5 @@
 import style from "./CreateUniqueSchedule.module.css";
-import { useEffect, useState, type ChangeEvent } from "react";
+import { useState, type ChangeEvent } from "react";
 import { MdUploadFile } from "react-icons/md";
 import { currentDate } from "../ScheduleDetailsComponents/Date";
 import { z, ZodError } from "zod"
@@ -106,15 +106,13 @@ const CreateUniqueSchedule = (props: CreateUniqueSchedule_props) => {
         } catch (err: any) {
             if (err instanceof ZodError) {
                 setErrorMessage(errorMessages[1]);
+                timeOut(() => setErrorMessage(""), 3000);
                 return null;
             }
             setErrorMessage(errorMessages[0]);
+            timeOut(() => setErrorMessage(""), 3000);
         }
     }
-
-    useEffect(() => {
-        timeOut(() => setErrorMessage(""), 3000);
-    }, [errorMessage])
 
     return (
         <div className={style.containerCreateUniqueSchedule}>
@@ -139,37 +137,37 @@ const CreateUniqueSchedule = (props: CreateUniqueSchedule_props) => {
                         <img src={eventImage} alt="Imagem do evento" />
                     }
                 </div>
-
                 <div className={`${style.containerFormName} ${style.containerEventFormUnique}`}>
                     <p><span style={{ color: "red" }}>* </span>Nome:</p>
-                    <input type="text" name="eventName" id="eventName" placeholder="Nome do evento" required />
+                    <input type="text" name="eventName" id="eventName" placeholder="Nome do evento" required className={style.formInputs} />
                 </div>
 
                 <div className={`${style.containerFormShortDesc} ${style.containerEventFormUnique}`}>
                     <p><span style={{ color: "red" }}>* </span> Descrição curta:</p>
-                    <input type="text" name="eventShortDesc" id="eventShortDesc" placeholder="Descrição curta" required />
+                    <input type="text" name="eventShortDesc" id="eventShortDesc" placeholder="Descrição curta" required className={style.formInputs} />
                 </div>
 
                 <div className={`${style.containerFormLongDesc} ${style.containerEventFormUnique}`}>
                     <p><span style={{ color: "red" }}>* </span>Descrição longa:</p>
-                    <textarea name="eventLongDesc" id="eventLongDesc" placeholder="Descrição longa" required></textarea>
+                    <textarea name="eventLongDesc" id="eventLongDesc" placeholder="Descrição longa" required className={style.formInputs}></textarea>
                 </div>
 
                 <div className={`${style.containerFormMaxAmount} ${style.containerEventFormUnique}`}>
                     <p><span style={{ color: "red" }}>* </span>Quantidade máxima:</p>
-                    <input type="number" name="maxAmount" id="maxAmount" placeholder="Quantidade máxima de pessoas" required />
+                    <input type="number" name="maxAmount" id="maxAmount" placeholder="Quantidade máxima de pessoas" required className={style.formInputs} />
                 </div>
 
                 <div className={`${style.containerFormDate} ${style.containerEventFormUnique}`}>
                     <p><span style={{ color: "red" }}>* </span> Data do evento:</p>
                     <input type="date" name="eventDate" id="eventDate" required max="9999-12-31"
                         min={currentDate}
-                    />
+                        className={style.formInputs} />
                 </div>
                 <div className={`${style.containerFormDate} ${style.containerEventFormUnique}`}>
                     <p><span style={{ color: "red" }}>* </span> Horário do evento:</p>
-                    <input type="time" name="scheduleHourBegin" id="scheduleHourBegin" onChange={handleTimeChange} value={scheduleHourBegin} />
+                    <input type="time" name="scheduleHourBegin" id="scheduleHourBegin" onChange={handleTimeChange} value={scheduleHourBegin} className={style.formInputs} />
                 </div>
+
                 <input type="submit" value="Criar evento" />
             </form>
             {errorMessage &&

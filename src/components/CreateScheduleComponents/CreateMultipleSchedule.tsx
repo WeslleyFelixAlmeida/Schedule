@@ -1,11 +1,10 @@
 import style from "./CreateMultipleSchedule.module.css";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import type { DaySchedule, schedulesRulers } from "../../Utils/Types";
 import Multiple_dayContainer from "./CreateMultipleScheduleComponents/Multiple_daysContainer";
 import Multiple_daysSchedule from "./CreateMultipleScheduleComponents/Multiple_daysSchedule";
 import Message from "../Message";
 import ShowSchedulesResume from "./CreateMultipleScheduleComponents/ShowSchedulesOverview";
-import { disableScroll, enableScroll } from "../../Utils/UtilsFunctions";
 import { MdUploadFile } from "react-icons/md";
 import { convertImageToBase64 } from "../../Utils/UtilsFunctions";
 
@@ -247,17 +246,17 @@ const CreateMultipleSchedule = () => {
 
             <div className={`${style.containerMultipleLine}`}>
                 <p>Nome: <span style={{ color: "red" }}>* </span></p>
-                <input type="text" minLength={5} maxLength={60} name="eventName" id="eventName" placeholder="Nome do evento" onChange={handleChanges} value={scheduleInfo.eventName} />
+                <input type="text" minLength={5} maxLength={60} name="eventName" id="eventName" placeholder="Nome do evento" onChange={handleChanges} value={scheduleInfo.eventName} className={style.formInputs} />
             </div>
 
             <div className={`${style.containerMultipleLine}`}>
                 <p>Descrição curta: <span style={{ color: "red" }}>* </span></p>
-                <input type="text" minLength={1} maxLength={55} name="eventShortDesc" id="eventShortDesc" placeholder="Descrição curta" onChange={handleChanges} value={scheduleInfo.eventShortDesc} />
+                <input type="text" minLength={1} maxLength={55} name="eventShortDesc" id="eventShortDesc" placeholder="Descrição curta" onChange={handleChanges} value={scheduleInfo.eventShortDesc} className={style.formInputs} />
             </div>
 
             <div className={`${style.containerMultipleLine}`}>
                 <p>Descrição longa: <span style={{ color: "red" }}>* </span></p>
-                <textarea name="eventLongDesc" id="eventLongDesc" placeholder="Descrição longa" onChange={handleChanges} value={scheduleInfo.eventLongDesc} maxLength={400}></textarea>
+                <textarea name="eventLongDesc" id="eventLongDesc" placeholder="Descrição longa" onChange={handleChanges} value={scheduleInfo.eventLongDesc} maxLength={400} className={style.formInputs}></textarea>
             </div>
 
             <Multiple_dayContainer days={userSchedules} setDays={setUserSchedules} />
