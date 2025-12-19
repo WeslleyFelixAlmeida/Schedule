@@ -2,6 +2,8 @@ import style from "./Header.module.css";
 import { Link, useNavigate } from "react-router-dom";
 import { VscAccount } from "react-icons/vsc";
 import { useLocation } from "react-router-dom";
+import { BsPersonPlus } from "react-icons/bs";
+
 import Logo from "./Logo";
 import Button from "./Button";
 import { useEffect, useState } from "react";
@@ -99,7 +101,7 @@ const Header = () => {
                     exitButton);
                 break;
         }
-        
+
         return (
             <div className={style.options}>
                 {chosedButtons}
@@ -139,8 +141,15 @@ const Header = () => {
                             <p>Fazer login</p>
                         </div>
                     </Link>
+                    <Link to={"/register"}>
+                        <div className={style.registerButton}>
+                            <BsPersonPlus />
+                            <p>Cadastro</p>
+                        </div>
+                    </Link>
                 </div>
             }
+
             {!notShowPerfilOptions.includes(location.pathname) &&
                 <div className={style.perfilOptionsContainer} style={perfilOptions}>
                     <div className={style.containerImage} onClick={() => presentPerfilOptions()} >
