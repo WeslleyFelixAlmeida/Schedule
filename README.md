@@ -8,7 +8,7 @@ Sistema de criação e gerenciamento de eventos desenvolvido com TypeScript, Rea
 Aplicação web para criar e gerenciar eventos de forma simples e eficiente.
 <br>
 
-⚙️ Tecnologias
+⚙️ Tecnologias:<br>
 -TypeScript<br>
 -CSS<br>
 -Vite<br>
