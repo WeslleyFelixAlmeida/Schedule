@@ -16,6 +16,6 @@ Aplicação web para criar e gerenciar eventos de forma simples e eficiente.
 
 <br>
 👤 Autor
-Weslley Felix Almeida - [@WeslleyFelixAlmeida](https://github.com/WeslleyFelixAlmeida)
+Weslley Felix Almeida - (https://github.com/WeslleyFelixAlmeida)
 
 
