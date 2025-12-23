@@ -9,10 +9,10 @@ Aplicação web para criar e gerenciar eventos de forma simples e eficiente.
 <br>
 
 ⚙️ Tecnologias
--TypeScript
--CSS
--Vite
--ESLint
+-TypeScript<br>
+-CSS<br>
+-Vite<br>
+-ESLint<br>
 
 <br>
 👤 Autor
