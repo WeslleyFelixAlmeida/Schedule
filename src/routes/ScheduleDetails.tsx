@@ -9,7 +9,7 @@ import { exitEvent as exit, joinEvent as join } from "../Utils/ButtonsFunctions"
 import type { JSX } from "react";
 import EventCard_status from "../components/EventCardComponents/EventCard_status";
 
-import { eventData } from "../Utils/UserDataExample";
+import { eventData } from "../Utils/UserData";
 
 type ScheduleDetailsProps = Pick<
     EventDataProps,

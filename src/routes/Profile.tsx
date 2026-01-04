@@ -4,7 +4,7 @@ import { useState } from "react";
 import Profile_home from "../components/ProfileComponents/Profile_home";
 import Profile_privacy from "../components/ProfileComponents/Profile_privacy";
 import Profile_security from "../components/ProfileComponents/Profile_security";
-import { userData } from "../Utils/UserDataExample";
+import { userData } from "../Utils/UserData";
 
 type ProfilePages = "home" | "privacy" | "security";
 

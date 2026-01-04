@@ -1,5 +1,44 @@
+import { API_URL } from "../config";
 import perfilImage from "./../assets/imgs/ta.jpg";
 import type { EventDataProps } from "./Types";
+
+// const getUserData = fetch(`${API_URL}/user`, {
+//   method: "GET",
+//   headers: {
+//     "Content-Type": "application/json"
+//   },
+//   credentials: "include"
+// })
+//   .then((data) => data.json())
+//   .then((data) => {
+
+//   })
+//   .catch((err) => { console.log(err) });
+
+// const userInfo = fetch(`${API_URL}/user`, {
+//   method: "GET",
+//   credentials: "include",
+//   headers: {
+//     "Content-Type": "application/json"
+//   }
+// })
+//   .then((data) => data.json())
+//   .then((data) => {
+//     console.log(data);
+//     if (!data.allowed) {
+//       return false;
+//     }
+
+//     return true;
+//   })
+//   .catch((err) => {
+//     console.log(err);
+//     return false;
+//   });
+
+// const userData = {
+//   ...userInfo, userImage: perfilImage,
+// }
 
 const userData = {
   id: 1,

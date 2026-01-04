@@ -1,6 +1,9 @@
 import EventCard from "../components/EventCard";
 import style from "./Schedules.module.css";
-import { eventData } from "../Utils/UserDataExample";
+import { eventData } from "../Utils/UserData";
+import { Auth } from "../Utils/Auth";
+import { useEffect, useState } from "react";
+
 /*
 Dados esperados da API:
     scheduleId: number
@@ -15,8 +18,10 @@ Dados esperados da API:
 */
 
 const Schedules = () => {
+
     return (
         <div className={style.containerMain}>
+            <Auth />
             {Array.from({ length: 15 }, (_, i) => (//Apagar depois
                 <EventCard
                     key={i}

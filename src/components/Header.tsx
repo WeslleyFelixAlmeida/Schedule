@@ -10,14 +10,13 @@ import { useEffect, useState } from "react";
 import type { ProfileOptionsProps } from "../Utils/Types";
 import type { JSX } from "react";
 
-import { userData } from "./../Utils/UserDataExample"; //Apagar depois, isso vai vir da API
+import { userData } from "../Utils/UserData"; //Apagar depois, isso vai vir da API
 
 const hiddenLoginContainerPages = ["/register", "/home", "/"];
 const showHomeLogoLink = ["/register", "/login"];
 const notShowPerfilOptions = ["/aboutUs", "/Login", "/Register", "/", "/login", "/register"];
 
 const isLogged = false;
-
 
 const Header = () => {
     const location = useLocation();

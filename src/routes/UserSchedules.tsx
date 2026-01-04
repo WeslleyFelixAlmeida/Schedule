@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import UserSchedules_card from "../components/UserSchedules_card";
 import { useEffect, useState } from "react";
 import data from "./../components/ScheduleDetailsComponents/dados.json"; // Apagar depois, serve apenas para puxar dados ficticios.
-import { userData } from "../Utils/UserDataExample";
+import { userData } from "../Utils/UserData";
 
 type eventDataSchedules_props = {
     id: number;
