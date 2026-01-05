@@ -5,6 +5,7 @@
   height: 300px;
   display: flex;
   flex-direction: column;
+  justify-content: center;
   row-gap: 10px;
   border-radius: 10px;
   box-shadow: 0px 0px 2px darkblue;
@@ -64,13 +65,13 @@
   border-radius: 50%;
 }
 
-.containerButtonsCard {
+.containerButtons {
   display: flex;
   align-items: center;
   justify-content: space-between;
 }
 
-.containerCardSchedule > img {
+.containerImage > img {
   width: 100%;
   aspect-ratio: 11 / 5;
   object-fit: cover;

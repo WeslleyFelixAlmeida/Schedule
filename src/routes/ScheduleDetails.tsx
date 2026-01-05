@@ -7,7 +7,7 @@ import Button from "./../components/Button";
 import type { EventDataProps } from "../Utils/Types";
 import { exitEvent as exit, joinEvent as join } from "../Utils/ButtonsFunctions";
 import type { JSX } from "react";
-import EventCard_status from "../components/EventCardComponents/EventCard_status";
+import EventCard_status from "../components/EventCardComponents/EventCardStatus";
 
 import { eventData } from "../Utils/UserData";
 

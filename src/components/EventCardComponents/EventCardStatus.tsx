@@ -40,7 +40,7 @@ function chooseStatus(type: PossibleStatus): StatusInformations {
     }
 }
 
-const EventCard_status = (props: EventCard_statusProps) => {
+const EventCardStatus = (props: EventCard_statusProps) => {
     const statusInformations: StatusInformations = chooseStatus(props.currentStatus);
 
     return (
@@ -51,4 +51,4 @@ const EventCard_status = (props: EventCard_statusProps) => {
     )
 }
 
-export default EventCard_status;
+export default EventCardStatus;
