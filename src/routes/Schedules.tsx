@@ -1,8 +1,9 @@
 import EventCard from "../components/EventCard";
 import style from "./Schedules.module.css";
 import { eventData } from "../Utils/UserData";
-import { Auth } from "../Utils/Auth";
 import { useEffect, useState } from "react";
+import type { EventDataProps } from "../Utils/Types";
+import { API_URL } from "../config";
 
 /*
 Dados esperados da API:
@@ -17,11 +18,54 @@ Dados esperados da API:
     isParticipating: "yes" | "no" | "multipleScheduleSituation"; //
 */
 
+
 const Schedules = () => {
+    const [schedules, setSchedules] = useState<EventDataProps[]>([]);
+
+    // const uniqueSchedule = (props: EventDataProps) => {
+    //     return (
+    //         <EventCard
+    //             eventType={props.eventType}
+    //             currentAmount={props.currentAmount}
+    //             currentStatus={props.currentStatus}
+    //             maxAmount={props.maxAmount}
+    //             shortDescription={props.shortDescription}
+    //             title={props.title}
+    //             isParticipating={props.isParticipating}
+    //             scheduleId={props.scheduleId}
+    //         />
+    //     )
+    // }
+
+    // const showCards = (data: EventDataProps[])=>{
+    //     const schedulesArray = [];
+
+    //     schedules.map((schedule, index)=>{
+
+    //     });
+    // }
+
+    useEffect(() => {
+        fetch(`${API_URL}/event`, {
+            method: "GET",
+            credentials: "include",
+            headers: {
+                "Content-Type": "application/json"
+            }
+        })
+            .then((data) => data.json())
+            .then((data) => {
+                console.log(data)
+                if (data) {
+                    setSchedules(data);
+                }
+            })
+            .catch((err) => console.log(err));
+    }, [])
+
 
     return (
         <div className={style.containerMain}>
-            <Auth />
             {Array.from({ length: 15 }, (_, i) => (//Apagar depois
                 <EventCard
                     key={i}

@@ -4,7 +4,7 @@ import { FaExchangeAlt } from "react-icons/fa";
 type Profile_privacy_props = {
     username: string;
     email: string;
-    profile_image: string;
+    profile_image?: string;
 }
 
 const Profile_privacy = (props: Profile_privacy_props) => {

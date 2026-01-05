@@ -13,6 +13,7 @@ import Profile from './routes/Profile.tsx'
 import UserSchedules from './routes/UserSchedules.tsx'
 import CreateSchedule from './routes/CreateSchedule.tsx'
 import UserCreatedSchedules from './routes/UserCreatedSchedules.tsx'
+import { ProtectedRoute } from './Utils/ProtectedRoute.tsx'
 
 const router = createBrowserRouter([
   {
@@ -34,27 +35,45 @@ const router = createBrowserRouter([
       },
       {
         path: "/schedules",
-        element: <Schedules />
+        element:
+          <ProtectedRoute>
+            <Schedules />
+          </ProtectedRoute>
       },
       {
         path: "/scheduleDetails",
-        element: <ScheduleDetails />
+        element:
+          <ProtectedRoute>
+            <ScheduleDetails />
+          </ProtectedRoute>
       },
       {
         path: "/profile",
-        element: <Profile />
+        element:
+          <ProtectedRoute>
+            <Profile />
+          </ProtectedRoute>
       },
       {
         path: "/userSchedules",
-        element: <UserSchedules />
+        element:
+          <ProtectedRoute>
+            <UserSchedules />
+          </ProtectedRoute>
       },
       {
         path: "/createSchedule",
-        element: <CreateSchedule />
+        element:
+          <ProtectedRoute>
+            <CreateSchedule />
+          </ProtectedRoute>
       },
       {
         path: "/userCreatedSchedules",
-        element: <UserCreatedSchedules />
+        element:
+          <ProtectedRoute>
+            <UserCreatedSchedules />
+          </ProtectedRoute>
       }
     ]
   },

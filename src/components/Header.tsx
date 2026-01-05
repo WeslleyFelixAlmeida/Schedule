@@ -9,16 +9,27 @@ import Button from "./Button";
 import { useEffect, useState } from "react";
 import type { ProfileOptionsProps } from "../Utils/Types";
 import type { JSX } from "react";
+import type { userType } from "../Utils/UserData";
+import { API_URL } from "../config";
 
-import { userData } from "../Utils/UserData"; //Apagar depois, isso vai vir da API
+import profileImage from "./../assets/imgs/ta.jpg";//Apagar depois, vai vir da API também.
 
 const hiddenLoginContainerPages = ["/register", "/home", "/"];
 const showHomeLogoLink = ["/register", "/login"];
 const notShowPerfilOptions = ["/aboutUs", "/Login", "/Register", "/", "/login", "/register"];
 
-const isLogged = false;
+const logout = () => {
+    fetch(`${API_URL}/user/logout`, {
+        method: "POST",
+        credentials: "include"
+    })
+        // .then((data) => data.json())
+        .catch((err) => console.log(err));
+}
 
 const Header = () => {
+    const [userData, setUserData] = useState<userType>();
+
     const location = useLocation();
     const navigate = useNavigate();
     const [perfilOptions, setPerfilOptions] = useState<ProfileOptionsProps>({
@@ -53,7 +64,10 @@ const Header = () => {
         buttons="schedules" key={1} />;
 
     const exitButton: JSX.Element = <Button
-        buttonFunction={() => console.log("Botão de sair")}
+        buttonFunction={() => {
+            logout();
+            navigate("/");
+        }}
         buttons="logout" key={2} />;
 
     const createScheduleButton: JSX.Element = <Button
@@ -114,6 +128,28 @@ const Header = () => {
             backgroundColor: "transparent",
             height: "80px"
         });
+
+        if (!notShowPerfilOptions.includes(location.pathname)) {
+            fetch(`${API_URL}/user`, {
+                method: "GET",
+                credentials: "include",
+                headers: {
+                    "Content-Type": "application/json"
+                }
+            })
+                .then((data) => data.json())
+                .then((data) => {
+                    setUserData({
+                        email: data?.email,
+                        username: data?.username,
+                        userImage: profileImage
+                    });
+                })
+                .catch((err) => {
+                    console.log(err);
+                });
+        }
+
     }, [location.pathname]);
 
     return (
@@ -152,10 +188,10 @@ const Header = () => {
             {!notShowPerfilOptions.includes(location.pathname) &&
                 <div className={style.perfilOptionsContainer} style={perfilOptions}>
                     <div className={style.containerImage} onClick={() => presentPerfilOptions()} >
-                        <img src={userData.userImage} alt="Imagem de perfil" />
+                        <img src={userData?.userImage} alt="Imagem de perfil" />
                         {/* Aqui vai vir um imagem do usuário atual! */}
                     </div>
-                    <p>{userData.username}</p>
+                    <p>{userData?.username}</p>
                     {showButtons()}
                 </div>
             }

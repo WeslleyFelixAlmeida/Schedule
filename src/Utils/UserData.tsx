@@ -1,19 +1,12 @@
 import { API_URL } from "../config";
-import perfilImage from "./../assets/imgs/ta.jpg";
 import type { EventDataProps } from "./Types";
+import perfilImage from "./../assets/imgs/ta.jpg";
 
-// const getUserData = fetch(`${API_URL}/user`, {
-//   method: "GET",
-//   headers: {
-//     "Content-Type": "application/json"
-//   },
-//   credentials: "include"
-// })
-//   .then((data) => data.json())
-//   .then((data) => {
-
-//   })
-//   .catch((err) => { console.log(err) });
+export type userType = {
+  username: string;
+  email: string;
+  userImage?: string;
+}
 
 // const userInfo = fetch(`${API_URL}/user`, {
 //   method: "GET",
@@ -25,29 +18,21 @@ import type { EventDataProps } from "./Types";
 //   .then((data) => data.json())
 //   .then((data) => {
 //     console.log(data);
-//     if (!data.allowed) {
-//       return false;
-//     }
-
-//     return true;
+//     return data as userType;
 //   })
 //   .catch((err) => {
 //     console.log(err);
-//     return false;
 //   });
 
+
 // const userData = {
-//   ...userInfo, userImage: perfilImage,
-// }
+//   id: 1,
+//   username: "Usuário 1",
+//   userEmail: "teste@gmail.com",
+//   userImage: perfilImage,
+// };
 
-const userData = {
-  id: 1,
-  username: "Usuário 1",
-  userEmail: "teste@gmail.com",
-  userImage: perfilImage,
-};
-
-export { userData };
+// export { userData };
 
 
 type propsExample = Pick<

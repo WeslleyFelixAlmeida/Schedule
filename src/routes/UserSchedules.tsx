@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 import UserSchedules_card from "../components/UserSchedules_card";
 import { useEffect, useState } from "react";
 import data from "./../components/ScheduleDetailsComponents/dados.json"; // Apagar depois, serve apenas para puxar dados ficticios.
-import { userData } from "../Utils/UserData";
 
 type eventDataSchedules_props = {
     id: number;
@@ -39,9 +38,8 @@ const UserSchedules = () => {
     return (
         <div className={style.containerUserSchedules}>
             <Link to={"/schedules"}>Voltar</Link>
-            <h1>Olá, {userData.username}. Veja seus agendamentos abaixo.</h1>
+            <h1>Agendamentos:</h1>
             <div className={style.containerList}>
-                <h2>agendamentos:</h2>
                 <ul>
                     {showCards(eventsData)}
                 </ul>

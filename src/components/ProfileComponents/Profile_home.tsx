@@ -1,7 +1,7 @@
 import style from "./Profile_home.module.css";
 
 type Profile_home_profile = {
-    profile_image: string;
+    profile_image?: string;
     username: string;
 }
 
