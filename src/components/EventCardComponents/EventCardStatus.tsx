@@ -1,6 +1,6 @@
 import style from "./../EventCard.module.css";
 
-type PossibleStatus = "open" | "closed";
+type PossibleStatus = "OPEN" | "CLOSED";
 
 type EventCard_statusProps = {
     currentStatus: PossibleStatus;
@@ -19,13 +19,13 @@ type StatusInformations = [
 
 function chooseStatus(type: PossibleStatus): StatusInformations {
     switch (type) {
-        case "open":
+        case "OPEN":
             return [
                 { color: "green", backgroundColor: "green", borderColor: "green" },
                 { color: "green" },
                 { text: "Com vagas"}
             ];
-        case "closed":
+        case "CLOSED":
             return [
                 { color: "red", backgroundColor: "red", borderColor: "red" },
                 { color: "red" },

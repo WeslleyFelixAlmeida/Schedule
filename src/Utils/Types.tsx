@@ -24,15 +24,15 @@ export type EventDataProps = (uniqueScheduleProps | multipleScheduleProps) & {
     currentStatus: "closed" | "open";
     creatorId: string;
     creatorName: string;
-    place: "remote" | {
-        placeName: string,
-        placeCity: string,
-        // placeCountry: string,
-        streetName: string,
-        streetNumber: number,
-        addressType: "commom" | "building" | "remote"
-        room?: number, // Caso seja em prédio
-    }
+    // place: "remote" | {
+    //     placeName: string,
+    //     placeCity: string,
+    //     // placeCountry: string,
+    //     streetName: string,
+    //     streetNumber: number,
+    //     addressType: "commom" | "building" | "remote"
+    //     room?: number, // Caso seja em prédio
+    // }
     isFull?: boolean;
 }
 

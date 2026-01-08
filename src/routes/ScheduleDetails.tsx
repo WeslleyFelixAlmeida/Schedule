@@ -1,47 +1,49 @@
 import style from "./ScheduleDetails.module.css";
-import schedule_img from "./../assets/imgs/img_teste.jpg";
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
-import { useState } from "react";
-import Details_MultipleSchedule from "../components/ScheduleDetailsComponents/Details_multipleSchedule";
-import Button from "./../components/Button";
-import type { EventDataProps } from "../Utils/Types";
+import { useEffect, useState, type JSX } from "react";
 import { exitEvent as exit, joinEvent as join } from "../Utils/ButtonsFunctions";
-import type { JSX } from "react";
-import EventCard_status from "../components/EventCardComponents/EventCardStatus";
+import Button from "./../components/Button";
+import { API_URL } from "../config";
+import EventCardStatus from "../components/EventCardComponents/EventCardStatus";
+import Details_MultipleSchedule from "../components/ScheduleDetailsComponents/Details_multipleSchedule";
 
-import { eventData } from "../Utils/UserData";
-
-type ScheduleDetailsProps = Pick<
-    EventDataProps,
-    | "title"
-    | "shortDescription"
-    | "description"
-    | "eventType"
-    | "isParticipating"
-    | "currentStatus"
-    | "scheduleId"
-    | "maxAmount"
-    | "currentAmount"
->;
-
+type ScheduleDetailsProps = {
+    id: number
+    title: string;
+    shortDescription: string;
+    currentStatus: "CLOSED" | "OPEN";
+    eventType: "MULTIPLE" | "UNIQUE";
+    currentAmount: number;
+    maxAmount: number;
+    isParticipating: boolean;
+    eventImage: string;
+    description: string;
+}
 
 const ScheduleDetails = () => {
     const [params] = useSearchParams();
     const scheduleId = Number(params.get("id"));
-
+    const navigate = useNavigate();
     const [showMultipleSchedule, setShowMultipleSchedule] = useState<{ display: string }>({
         display: "none"
     });
 
-    const scheduleData: ScheduleDetailsProps = eventData; //Isso deve vir da API
-    console.log(scheduleData);
+    const [scheduleData, setScheduleData] = useState<ScheduleDetailsProps>({
+        id: scheduleId,
+        title: "",
+        shortDescription: "",
+        currentStatus: "OPEN",
+        eventType: "UNIQUE",
+        currentAmount: 0,
+        maxAmount: 0,
+        isParticipating: false,
+        eventImage: "",
+        description: "",
+    });
 
-    //------------------------------------------------------------------
-    const navigate = useNavigate();
-
-    const chooseButton = (conditionsCheck: Pick<EventDataProps, "eventType" | "isParticipating" | "currentStatus" | "scheduleId">) => {
+    const chooseButton = (conditionsCheck: Pick<ScheduleDetailsProps, "eventType" | "isParticipating" | "currentStatus" | "id">) => {
         const cancelButton = (
-            <Button buttonFunction={exit} buttons="cancel" key={1} />
+            <Button buttonFunction={() => exit(scheduleData.id)} buttons="cancel" key={1} />
         );
 
         const joinButtonMultiple = (
@@ -49,34 +51,36 @@ const ScheduleDetails = () => {
         );
 
         const joinButtonUnique = (
-            <Button buttonFunction={join} buttons="join" key={1} />
+            <Button buttonFunction={() => join(scheduleData.id)} buttons="join" key={1} />
         )
 
         const buttons: JSX.Element[] = [];
 
 
-        if (conditionsCheck.eventType === "uniqueSchedule" &&
-            conditionsCheck.isParticipating === "no" &&
-            conditionsCheck.currentStatus === "open"
+        if (conditionsCheck.eventType === "UNIQUE" &&
+            !conditionsCheck.isParticipating &&
+            conditionsCheck.currentStatus === "OPEN"
         ) {
             buttons.push(joinButtonUnique);
         }
-        else if (conditionsCheck.eventType === "multipleSchedule" &&
-            conditionsCheck.currentStatus === "open"
+        else if (conditionsCheck.eventType === "MULTIPLE" &&
+            conditionsCheck.currentStatus === "OPEN"
         ) {
             buttons.push(joinButtonMultiple);
         }
-        else if (conditionsCheck.eventType === "uniqueSchedule" &&
-            conditionsCheck.isParticipating === "yes" &&
-            conditionsCheck.currentStatus === "open") {
+        else if (conditionsCheck.eventType === "UNIQUE" &&
+            conditionsCheck.isParticipating &&
+            conditionsCheck.currentStatus === "OPEN") {
             buttons.push(cancelButton);
 
-        } else if (conditionsCheck.eventType === "uniqueSchedule" &&
-            conditionsCheck.isParticipating === "yes" &&
-            conditionsCheck.currentStatus === "closed") {
+        }
+        else if (conditionsCheck.eventType === "UNIQUE" &&
+            conditionsCheck.isParticipating &&
+            conditionsCheck.currentStatus === "CLOSED") {
             buttons.push(cancelButton);
         }
-        if (conditionsCheck.currentStatus === "closed") {
+
+        if (conditionsCheck.currentStatus === "CLOSED") {
             buttons.push(<p className={style.closedEventMessage} key={2}>Evento fechado!</p>);
         }
 
@@ -86,7 +90,28 @@ const ScheduleDetails = () => {
             </div>
         )
     }
+
     //------------------------------------------------------------------
+
+    useEffect(() => {
+        fetch(`${API_URL}/event/${scheduleId}`, {
+            method: "GET",
+            credentials: "include",
+            headers: {
+                "Content-Type": "application/json"
+            }
+        })
+            .then((data) => data.json())
+            .then((data) => {
+                if (!data) {
+                    navigate("/schedules");
+                }
+                console.log(data);
+                setScheduleData(data);
+
+            })
+            .catch((err) => console.log(err));
+    }, [])
 
     return (
         <div className={style.containerMain}>
@@ -95,12 +120,23 @@ const ScheduleDetails = () => {
                 <h1>{scheduleData.title}</h1>
                 <h2>{scheduleData.shortDescription}</h2>
             </div>
-            <EventCard_status currentStatus={scheduleData.currentStatus} />
-
+            <EventCardStatus currentStatus={scheduleData.currentStatus} />
+            {scheduleData.eventType === "UNIQUE" &&
+                <div className={style.containerAmount}>
+                    <p>Quantidade de pessoas:</p>
+                    <div className={style.amountBox}>
+                        <p>{scheduleData.currentAmount}</p>
+                        <p>/</p>
+                        <p>{scheduleData.maxAmount}</p>
+                    </div>
+                </div>
+            }
             <div className={style.centerDetailsContainer}>
                 <div className={style.imageContainer}>
                     <div className={style.mainImageContainer}>
-                        <img src={schedule_img} alt="imagem evento" />
+                        {scheduleData.eventImage !== "" &&
+                            <img src={scheduleData.eventImage} alt="imagem evento" />
+                        }
                     </div>
                 </div>
                 <div className={style.descriptionContainer}>
@@ -109,10 +145,16 @@ const ScheduleDetails = () => {
                 </div>
             </div>
 
-            {chooseButton({ currentStatus: scheduleData.currentStatus, eventType: scheduleData.eventType, isParticipating: scheduleData.isParticipating, scheduleId: scheduleData.scheduleId })}
-            {scheduleData.eventType === "multipleSchedule" &&
+            {chooseButton(
+                {
+                    id: scheduleData.id,
+                    currentStatus: scheduleData.currentStatus,
+                    eventType: scheduleData.eventType,
+                    isParticipating: scheduleData.isParticipating
+                })}
+            {scheduleData.eventType === "MULTIPLE" &&
                 (
-                    <Details_MultipleSchedule scheduleId={1} setShowMultipleSchedule={setShowMultipleSchedule} showMultipleSchedule={showMultipleSchedule} />
+                    <Details_MultipleSchedule scheduleId={scheduleData.id} setShowMultipleSchedule={setShowMultipleSchedule} showMultipleSchedule={showMultipleSchedule} />
                 )
             }
         </div>

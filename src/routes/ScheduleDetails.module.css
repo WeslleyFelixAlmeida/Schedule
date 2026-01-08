@@ -27,6 +27,25 @@
   font-weight: normal;
 }
 
+.containerAmount {
+  display: flex;
+  column-gap: 10px;
+  align-items: center;
+}
+
+.containerAmount > p {
+  font-weight: bold;
+}
+
+.amountBox {
+  display: flex;
+  column-gap: 5px;
+  border: solid 1px var(--golden_fonts);
+  padding: 0px 10px;
+  font-weight: 600;
+  align-items: center;
+}
+
 .imageContainer {
   display: flex;
   align-items: center;
@@ -45,9 +64,11 @@
 }
 
 .descriptionContainer {
+  align-self: flex-start;
   width: 60%;
-  box-shadow: 4px 3px 3px #cfcfcf;
+  box-shadow: 0px 0px 3px #cfcfcf;
   padding: 5px;
+  box-sizing: border-box;
   border-radius: 10px;
 }
 
@@ -117,7 +138,7 @@
   }
 
   .descriptionContainer {
-    width: 80%;
+    width: 100%;
   }
 
   .containerDetailsButtons {

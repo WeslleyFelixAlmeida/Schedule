@@ -1,8 +1,8 @@
-const joinEvent = () => {
-    return console.log("Entrou no evento!");
+const joinEvent = (eventId: number) => {
+    return console.log("Entrou no evento de id: " + eventId);
 }
-const exitEvent = () => {
-    return console.log("Saiu no evento!");
+const exitEvent = (eventId: number) => {
+    return console.log("Saiu do evento de id: " + eventId);
 }
 
 export { joinEvent, exitEvent };
