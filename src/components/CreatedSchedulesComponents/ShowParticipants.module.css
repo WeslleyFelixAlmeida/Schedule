@@ -5,6 +5,9 @@
   flex-direction: column;
   padding: 10px;
   box-sizing: border-box;
+  position: absolute;
+  top: 0;
+  background-color: white;
 }
 
 .showParticipantsPage > button {
@@ -114,11 +117,13 @@
   width: 100%;
   border: solid 1px var(--dark_blue);
   border-radius: 10px;
-  padding: 10px;
+  padding: 0px 10px;
+  height: 40px;
   box-sizing: border-box;
-  display: flex;
+  display: grid;
   align-items: center;
-  justify-content: space-between;
+  justify-items: center;
+  grid-template-columns: 140px 1fr 140px;
 }
 
 .participantsList > li > p {
@@ -126,16 +131,23 @@
   color: var(--dark_blue);
 }
 
+.scheduleItemCenter {
+  border-left: solid 1px var(--golden_fonts);
+  border-right: solid 1px var(--golden_fonts);
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
 .participantsList > li > button {
-  background-color: transparent;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
   column-gap: 10px;
   border: none;
-  border-radius: 10px;
-  padding: 10px;
+  border-radius: 5px;
+  padding: 5px;
   background-color: #df1d1d;
   transition: background-color 0.5s ease;
   color: white;

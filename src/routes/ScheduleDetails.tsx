@@ -94,7 +94,7 @@ const ScheduleDetails = () => {
     //------------------------------------------------------------------
 
     useEffect(() => {
-        fetch(`${API_URL}/event/${scheduleId}`, {
+        fetch(`${API_URL}/event/eventData/${scheduleId}`, {
             method: "GET",
             credentials: "include",
             headers: {

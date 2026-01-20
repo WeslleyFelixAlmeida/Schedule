@@ -1,28 +1,4 @@
-.containerCreatedEvents {
-  display: flex;
-  flex-direction: column;
-  row-gap: 10px;
-  padding: 10px 0px;
-  width: 100%;
-}
-
-.containerCreatedEvents > a {
-  text-decoration: underline;
-}
-
-.createdEvents {
-  display: flex;
-  flex-direction: column;
-  row-gap: 10px;
-  overflow-y: scroll;
-  width: 100%;
-  max-width: 1200px;
-  padding: 10px;
-  box-sizing: border-box;
-  align-self: center;
-}
-
-.createdEvents > li {
+.createdSchedulesItem {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -33,7 +9,7 @@
   box-shadow: 0px 0px 5px lightgray;
 }
 
-.createdEvents > li > p {
+.createdSchedulesItem > p {
   font-size: 20px;
   font-weight: bold;
   width: 100%;
@@ -62,6 +38,9 @@
   height: 100%;
   width: 100%;
   border-radius: 0px 8px 8px 0px;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
 }
 
 .containerButtons {
