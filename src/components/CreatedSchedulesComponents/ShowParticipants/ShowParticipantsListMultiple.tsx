@@ -10,7 +10,7 @@ type schedulesType = {
     day: string;
     schedule: string;
     eventId: number;
-    username: string | null;
+    userId: string | null;
 }
 
 
@@ -42,24 +42,29 @@ const getSchedules = async (id: number, day: number) => {
 
 const ShowParticipantsListMultiple = (props: Pick<schedulesType, "eventId">) => {
     const [listIndex, setListIndex] = useState<number>(0);
-    const [schedules, setSchedules] = useState<schedulesType[]>([]);
+    const [schedules, setSchedules] = useState<schedulesType[][]>([]);
     const [day, setDays] = useState<number[]>([]);
+    const [disableButton, setDisableButton] = useState<boolean[]>([false, false]);
 
     const [isLoading, setIsLoading] = useState<boolean>(false);
 
     const goAhead = async () => {
         if (listIndex < day.length - 1) {
+            const index = listIndex + 1;
             setListIndex(prev => prev + 1);
-            try {
-                setIsLoading(!isLoading);
-                const data = await getSchedules(props.eventId, day[listIndex + 1]);
 
-                if (data) {
-                    setSchedules(data);
-                    console.log(data);
+            if (!schedules[index]) {
+                try {
+                    setIsLoading(!isLoading);
+                    const data = await getSchedules(props.eventId, day[index]);
+                    setSchedules((prev) => [...prev, data]);
+
+                    // if (data) {
+                    //     console.log(data);
+                    // }
+                } catch (error) {
+                    console.log(error);
                 }
-            } catch (error) {
-                console.log(error);
             }
         }
     }
@@ -67,17 +72,6 @@ const ShowParticipantsListMultiple = (props: Pick<schedulesType, "eventId">) => 
     const goBack = async () => {
         if (listIndex > 0) {
             setListIndex(prev => prev - 1);
-            try {
-                setIsLoading(!isLoading);
-                const data = await getSchedules(props.eventId, day[listIndex - 1]);
-
-                if (data) {
-                    setSchedules(data);
-                    console.log(data);
-                }
-            } catch (error) {
-                console.log(error);
-            }
         }
     }
 
@@ -89,7 +83,10 @@ const ShowParticipantsListMultiple = (props: Pick<schedulesType, "eventId">) => 
                 setDays(days);
                 const userSchedules = await getSchedules(props.eventId, days[0]);
                 if (userSchedules) {//Para atribuir os dados ao state
-                    setSchedules(userSchedules);
+                    const array = [...schedules];
+                    array.push(userSchedules);
+
+                    setSchedules(array);
                 }
             }
         }
@@ -101,17 +98,40 @@ const ShowParticipantsListMultiple = (props: Pick<schedulesType, "eventId">) => 
         if (isLoading) {
             setIsLoading(!isLoading);
         }
+        console.log(schedules);
     }, [schedules]);
 
+    useEffect(() => {
+        if (isLoading) {
+            setDisableButton([true, true]);
+        } else {
+            setDisableButton([false, false]);
+        }
+
+    }, [isLoading]);
+
+    useEffect(() => {
+        if (listIndex === 0) {
+            setDisableButton([true, false]);
+        }
+        else if (listIndex === day.length - 1) {
+            setDisableButton([false, true]);
+        } else {
+            setDisableButton([false, false]);
+        }
+
+    }, [listIndex]);
+
+    // talvez o problema esteja no listIndex que não muda a tempo!
     if (schedules.length < 1) { return null; }
     return (
         <div className={style.containerShowParticipants}>
             <div className={style.containerChangeDayButtons}>
-                <button onClick={goBack} disabled={isLoading ? true : false}>
+                <button onClick={goBack} disabled={disableButton[0]}>
                     <IoIosArrowBack />
                 </button>
                 <h2>Escalas do dia: <span>{day[listIndex]}</span></h2>
-                <button onClick={goAhead} disabled={isLoading ? true : false}>
+                <button onClick={goAhead} disabled={disableButton[1]}>
                     <IoIosArrowForward />
                 </button>
             </div>
@@ -119,14 +139,14 @@ const ShowParticipantsListMultiple = (props: Pick<schedulesType, "eventId">) => 
             <div className={style.containerParticipantsList}>
                 <ul className={style.participantsList}>
                     {isLoading &&
-                        <div>Carregando...</div>
+                        <div style={{ height: "500px" }}>Carregando...</div>
                     }
-                    {(schedules.length > 0 && !isLoading) && schedules.map((schedule) => (
+                    {(schedules.length > 0 && !isLoading) && schedules[listIndex].map((schedule) => (
                         <li key={schedule.id}>
-                            <p>{schedule.username ? schedule.username : "HORÁRIO LIVRE" + schedule.day}</p>
+                            <p>{schedule.userId ? "OCUPADO" : "HORÁRIO LIVRE" + schedule.day}</p>
                             <p className={style.scheduleItemCenter}>Horário: {schedule.schedule}</p>
-                            {schedule.username &&
-                                <button>
+                            {schedule.userId &&
+                                <button onClick={() => console.log(schedule.id)}>
                                     Cancelar
                                     <FaRegTrashAlt />
                                 </button>
