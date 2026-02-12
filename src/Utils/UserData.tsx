@@ -5,7 +5,9 @@ import perfilImage from "./../assets/imgs/ta.jpg";
 export type userType = {
   username: string;
   email: string;
-  userImage?: string;
+  profileImage: string;
+  imageType: string;
+  // userImage?: string;
 }
 
 // const userInfo = fetch(`${API_URL}/user`, {

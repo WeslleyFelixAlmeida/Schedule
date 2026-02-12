@@ -7,48 +7,40 @@ import Profile_security from "../components/ProfileComponents/Profile_security";
 import { type userType } from "../Utils/UserData";
 import { API_URL } from "../config";
 
-import profileImage from "./../assets/imgs/ta.jpg";//Apagar depois, vai vir da API também.
+import profileImage from "./../assets/imgs/profile.png";//Apagar depois, vai vir da API também.
+import useFetch from "../Utils/useFetch";
 
 type ProfilePages = "home" | "privacy" | "security";
 
+
 const Profile = () => {
-    const [currentPage, setCurrentPage] = useState<ProfilePages>("home");
-    const [userData, setUserData] = useState<userType>({
-        email: "",
-        username: "",
-        userImage: ""
+    const { isLoading, data, error } = useFetch<userType>({
+        apiUrl: `${API_URL}/user`,
+        method: "GET"
     });
 
-    useEffect(() => {
-        fetch(`${API_URL}/user`, {
-            method: "GET",
-            credentials: "include",
-            headers: {
-                "Content-Type": "application/json"
-            }
-        })
-            .then((data) => data.json())
-            .then((data) => {
-                setUserData({
-                    email: data?.email,
-                    username: data?.username,
-                    userImage: profileImage
-                });
-            })
-            .catch((err) => {
-                console.log(err);
-            });
-    }, []);
+    const [currentPage, setCurrentPage] = useState<ProfilePages>("home");
+
+    const imageSrc = data ? data.profileImage !== null ?
+        `data:${data.imageType};base64,${data.profileImage}` :
+        profileImage : profileImage;
+
+    const userData = data
+        ? { ...data, profileImage: imageSrc}
+        : null;
 
     return (
         <div className={style.containerProfile}>
             <ProfileOption changePage={setCurrentPage} buttonFocused={currentPage} />
 
-            {currentPage === "home" && <Profile_home profile_image={userData!.userImage} username={userData!.username} />}
+            {isLoading && <p>Carregando...</p>}
+            {error && <p>Ocorreu um erro</p>}
 
-            {currentPage === "privacy" && <Profile_privacy profile_image={userData!.userImage} username={userData!.username} email={userData!.email} />}
+            {(currentPage === "home" && !isLoading && !error && userData) && <Profile_home profileImage={userData!.profileImage} username={userData!.username} />}
 
-            {currentPage === "security" && <Profile_security />}
+            {(currentPage === "privacy" && !isLoading && !error && userData) && <Profile_privacy profileImage={userData!.profileImage} username={userData!.username} email={userData!.email} />}
+
+            {(currentPage === "security" && !isLoading && !error && userData) && <Profile_security />}
 
         </div>
     )

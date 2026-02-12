@@ -4,10 +4,11 @@ import { FaExchangeAlt } from "react-icons/fa";
 type Profile_privacy_props = {
     username: string;
     email: string;
-    profile_image?: string;
+    profileImage?: string;
 }
 
 const Profile_privacy = (props: Profile_privacy_props) => {
+    
     return (
         <section className={style.containerPersonalInfos}>
             <h1>Informações pessoais:</h1>
@@ -27,7 +28,7 @@ const Profile_privacy = (props: Profile_privacy_props) => {
             </div>
             <div className={style.containerUserImage}>
                 <h2>Imagem de perfil:</h2>
-                <img src={props.profile_image} alt="Imagem de perfil" />
+                <img src={props.profileImage} alt="Imagem de perfil" />
                 <button className={style.buttonsPrivacy}
                     onClick={() => console.log("alterarImagem")}
                 >

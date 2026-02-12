@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import style from "./Details_MultipleSchedule.module.css";
 
 import { scheduleLine_open_element, scheduleLine_occupied_element, scheduleLine_choosed_element, participateEvent, getOutEvent } from "./Details_MultipleScheduleCards";

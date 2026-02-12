@@ -58,10 +58,6 @@ const ShowParticipantsListMultiple = (props: Pick<schedulesType, "eventId">) => 
                     setIsLoading(!isLoading);
                     const data = await getSchedules(props.eventId, day[index]);
                     setSchedules((prev) => [...prev, data]);
-
-                    // if (data) {
-                    //     console.log(data);
-                    // }
                 } catch (error) {
                     console.log(error);
                 }
@@ -82,10 +78,10 @@ const ShowParticipantsListMultiple = (props: Pick<schedulesType, "eventId">) => 
             if (days) {
                 setDays(days);
                 const userSchedules = await getSchedules(props.eventId, days[0]);
-                if (userSchedules) {//Para atribuir os dados ao state
+
+                if (userSchedules) {
                     const array = [...schedules];
                     array.push(userSchedules);
-
                     setSchedules(array);
                 }
             }
@@ -98,7 +94,6 @@ const ShowParticipantsListMultiple = (props: Pick<schedulesType, "eventId">) => 
         if (isLoading) {
             setIsLoading(!isLoading);
         }
-        console.log(schedules);
     }, [schedules]);
 
     useEffect(() => {
@@ -122,7 +117,6 @@ const ShowParticipantsListMultiple = (props: Pick<schedulesType, "eventId">) => 
 
     }, [listIndex]);
 
-    // talvez o problema esteja no listIndex que não muda a tempo!
     if (schedules.length < 1) { return null; }
     return (
         <div className={style.containerShowParticipants}>
