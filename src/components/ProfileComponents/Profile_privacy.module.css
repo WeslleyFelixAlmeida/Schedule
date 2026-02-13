@@ -20,24 +20,51 @@
   font-size: 20px;
 }
 
-.buttonsPrivacy {
+.commomButton {
   height: 30px;
   width: 100%;
   max-width: 150px;
   border: none;
   border-radius: 10px;
-  background-color: var(--dark_blue);
-  color: var(--golden_fonts);
   cursor: pointer;
   transition: background-color 0.5s ease;
   display: flex;
   align-items: center;
-  justify-content: center;
   column-gap: 10px;
+  padding: 0px 10px;
+  box-sizing: border-box;
+}
+
+.commomButton > span {
+  align-self: center;
+  width: 100%;
+}
+
+.buttonsPrivacy {
+  background-color: var(--dark_blue);
+  color: var(--golden_fonts);
 }
 
 .buttonsPrivacy:hover {
   background-color: var(--light_blue_color);
+}
+
+.buttonsCancel {
+  background-color: red;
+  color: white;
+}
+
+.buttonsCancel:hover {
+  background-color: #fb5a5a;
+}
+
+.buttonsConfirm {
+  background-color: #0ba10b;
+  color: white;
+}
+
+.buttonsConfirm:hover {
+  background-color: #58c158;
 }
 
 .containerUsername {
@@ -46,6 +73,25 @@
   row-gap: 10px;
   border-bottom: solid 1px #e9e9e9;
   padding-bottom: 10px;
+}
+
+.containerUsername > input[type="text"] {
+  border-radius: 5px;
+  padding: 5px;
+  height: 40px;
+  box-sizing: border-box;
+  border: solid 2px var(--golden_fonts);
+  color: var(--dark_blue);
+}
+
+.containerUsername > input[type="text"]::placeholder {
+  color: var(--golden_fonts);
+  opacity: 50%;
+}
+
+.containerUsername > input[type="text"]:focus {
+  outline: var(--golden_fonts);
+  color: var(--dark_blue);
 }
 
 .containerUserImage {
@@ -59,4 +105,18 @@
   max-width: 300px;
   border-radius: 10px;
   box-shadow: 0px 0px 3px var(--dark_blue);
+}
+
+.errorMessage {
+  color: white;
+  background-color: rgb(207, 17, 17);
+  border: none;
+  border-radius: 10px;
+  box-sizing: border-box;
+  height: 35px;
+  padding: 0px 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  max-width: 350px;
 }
