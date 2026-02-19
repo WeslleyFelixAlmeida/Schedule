@@ -17,6 +17,7 @@ const usernameSchema = z.object({
     username: z.string().min(5),
 });
 
+
 const Profile_privacy = (props: Profile_privacy_props) => {
     const [userData, setUserData] = useState<Profile_privacy_props>({
         username: props.username,
@@ -25,7 +26,10 @@ const Profile_privacy = (props: Profile_privacy_props) => {
     });
 
     const [showChangeUsername, setShowChangeUsername] = useState<boolean>(false);
+    const [showChangeProfImage, setShowChangeProfImage] = useState<boolean>(false);
     const [newUsername, setNewUsername] = useState<string>("");
+    const [newProfileImage, setNewProfileImage] = useState<File | null>(null);
+    const [profileImagePreview, setProfileImagePreview] = useState<string | null>("");
 
     const [showMessage, setShowMessage] = useState<boolean[]>([false, false, false]);
     const messages: string[] = [
@@ -78,10 +82,53 @@ const Profile_privacy = (props: Profile_privacy_props) => {
         }
     };
 
+    const changeProfileImage = async () => {
+        if (!newProfileImage) { return null }
+
+        const formData = new FormData();
+        formData.append("profileImage", newProfileImage);
+
+        try {
+            const response = await fetch(`${API_URL}/user/update/profileImage`, {
+                method: "PATCH",
+                credentials: "include",
+                body: formData
+            });
+
+            if(!response.ok){
+                throw new Error("Erro ao tentar alterar imagem!");
+            }
+
+            
+        } catch (err: any) {
+            
+        }
+    }
+
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         if (e.target.name === "username") {
             setNewUsername(e.target.value);
         }
+    };
+
+    const handleProfileImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const file = e.target.files?.[0];
+        if (!file) return;
+
+        setNewProfileImage(file);
+
+        const previewUrl = URL.createObjectURL(file);
+        setProfileImagePreview(previewUrl);
+    };
+
+    const cancelImageChange = () => {
+        if (profileImagePreview) {
+            URL.revokeObjectURL(profileImagePreview);
+        }
+
+        setProfileImagePreview(null);
+        setNewProfileImage(null);
+        setShowChangeProfImage(false);
     };
 
     return (
@@ -144,14 +191,46 @@ const Profile_privacy = (props: Profile_privacy_props) => {
 
             </div>
             <div className={style.containerUserImage}>
-                <h2>Imagem de perfil:</h2>
-                <img src={userData.profileImage} alt="Imagem de perfil" />
-                <button className={`${style.commomButton} ${style.buttonsPrivacy}`}
-                    onClick={() => console.log("alterarImagem")}
-                >
-                    <FaExchangeAlt />
-                    Alterar
-                </button>
+                {!profileImagePreview && <h2>Imagem de perfil:</h2>}
+                {profileImagePreview && <h2>*Nova imagem:</h2>}
+
+                <img src={profileImagePreview ? profileImagePreview : userData.profileImage} alt="Imagem de perfil" />
+
+                {!showChangeProfImage &&
+                    <button className={`${style.commomButton} ${style.buttonsPrivacy}`}
+                        onClick={() => setShowChangeProfImage(!showChangeProfImage)}
+                    >
+                        <FaExchangeAlt />
+                        Alterar
+                    </button>
+                }
+
+                {showChangeProfImage &&
+                    <div className={style.containerChangeImage}>
+                        <input type="file" name="profileImage" id="profileImage" accept="image/*" onChange={handleProfileImageChange} />
+                        <label htmlFor="profileImage">Escolher imagem</label>
+                    </div>
+                }
+
+                {showChangeProfImage &&
+                    <button className={`${style.commomButton} ${style.buttonsCancel}`}
+                        onClick={() => {
+                            cancelImageChange()
+                        }}
+                        style={{ marginTop: "30px" }}
+                    >
+                        <MdCancel /> <span>Cancelar</span>
+                    </button>
+                }
+
+                {showChangeProfImage &&
+                    <button
+                        className={`${style.commomButton} ${style.buttonsConfirm}`}
+                        onClick={changeProfileImage}
+                    >
+                        <FaSquareCheck /> <span>Confirmar</span>
+                    </button>
+                }
             </div>
         </section>
     )

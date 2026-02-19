@@ -120,3 +120,26 @@
   justify-content: center;
   max-width: 350px;
 }
+
+.containerChangeImage > input[type="file"] {
+  display: none;
+  position: relative;
+}
+
+.containerChangeImage > label {
+  position: absolute;
+  background-color: var(--dark_blue);
+  color: var(--golden_fonts);
+  border-radius: 10px;
+  height: 30px;
+  width: 200px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background-color 0.5s ease;
+}
+
+.containerChangeImage > label:hover {
+  background-color: var(--light_blue_color);
+}
