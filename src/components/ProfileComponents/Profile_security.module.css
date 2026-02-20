@@ -16,6 +16,47 @@
   padding: 10px 0px;
 }
 
+.containerChangePasswordForm {
+  display: flex;
+  flex-direction: column;
+  row-gap: 10px;
+}
+
+.formChangePassword {
+  display: flex;
+  flex-direction: column;
+  row-gap: 10px;
+}
+
+.formChangePassword > section > input[type="password"] {
+  width: 100%;
+  max-width: 350px;
+  height: 30px;
+  border-radius: 10px;
+  border: solid 2px var(--golden_fonts);
+  padding: 5px;
+  box-sizing: border-box;
+  margin-top: 5px;
+}
+
+.formChangePassword > input[type="submit"],
+.containerChangePasswordForm > input[type="button"] {
+  width: 100%;
+  max-width: 200px;
+  background-color: var(--dark_blue);
+  color: var(--golden_fonts);
+  border-radius: 10px;
+  height: 30px;
+  border: solid 1px var(--golden_fonts);
+  cursor: pointer;
+  transition: background-color 0.5s ease;
+}
+
+.formChangePassword > input[type="submit"]:hover,
+.containerChangePasswordForm > input[type="button"]:hover {
+  background-color: var(--light_blue_color);
+}
+
 .containerDeleteAccount {
   display: flex;
   flex-direction: column;
@@ -73,4 +114,57 @@
 
 .buttonsDeleteAcc:hover {
   background-color: rgb(255, 54, 54);
+}
+
+.deleteAccContainer {
+  width: 100%;
+  max-width: 500px;
+  border-radius: 10px;
+  box-sizing: border-box;
+  height: 150px;
+  background-color: lightcoral;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  row-gap: 10px;
+}
+
+.deleteAccContainer > h2 {
+  color: red;
+}
+
+.containerDeleteButtons {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  column-gap: 10px;
+  width: 100%;
+}
+
+.containerDeleteButtons > button {
+  width: 100%;
+  max-width: 100px;
+  height: 30px;
+  border-radius: 10px;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  column-gap: 5px;
+  cursor: pointer;
+  transition:
+    background-color 0.5s ease,
+    color 0.5s ease;
+  font-weight: bold;
+}
+
+.cancelDeleteAccButton:hover {
+  background-color: lightgray;
+  color: rgb(68, 68, 68);
+}
+
+.confirmDeleteAccButton:hover {
+  background-color: red;
+  color: white;
 }

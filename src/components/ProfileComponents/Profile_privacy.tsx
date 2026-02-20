@@ -6,7 +6,7 @@ import { FaExchangeAlt } from "react-icons/fa";
 import { MdCancel } from "react-icons/md";
 import { FaSquareCheck } from "react-icons/fa6";
 import { z, ZodError } from "zod";
-import useFetch from "../../Utils/useFetch2";
+import useFetch2 from "../../Utils/useFetch2";
 
 type Profile_privacy_props = {
     username: string;
@@ -43,7 +43,7 @@ const Profile_privacy = (props: Profile_privacy_props) => {
         "O campo de alteração está vazio!",
     ]
 
-    const { isLoading, data, error, callApi, setCallApi, isFile, setIsFile } = useFetch({
+    const { isLoading, data, error, callApi, setCallApi, isFile, setIsFile } = useFetch2({
         apiUrl: apiRoute,
         method: "PATCH",
         body: body,

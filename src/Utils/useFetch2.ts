@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
 
-type UseFetchProps = {
+type UseFetch2Props = {
   apiUrl: string;
   method: "GET" | "POST" | "PUT" | "DELETE" | "PATCH" | "OPTIONS";
   body?: BodyInit | null;
 };
 
-const useFetch = <T>(props: UseFetchProps) => {
+const useFetch2 = <T>(props: UseFetch2Props) => {
   const [isLoading, setIsloading] = useState(true);
   const [error, setError] = useState<Error | null>(null);
   const [data, setData] = useState<T>();
@@ -60,4 +60,4 @@ const useFetch = <T>(props: UseFetchProps) => {
   return { isLoading, data, error, callApi, setCallApi, isFile, setIsFile };
 };
 
-export default useFetch;
+export default useFetch2;
