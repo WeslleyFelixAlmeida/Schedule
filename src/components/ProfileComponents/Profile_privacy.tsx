@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { API_URL } from "../../config";
 import type { userType } from "../../Utils/UserData";
 import style from "./Profile_privacy.module.css";
@@ -6,6 +6,7 @@ import { FaExchangeAlt } from "react-icons/fa";
 import { MdCancel } from "react-icons/md";
 import { FaSquareCheck } from "react-icons/fa6";
 import { z, ZodError } from "zod";
+import useFetch from "../../Utils/useFetch2";
 
 type Profile_privacy_props = {
     username: string;
@@ -31,6 +32,9 @@ const Profile_privacy = (props: Profile_privacy_props) => {
     const [newProfileImage, setNewProfileImage] = useState<File | null>(null);
     const [profileImagePreview, setProfileImagePreview] = useState<string | null>("");
 
+    const [body, setBody] = useState<BodyInit>();
+    const [apiRoute, setApiRoute] = useState<string>("");
+
     const [showMessage, setShowMessage] = useState<boolean[]>([false, false, false]);
     const messages: string[] = [
         "Usuário alterado com sucesso!",
@@ -38,6 +42,12 @@ const Profile_privacy = (props: Profile_privacy_props) => {
         "Ocorreu um erro inesperado. Tente novamente.",
         "O campo de alteração está vazio!",
     ]
+
+    const { isLoading, data, error, callApi, setCallApi, isFile, setIsFile } = useFetch({
+        apiUrl: apiRoute,
+        method: "PATCH",
+        body: body,
+    });
 
     const changeUsername = async () => {
         try {
@@ -87,22 +97,12 @@ const Profile_privacy = (props: Profile_privacy_props) => {
 
         const formData = new FormData();
         formData.append("profileImage", newProfileImage);
-
-        try {
-            const response = await fetch(`${API_URL}/user/update/profileImage`, {
-                method: "PATCH",
-                credentials: "include",
-                body: formData
-            });
-
-            if(!response.ok){
-                throw new Error("Erro ao tentar alterar imagem!");
-            }
-
-            
-        } catch (err: any) {
-            
-        }
+        setIsFile(true);
+        setBody(formData);
+        setApiRoute(
+            `${API_URL}/user/update/profileImage`
+        )
+        setCallApi(true);
     }
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -130,6 +130,11 @@ const Profile_privacy = (props: Profile_privacy_props) => {
         setNewProfileImage(null);
         setShowChangeProfImage(false);
     };
+
+    useEffect(() => {
+        console.log(error);
+    }, [error])
+
 
     return (
         <section className={style.containerPersonalInfos}>
@@ -192,7 +197,9 @@ const Profile_privacy = (props: Profile_privacy_props) => {
             </div>
             <div className={style.containerUserImage}>
                 {!profileImagePreview && <h2>Imagem de perfil:</h2>}
-                {profileImagePreview && <h2>*Nova imagem:</h2>}
+                {profileImagePreview && !data && <h2>*Nova imagem:</h2>}
+
+                {!isLoading && profileImagePreview && <h2>Imagem de perfil:</h2>}
 
                 <img src={profileImagePreview ? profileImagePreview : userData.profileImage} alt="Imagem de perfil" />
 

@@ -21,12 +21,12 @@ const Profile = () => {
 
     const [currentPage, setCurrentPage] = useState<ProfilePages>("home");
 
-    const imageSrc = data ? data.profileImage !== null ?
-        `data:${data.imageType};base64,${data.profileImage}` :
+    const imageSrc = data ? 
+    data.profileImage !== null ? data.profileImage :
         profileImage : profileImage;
 
     const userData = data
-        ? { ...data, profileImage: imageSrc}
+        ? { ...data, profileImage: imageSrc }
         : null;
 
     return (
