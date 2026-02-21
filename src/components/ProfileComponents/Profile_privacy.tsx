@@ -6,7 +6,6 @@ import { FaExchangeAlt } from "react-icons/fa";
 import { MdCancel } from "react-icons/md";
 import { FaSquareCheck } from "react-icons/fa6";
 import { z, ZodError } from "zod";
-import useFetch2 from "../../Utils/useFetch2";
 
 type Profile_privacy_props = {
     username: string;
@@ -14,10 +13,23 @@ type Profile_privacy_props = {
     profileImage: string;
 }
 
+type MessageItem = {
+    message: string;
+    show?: boolean;
+};
+
+type ShowMessageState = {
+    message_0: MessageItem;
+    message_1: MessageItem;
+    message_2: MessageItem;
+    message_3: MessageItem;
+    message_4: MessageItem;
+    message_5: MessageItem;
+};
+
 const usernameSchema = z.object({
     username: z.string().min(5),
 });
-
 
 const Profile_privacy = (props: Profile_privacy_props) => {
     const [userData, setUserData] = useState<Profile_privacy_props>({
@@ -32,24 +44,40 @@ const Profile_privacy = (props: Profile_privacy_props) => {
     const [newProfileImage, setNewProfileImage] = useState<File | null>(null);
     const [profileImagePreview, setProfileImagePreview] = useState<string | null>("");
 
-    const [body, setBody] = useState<BodyInit>();
-    const [apiRoute, setApiRoute] = useState<string>("");
+    // const [showMessage, setShowMessage] = useState<boolean[]>([false, false, false, false]);
 
-    const [showMessage, setShowMessage] = useState<boolean[]>([false, false, false]);
     const messages: string[] = [
         "Usuário alterado com sucesso!",
         "Erro ao alterar nome de usuário, verifique se o nome possui mais de 5 caractéres e tente novamente.",
         "Ocorreu um erro inesperado. Tente novamente.",
-        "O campo de alteração está vazio!",
+        "O campo está vazio ou tem menos de 5 caractéres!",
+        "Não foi identificada nenhuma imagem!",
+        "Imagem de perfil alterada com sucesso!"
     ]
 
-    const { isLoading, data, error, callApi, setCallApi, isFile, setIsFile } = useFetch2({
-        apiUrl: apiRoute,
-        method: "PATCH",
-        body: body,
+    const [showMessage, setShowMessage] = useState<ShowMessageState>({
+        message_0: { message: messages[0], show: false },
+        message_1: { message: messages[1], show: false },
+        message_2: { message: messages[2], show: false },
+        message_3: { message: messages[3] },
+        message_4: { message: messages[4] },
+        message_5: { message: messages[5], show: false },
     });
 
+    const clearAllMessages = () => {
+        setShowMessage({
+            message_0: { message: messages[0], show: false },
+            message_1: { message: messages[1], show: false },
+            message_2: { message: messages[2], show: false },
+            message_3: { message: messages[3] },
+            message_4: { message: messages[4] },
+            message_5: { message: messages[5], show: false },
+        })
+    }
+
     const changeUsername = async () => {
+        if (!newUsername) { return null }
+
         try {
             const validated = usernameSchema.parse({ username: newUsername });
 
@@ -73,36 +101,64 @@ const Profile_privacy = (props: Profile_privacy_props) => {
                 username: data.username,
             }));
 
-            setShowMessage([true, false, false]);
-
-            setTimeout(() => {
-                setShowMessage([false, false, false]);
-            }, 3000);
-
-            setShowChangeUsername(false);
-            setNewUsername("");
+            setShowMessage((prev) => (
+                { ...prev, message_0: { ...prev.message_0, show: true } }));
 
         } catch (error) {
             if (error instanceof ZodError) {
-                setShowMessage([false, true, false]);
+                setShowMessage((prev) => (
+                    { ...prev, message_1: { ...prev.message_1, show: true } }));
                 return;
             }
 
-            setShowMessage([false, false, true]);
+            setShowMessage((prev) => (
+                { ...prev, message_2: { ...prev.message_2, show: true } }));
+        } finally {
+            setTimeout(() => clearAllMessages(), 3000);
+
+            setShowChangeUsername(false);
+            setNewUsername("");
         }
     };
 
     const changeProfileImage = async () => {
         if (!newProfileImage) { return null }
 
-        const formData = new FormData();
-        formData.append("profileImage", newProfileImage);
-        setIsFile(true);
-        setBody(formData);
-        setApiRoute(
-            `${API_URL}/user/update/profileImage`
-        )
-        setCallApi(true);
+        try {
+            const formData = new FormData();
+            formData.append("profileImage", newProfileImage);
+
+            const response = await fetch(`${API_URL}/user/update/profileImage`, {
+                method: "PATCH",
+                credentials: "include",
+                body: formData,
+            });
+
+            if (!response.ok) {
+                throw new Error("Erro ao atualizar usuário");
+            }
+
+            const data: userType = await response.json();
+
+            setUserData(prev => ({
+                ...prev,
+                username: data.username,
+            }));
+
+            setShowMessage((prev) => (
+                { ...prev, message_5: { ...prev.message_5, show: true } }));
+        } catch (error) {
+            setShowMessage((prev) => (
+                { ...prev, message_3: { ...prev.message_3, show: true } }));
+        } finally {
+            setTimeout(() => clearAllMessages(), 3000);
+
+            setShowChangeProfImage(false);
+            setNewProfileImage(null);
+            setProfileImagePreview(null);
+        }
+
+
     }
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -131,10 +187,6 @@ const Profile_privacy = (props: Profile_privacy_props) => {
         setShowChangeProfImage(false);
     };
 
-    useEffect(() => {
-        console.log(error);
-    }, [error])
-
 
     return (
         <section className={style.containerPersonalInfos}>
@@ -146,9 +198,6 @@ const Profile_privacy = (props: Profile_privacy_props) => {
             <div className={style.containerUsername}>
                 <h2>Nome de usuário:</h2>
                 <p>{userData.username}</p>
-                {showChangeUsername &&
-                    <input type="text" name="username" id="username" placeholder="Novo nome de usuário" value={newUsername} onChange={handleInputChange} minLength={5} />
-                }
 
                 {!showChangeUsername &&
                     <button className={`${style.commomButton} ${style.buttonsPrivacy}`}
@@ -158,48 +207,44 @@ const Profile_privacy = (props: Profile_privacy_props) => {
                     </button>
                 }
 
-                {showMessage[0] &&
-                    <p className={style.success}>{messages[0]}</p>
+                {showChangeUsername &&
+                    <>
+                        <input type="text" name="username" id="username" placeholder="Novo nome de usuário" value={newUsername} onChange={handleInputChange} minLength={5} />
+                        <button className={`${style.commomButton} ${style.buttonsCancel}`}
+                            onClick={() => {
+                                setShowChangeUsername(prev => !prev);
+                                setNewUsername("");
+                            }}
+                        >
+                            <MdCancel /> <span>Cancelar</span>
+                        </button>
+                        <button className={`${style.commomButton} ${style.buttonsConfirm}`}
+                            onClick={changeUsername}>
+                            <FaSquareCheck /> <span>Confirmar</span>
+                        </button>
+                    </>
                 }
 
-
-                {showMessage[1] &&
-                    <p className={style.errorMessage}>{messages[1]}</p>
+                {showMessage.message_0.show &&
+                    <p className={`${style.message} ${style.successMessage}`}>{showMessage.message_0.message}</p>
                 }
 
-                {showMessage[2] &&
-                    <p className={style.errorMessage}>{messages[2]}</p>
+                {showMessage.message_1.show &&
+                    <p className={`${style.message} ${style.errorMessage}`}>{showMessage.message_1.message}</p>
+                }
+
+                {showMessage.message_2.show &&
+                    <p className={`${style.message} ${style.errorMessage}`}>{showMessage.message_2.message}</p>
                 }
 
                 {showChangeUsername && newUsername.length < 5 &&
-                    <p className={style.errorMessage}>{messages[3]}</p>
+                    <p className={`${style.message} ${style.errorMessage}`}>{showMessage.message_3.message}</p>
                 }
-
-
-                {showChangeUsername &&
-                    <button className={`${style.commomButton} ${style.buttonsConfirm}`}
-                        onClick={changeUsername}>
-                        <FaSquareCheck /> <span>Confirmar</span>
-                    </button>
-                }
-                {showChangeUsername &&
-                    <button className={`${style.commomButton} ${style.buttonsCancel}`}
-                        onClick={() => {
-                            setShowChangeUsername(prev => !prev);
-                            setNewUsername("");
-                        }}
-                    >
-                        <MdCancel /> <span>Cancelar</span>
-                    </button>
-                }
-
 
             </div>
             <div className={style.containerUserImage}>
                 {!profileImagePreview && <h2>Imagem de perfil:</h2>}
-                {profileImagePreview && !data && <h2>*Nova imagem:</h2>}
-
-                {!isLoading && profileImagePreview && <h2>Imagem de perfil:</h2>}
+                {profileImagePreview && <h2>*Nova imagem:</h2>}
 
                 <img src={profileImagePreview ? profileImagePreview : userData.profileImage} alt="Imagem de perfil" />
 
@@ -212,32 +257,36 @@ const Profile_privacy = (props: Profile_privacy_props) => {
                     </button>
                 }
 
+
+                {showMessage.message_5.show &&
+                    <p className={`${style.message} ${style.successMessage}`}>{showMessage.message_5.message}</p>
+                }
                 {showChangeProfImage &&
-                    <div className={style.containerChangeImage}>
-                        <input type="file" name="profileImage" id="profileImage" accept="image/*" onChange={handleProfileImageChange} />
-                        <label htmlFor="profileImage">Escolher imagem</label>
-                    </div>
+                    <>
+                        <div className={style.containerChangeImage}>
+                            <input type="file" name="profileImage" id="profileImage" accept="image/*" onChange={handleProfileImageChange} />
+                            <label htmlFor="profileImage">Escolher imagem</label>
+                        </div>
+                        <button className={`${style.commomButton} ${style.buttonsCancel}`}
+                            onClick={() => {
+                                cancelImageChange()
+                            }}
+                            style={{ marginTop: "30px" }}
+                        >
+                            <MdCancel /> <span>Cancelar</span>
+                        </button>
+                        <button
+                            className={`${style.commomButton} ${style.buttonsConfirm}`}
+                            onClick={changeProfileImage}
+                        >
+                            <FaSquareCheck /> <span>Confirmar</span>
+                        </button>
+                        {!profileImagePreview &&
+                            <p className={`${style.message} ${style.errorMessage}`}>{showMessage.message_4.message}</p>
+                        }
+                    </>
                 }
 
-                {showChangeProfImage &&
-                    <button className={`${style.commomButton} ${style.buttonsCancel}`}
-                        onClick={() => {
-                            cancelImageChange()
-                        }}
-                        style={{ marginTop: "30px" }}
-                    >
-                        <MdCancel /> <span>Cancelar</span>
-                    </button>
-                }
-
-                {showChangeProfImage &&
-                    <button
-                        className={`${style.commomButton} ${style.buttonsConfirm}`}
-                        onClick={changeProfileImage}
-                    >
-                        <FaSquareCheck /> <span>Confirmar</span>
-                    </button>
-                }
             </div>
         </section>
     )
