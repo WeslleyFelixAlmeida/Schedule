@@ -124,16 +124,6 @@
 .errorMessage {
   color: white;
   background-color: rgb(207, 17, 17);
-  /* border: none;
-  border-radius: 10px;
-  text-align: center;
-  box-sizing: border-box;
-  height: 40px;
-  padding: 0px 5px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  max-width: 350px; */
 }
 
 .successMessage {

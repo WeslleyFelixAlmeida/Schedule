@@ -45,7 +45,7 @@
   outline-color: var(--golden_fonts);
 }
 
-.formChangePassword > input[type="submit"],
+.formChangePassword > input[type="button"],
 .containerChangePasswordForm > input[type="button"] {
   width: 100%;
   max-width: 200px;
@@ -58,7 +58,7 @@
   transition: background-color 0.5s ease;
 }
 
-.formChangePassword > input[type="submit"]:hover,
+.formChangePassword > input[type="button"]:hover,
 .containerChangePasswordForm > input[type="button"]:hover {
   background-color: var(--light_blue_color);
 }
@@ -172,4 +172,28 @@
 .confirmDeleteAccButton:hover {
   background-color: red;
   color: white;
+}
+
+.message {
+  border: none;
+  border-radius: 10px;
+  text-align: center;
+  box-sizing: border-box;
+  height: 40px;
+  padding: 0px 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  max-width: 350px;
+  font-weight: bold;
+}
+
+.errorMessage {
+  color: white;
+  background-color: rgb(207, 17, 17);
+}
+
+.successMessage {
+  background-color: lightgreen;
+  color: rgb(9, 105, 9);
 }

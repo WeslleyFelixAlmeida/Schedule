@@ -25,4 +25,5 @@ const convertImageToBase64 = (file: File) => {
     });
 };
 
+
 export { isValidTime, disableScroll, enableScroll, timeOut, convertImageToBase64 };

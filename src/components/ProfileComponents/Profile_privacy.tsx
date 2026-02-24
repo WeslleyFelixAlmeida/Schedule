@@ -44,8 +44,6 @@ const Profile_privacy = (props: Profile_privacy_props) => {
     const [newProfileImage, setNewProfileImage] = useState<File | null>(null);
     const [profileImagePreview, setProfileImagePreview] = useState<string | null>("");
 
-    // const [showMessage, setShowMessage] = useState<boolean[]>([false, false, false, false]);
-
     const messages: string[] = [
         "Usuário alterado com sucesso!",
         "Erro ao alterar nome de usuário, verifique se o nome possui mais de 5 caractéres e tente novamente.",
