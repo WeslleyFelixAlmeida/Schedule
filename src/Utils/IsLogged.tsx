@@ -1,10 +1,10 @@
 import { useEffect, useState, type JSX } from "react";
 import { API_URL } from "../config";
-import { Navigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
-const ProtectedRoute = ({ children }: { children: JSX.Element }) => {
+const IsLogged = ({ children }: { children: JSX.Element }) => {
     const [loading, setLoading] = useState(true);
-    const [allowed, setAllowed] = useState(false);
+    const navigate = useNavigate();
 
     useEffect(() => {
         fetch(`${API_URL}/user/isAuth`, {
@@ -12,11 +12,14 @@ const ProtectedRoute = ({ children }: { children: JSX.Element }) => {
         })
             .then(res => res.json())
             .then(data => {
-                setAllowed(data.allowed);
                 setLoading(false);
+                if (data.allowed) {
+                    if (data.allowed) {
+                        navigate("/schedules");
+                    }
+                }
             })
             .catch(() => {
-                setAllowed(false);
                 setLoading(false);
             });
     }, []);
@@ -25,12 +28,8 @@ const ProtectedRoute = ({ children }: { children: JSX.Element }) => {
         return null;
     }
 
-    if (!allowed) {
-        return <Navigate to="/" replace />;
-    }
-
     return children;
 }
 
 
-export { ProtectedRoute };
+export { IsLogged };

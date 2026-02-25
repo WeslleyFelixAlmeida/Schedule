@@ -142,7 +142,7 @@ const Header = () => {
                     setUserData({
                         email: data?.email,
                         username: data?.username,
-                        userImage: profileImage
+                        profileImage: data?.profileImage? data?.profileImage : profileImage
                     });
                 })
                 .catch((err) => {
@@ -188,7 +188,7 @@ const Header = () => {
             {!notShowPerfilOptions.includes(location.pathname) &&
                 <div className={style.perfilOptionsContainer} style={perfilOptions}>
                     <div className={style.containerImage} onClick={() => presentPerfilOptions()} >
-                        <img src={userData?.userImage} alt="Imagem de perfil" />
+                        <img src={userData?.profileImage} alt="Imagem de perfil" />
                         {/* Aqui vai vir um imagem do usuário atual! */}
                     </div>
                     <p>{userData?.username}</p>

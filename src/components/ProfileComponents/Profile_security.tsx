@@ -135,7 +135,7 @@ const Profile_security = () => {
             }
 
             setDeletePassword("")
-            navigate("/?accountDeleted=true");
+            navigate("/?process=accDeleted");
         } catch (error) {
             if (error instanceof ZodError) {
                 setShowMessage((prev) => (

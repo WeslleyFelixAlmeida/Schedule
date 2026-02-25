@@ -14,6 +14,7 @@ import UserSchedules from './routes/UserSchedules.tsx'
 import CreateSchedule from './routes/CreateSchedule.tsx'
 import UserCreatedSchedules from './routes/UserCreatedSchedules.tsx'
 import { ProtectedRoute } from './Utils/ProtectedRoute.tsx'
+import { IsLogged } from './Utils/IsLogged.tsx'
 
 const router = createBrowserRouter([
   {
@@ -23,15 +24,24 @@ const router = createBrowserRouter([
     children: [
       {
         index: true,
-        element: <Home />,
+        element:
+          <IsLogged>
+            <Home />
+          </IsLogged>
       },
       {
         path: "/register",
-        element: <Register />
+        element:
+          <IsLogged>
+            <Register />
+          </IsLogged>
       },
       {
         path: "/login",
-        element: <Login />
+        element:
+          <IsLogged>
+            <Login />
+          </IsLogged>
       },
       {
         path: "/schedules",
