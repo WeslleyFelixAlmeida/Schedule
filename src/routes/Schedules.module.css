@@ -8,9 +8,42 @@
   justify-content: center;
 }
 
+.message {
+  border-radius: 10px;
+  text-align: center;
+  box-sizing: border-box;
+  height: 70px;
+  padding: 0px 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  max-width: 500px;
+  font-weight: bold;
+  position: absolute;
+  top: 145px;
+  left: 50%;
+  transform: translate(-50%, 0);
+}
+
+.errorMessage {
+  color: white;
+  background-color: rgb(207, 17, 17);
+  border: solid 2px rgb(207, 17, 17);
+}
+
+.successMessage {
+  background-color: lightgreen;
+  color: rgb(9, 105, 9);
+  border: solid 2px rgb(9, 105, 9);
+}
+
 @media screen and (max-width: 1330px) {
   .containerMain {
     grid-template-columns: 50% 50%;
+  }
+  .message {
+    max-width: 340px;
   }
 }
 
