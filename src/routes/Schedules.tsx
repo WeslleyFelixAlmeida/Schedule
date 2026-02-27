@@ -21,21 +21,19 @@ type MessageType = {
     message_1: { show: boolean },
     message_2: { show: boolean },
     message_3: { show: boolean },
+    message_4: { show: boolean },
+    message_5: { show: boolean },
 }
 
 const Schedules = () => {
     const navigate = useNavigate();
     const [schedules, setSchedules] = useState<eventType[]>([]);
-    const [joinedEventMessage, setJoinMessage] = useState<{
-        eventTitle: string,
-        noSpot: boolean,
-        eventId: number
-    }>({ eventTitle: "", noSpot: false, eventId: -1 });
-
     const [showMessages, setShowMessages] = useState<MessageType>({
         message_1: { show: false },
         message_2: { show: false },
         message_3: { show: false },
+        message_4: { show: false },
+        message_5: { show: false },
     });
 
     const [joinedEventTitle, setJoinedEventTitle] = useState<string>("");
@@ -45,6 +43,8 @@ const Schedules = () => {
             message_1: { show: false },
             message_2: { show: false },
             message_3: { show: false },
+            message_4: { show: false },
+            message_5: { show: false },
         });
     }
 
@@ -68,12 +68,39 @@ const Schedules = () => {
                 )
             );
         }
-        
+
         setTimeout(() => {
             clearMessages();
             setJoinedEventTitle("");
         }, 3000);
     };
+
+    const handleExitEvent = async (eventId: number, eventType: "UNIQUE" | "MULTIPLE") => {
+        const result = await exitEvent(eventId, eventType);
+        if (!result.success) {
+            setShowMessages((prev) => ({ ...prev, message_5: { show: true } }));
+        }
+        else {
+            setShowMessages((prev) => ({ ...prev, message_4: { show: true } }));
+            setSchedules(prev =>
+                prev.map(schedule =>
+                    schedule.id === eventId
+                        ? {
+                            ...schedule,
+                            isParticipating: false,
+                            currentAmount: schedule.currentAmount - 1
+                        }
+                        : schedule
+                )
+            );
+        }
+
+        setTimeout(() => {
+            clearMessages();
+            setJoinedEventTitle("");
+        }, 3000);
+    };
+
 
     useEffect(() => {
         fetch(`${API_URL}/event`, {
@@ -107,6 +134,15 @@ const Schedules = () => {
                 <p className={`${style.message} ${style.errorMessage}`}>Ocorreu um erro ao tentar entrar no evento.</p>
             }
 
+            {showMessages.message_4.show &&
+                <p className={`${style.message} ${style.successMessage}`}>Você saiu do evento: <span style={{ textDecoration: "underline", marginLeft: "10px" }}> {joinedEventTitle}</span></p>
+            }
+
+
+            {showMessages.message_5.show &&
+                <p className={`${style.message} ${style.errorMessage}`}>Ocorreu um erro ao tentar sair do evento.</p>
+            }
+
             {schedules.length > 0 &&
                 schedules.map((schedule) => (
                     <Card.Root key={schedule.id}>
@@ -120,7 +156,10 @@ const Schedules = () => {
                         <Card.Image imgUrl={schedule.eventImage} />
                         <Card.Buttons>
                             {(schedule.eventType === "UNIQUE" && schedule.isParticipating) &&
-                                <Card.Button buttonFunction={() => exitEvent(schedule.id)} buttonType={"cancel"} />
+                                <Card.Button buttonFunction={() => {
+                                    setJoinedEventTitle(schedule.title);
+                                    handleExitEvent(schedule.id, schedule.eventType);
+                                }} buttonType={"cancel"} />
                             }
                             {(schedule.eventType === "UNIQUE" && !schedule.isParticipating && schedule.currentStatus === "OPEN") &&
                                 <Card.Button

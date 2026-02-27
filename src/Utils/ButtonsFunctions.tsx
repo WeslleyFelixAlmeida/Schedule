@@ -5,6 +5,10 @@ type joinType = {
     success: boolean;
 }
 
+type exitType = {
+    success: boolean;
+}
+
 const joinEvent = async (eventId: number, eventType: "UNIQUE" | "MULTIPLE"): Promise<joinType> => {
     if (eventType === "UNIQUE") {
         const request = await fetch(`${API_URL}/event/join/unique/${eventId}`, {
@@ -30,8 +34,28 @@ const joinEvent = async (eventId: number, eventType: "UNIQUE" | "MULTIPLE"): Pro
 }
 
 
-const exitEvent = async (eventId: number) => {
-    return console.log("Saiu do evento de id: " + eventId);
+const exitEvent = async (eventId: number, eventType: "UNIQUE" | "MULTIPLE"): Promise<exitType> => {
+    if (eventType === "UNIQUE") {
+        const request = await fetch(`${API_URL}/event/exit/unique/${eventId}`, {
+            method: "PATCH",
+            credentials: "include",
+            headers: {
+                "Content-Type": "application/json"
+            }
+        });
+
+        if (!request.ok) {
+            return { success: false };
+        }
+
+        const data = await request.json();
+        if (!data.noSpot) {
+            return { success: true };
+        }
+
+    }
+
+    return { success: false };
 }
 
 export { joinEvent, exitEvent };
