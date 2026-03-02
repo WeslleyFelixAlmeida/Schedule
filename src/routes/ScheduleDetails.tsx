@@ -1,7 +1,7 @@
 import style from "./ScheduleDetails.module.css";
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import { useEffect, useState, type JSX } from "react";
-import { exitEvent as exit, joinEvent as join } from "../Utils/ButtonsFunctions";
+import { exitEvent, joinEvent } from "../Utils/ButtonsFunctions";
 import Button from "./../components/Button";
 import { API_URL } from "../config";
 import EventCardStatus from "../components/EventCardComponents/EventCardStatus";
@@ -19,6 +19,15 @@ type ScheduleDetailsProps = {
     eventImage: string;
     description: string;
 }
+
+type MessageType = {
+    message_1: { show: boolean },
+    message_2: { show: boolean },
+    message_3: { show: boolean },
+    message_4: { show: boolean },
+    message_5: { show: boolean },
+}
+
 
 const ScheduleDetails = () => {
     const [params] = useSearchParams();
@@ -41,9 +50,61 @@ const ScheduleDetails = () => {
         description: "",
     });
 
-    const chooseButton = (conditionsCheck: Pick<ScheduleDetailsProps, "eventType" | "isParticipating" | "currentStatus" | "id">) => {
+    const [joinedEventTitle, setJoinedEventTitle] = useState<string>("");
+
+    const [showMessages, setShowMessages] = useState<MessageType>({
+        message_1: { show: false },
+        message_2: { show: false },
+        message_3: { show: false },
+        message_4: { show: false },
+        message_5: { show: false },
+    });
+
+    const clearMessages = () => {
+        setShowMessages({
+            message_1: { show: false },
+            message_2: { show: false },
+            message_3: { show: false },
+            message_4: { show: false },
+            message_5: { show: false },
+        });
+    }
+
+    const handleJoinEvent = async (eventId: number, eventType: "UNIQUE" | "MULTIPLE") => {
+        const result = await joinEvent(eventId, eventType);
+        if (!result.success) {
+            setShowMessages((prev) => ({ ...prev, message_3: { show: true } }));
+        } else if (result.isFull) {
+            setShowMessages((prev) => ({ ...prev, message_2: { show: true } }));
+        } else {
+            setShowMessages((prev) => ({ ...prev, message_1: { show: true } }));
+
+            setScheduleData((prev) => ({ ...prev, isParticipating: !prev.isParticipating, currentAmount: prev.currentAmount + 1 }))
+        }
+
+        setTimeout(() => {
+            clearMessages();
+        }, 3000);
+    };
+
+    const handleExitEvent = async (eventId: number, eventType: "UNIQUE" | "MULTIPLE") => {
+        const result = await exitEvent(eventId, eventType);
+        if (!result.success) {
+            setShowMessages((prev) => ({ ...prev, message_5: { show: true } }));
+        }
+        else {
+            setShowMessages((prev) => ({ ...prev, message_4: { show: true } }));
+            setScheduleData((prev) => ({ ...prev, isParticipating: !prev.isParticipating, currentAmount: prev.currentAmount - 1 }))
+        }
+
+        setTimeout(() => {
+            clearMessages();
+        }, 3000);
+    };
+
+    const chooseButton = (conditionsCheck: ScheduleDetailsProps) => {
         const cancelButton = (
-            <Button buttonFunction={() => exit(scheduleData.id)} buttons="cancel" key={1} />
+            <Button buttonFunction={() => handleExitEvent(scheduleData.id, scheduleData.eventType)} buttons="cancel" key={1} />
         );
 
         const joinButtonMultiple = (
@@ -51,7 +112,7 @@ const ScheduleDetails = () => {
         );
 
         const joinButtonUnique = (
-            <Button buttonFunction={() => join(scheduleData.id)} buttons="join" key={1} />
+            <Button buttonFunction={() => handleJoinEvent(scheduleData.id, scheduleData.eventType)} buttons="join" key={1} />
         )
 
         const buttons: JSX.Element[] = [];
@@ -59,7 +120,8 @@ const ScheduleDetails = () => {
 
         if (conditionsCheck.eventType === "UNIQUE" &&
             !conditionsCheck.isParticipating &&
-            conditionsCheck.currentStatus === "OPEN"
+            conditionsCheck.currentStatus === "OPEN" &&
+            conditionsCheck.currentAmount !== conditionsCheck.maxAmount
         ) {
             buttons.push(joinButtonUnique);
         }
@@ -78,6 +140,14 @@ const ScheduleDetails = () => {
             conditionsCheck.isParticipating &&
             conditionsCheck.currentStatus === "CLOSED") {
             buttons.push(cancelButton);
+        }
+
+        if (conditionsCheck.currentAmount === conditionsCheck.maxAmount &&
+            !conditionsCheck.isParticipating
+        ) {
+            buttons.push(
+                <p className={style.closedEventMessage} key={2}>Evento lotado!</p>
+            )
         }
 
         if (conditionsCheck.currentStatus === "CLOSED") {
@@ -109,6 +179,7 @@ const ScheduleDetails = () => {
                 console.log(data);
                 setScheduleData(data);
 
+                setJoinedEventTitle(data.title);
             })
             .catch((err) => console.log(err));
     }, [])
@@ -145,13 +216,28 @@ const ScheduleDetails = () => {
                 </div>
             </div>
 
-            {chooseButton(
-                {
-                    id: scheduleData.id,
-                    currentStatus: scheduleData.currentStatus,
-                    eventType: scheduleData.eventType,
-                    isParticipating: scheduleData.isParticipating
-                })}
+            {showMessages.message_1.show &&
+                <p className={`${style.message} ${style.successMessage}`}>Você entrou no evento: <span style={{ textDecoration: "underline", marginLeft: "10px" }}> {joinedEventTitle}</span></p>
+            }
+
+            {showMessages.message_2.show &&
+                <p className={`${style.message} ${style.errorMessage}`}>Não há vagas neste evento!</p>
+            }
+
+            {showMessages.message_3.show &&
+                <p className={`${style.message} ${style.errorMessage}`}>Ocorreu um erro ao tentar entrar no evento.</p>
+            }
+
+            {showMessages.message_4.show &&
+                <p className={`${style.message} ${style.successMessage}`}>Você saiu do evento: <span style={{ textDecoration: "underline", marginLeft: "10px" }}> {joinedEventTitle}</span></p>
+            }
+
+
+            {showMessages.message_5.show &&
+                <p className={`${style.message} ${style.errorMessage}`}>Ocorreu um erro ao tentar sair do evento.</p>
+            }
+
+            {chooseButton(scheduleData)}
             {scheduleData.eventType === "MULTIPLE" &&
                 (
                     <Details_MultipleSchedule scheduleId={scheduleData.id} setShowMultipleSchedule={setShowMultipleSchedule} showMultipleSchedule={showMultipleSchedule} />

@@ -38,6 +38,12 @@
   border: solid 2px rgb(9, 105, 9);
 }
 
+.eventFull{
+  background-color: red;
+  color: white;
+  padding: 5px;
+}
+
 @media screen and (max-width: 1330px) {
   .containerMain {
     grid-template-columns: 50% 50%;

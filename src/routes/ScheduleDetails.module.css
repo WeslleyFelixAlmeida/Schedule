@@ -119,7 +119,39 @@
   font-size: 20px;
 }
 
+.message {
+  border-radius: 10px;
+  text-align: center;
+  box-sizing: border-box;
+  height: 70px;
+  padding: 0px 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  max-width: 500px;
+  font-weight: bold;
+  top: 145px;
+  left: 50%;
+}
+
+.errorMessage {
+  color: white;
+  background-color: rgb(207, 17, 17);
+  border: solid 2px rgb(207, 17, 17);
+}
+
+.successMessage {
+  background-color: lightgreen;
+  color: rgb(9, 105, 9);
+  border: solid 2px rgb(9, 105, 9);
+}
+
 @media screen and (max-width: 1260px) {
+  .message {
+    max-width: 340px;
+  }
+
   .containerMain,
   .detailsTitleContainer {
     align-items: center;

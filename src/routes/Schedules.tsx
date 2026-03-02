@@ -161,15 +161,29 @@ const Schedules = () => {
                                     handleExitEvent(schedule.id, schedule.eventType);
                                 }} buttonType={"cancel"} />
                             }
-                            {(schedule.eventType === "UNIQUE" && !schedule.isParticipating && schedule.currentStatus === "OPEN") &&
+                            {(
+                                (
+                                    schedule.eventType === "UNIQUE" &&
+                                    !schedule.isParticipating &&
+                                    schedule.currentStatus === "OPEN" &&
+                                    schedule.currentAmount !== schedule.maxAmount
+                                )) &&
                                 <Card.Button
                                     buttonFunction={() => {
                                         setJoinedEventTitle(schedule.title);
                                         handleJoinEvent(schedule.id, schedule.eventType);
                                     }} buttonType={"join"} />
                             }
+
                             <Card.Button buttonFunction={() =>
                                 navigate(`/scheduleDetails?id=${schedule.id}`)} buttonType={"details"} />
+
+                            {(
+                                schedule.currentAmount === schedule.maxAmount &&
+                                !schedule.isParticipating
+                            ) &&
+                                <p className={style.eventFull}>Evento lotado!</p>
+                            }
                         </Card.Buttons>
                     </Card.Root>
                 ))}
