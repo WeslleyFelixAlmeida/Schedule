@@ -10,7 +10,7 @@
   padding: 10px 0px;
 }
 
-.containerUserSchedules > a{ 
+.containerUserSchedules > a {
   align-self: flex-start;
   text-decoration: underline;
 }
@@ -34,6 +34,23 @@
 .containerList > h1 {
   border-bottom: solid 1px gray;
   padding-bottom: 5px;
+}
+
+.containerList > ul > button {
+  height: 40px;
+  width: 200px;
+  border-radius: 10px;
+  border: solid 2px var(--golden_fonts);
+  color: var(--golden_fonts);
+  font-weight: bold;
+  background-color: var(--dark_blue);
+  align-self: center;
+  cursor: pointer;
+  transition: background-color 0.5s ease;
+}
+
+.containerList > ul > button:hover {
+  background-color: var(--light_blue_color);
 }
 
 .topContainerList {

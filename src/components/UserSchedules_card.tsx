@@ -1,25 +1,21 @@
 import style from "./UserSchedules_card.module.css";
 
 type UserSchedules_card_props = {
-    eventHour: string
-    eventDate: string
+    schedule: string
+    date: string
     buttonFunction: Function;
-    title: string; //Vai vir da API também
+    name: string;
 }
 
 const UserSchedules_card = (props: UserSchedules_card_props) => {
-    const eventDate = new Date(props.eventDate);
-    const formatedDate = `${String(eventDate.getDate()).padStart(2, "0")}/${String(eventDate.getMonth() + 1).padStart(2, "0")}/${String(eventDate.getFullYear() % 100).padStart(2, "0")}`;
-
     return (
         <li className={style.choosedScheduleContainer}>
             <div className={style.hourChoosedSchedule}>
-                <p>{formatedDate}</p>
-                <p>{props.eventHour}</p>
+                <p>{props.date}</p>
+                <p>{props.schedule}</p>
             </div>
             <div className={style.textChoosedSchedule}>
-                <p>{props.title}</p>
-                {/* Isso deve vir da API também ^^^ */}
+                <p>{props.name}</p>
                 <input type="button" value="Cancelar" onClick={() => { props.buttonFunction() }} />
             </div>
         </li>
