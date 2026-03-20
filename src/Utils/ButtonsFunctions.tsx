@@ -49,10 +49,7 @@ const exitEvent = async (eventId: number, eventType: "UNIQUE" | "MULTIPLE"): Pro
         }
 
         const data = await request.json();
-        if (!data.noSpot) {
-            return { success: true };
-        }
-
+        return { success: true };
     }
 
     return { success: false };

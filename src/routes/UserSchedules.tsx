@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import UserSchedules_card from "../components/UserSchedules_card";
 import { useEffect, useState } from "react";
 import { API_URL } from "../config";
+import { exitEvent } from "../Utils/ButtonsFunctions";
 
 type eventDataSchedules_props = {
     id: number; //vai ser usado na função de exitEvent(id -> eventId)
@@ -10,26 +11,8 @@ type eventDataSchedules_props = {
     schedule: string;
     date: string; //Da para considerar os horários pela data exemplo 10/01/2025, apenas os horários deste dia serão apresentados
     name: string;
-}
-
-const scheduleCard = (cardProps: eventDataSchedules_props, key: number) => {
-    return <UserSchedules_card schedule={cardProps.schedule}
-        buttonFunction={
-            () => {
-                console.log(`Cancelou o horário: ${cardProps.schedule} no dia: ${cardProps.date}`)
-                console.log("Id: " + cardProps.id);
-            }
-        }
-        key={key} date={cardProps.date} name={cardProps.name} />
-};
-
-const showCards = (eventsData: eventDataSchedules_props[]) => {
-    let lines: any = []
-    eventsData.map((event, index) => {
-        lines.push(scheduleCard(event, index))
-    })
-
-    return lines;
+    type: "UNIQUE" | "MULTIPLE";
+    eventId: number;
 }
 
 const UserSchedules = () => {
@@ -38,6 +21,18 @@ const UserSchedules = () => {
     const [error, setError] = useState<boolean>(false);
     const [isLoading, setIsloading] = useState<boolean>(false);
     const [hasNext, setHasNext] = useState<boolean>(false);
+
+
+    const exitEventFunc = async (eventId: number, type: "UNIQUE" | "MULTIPLE") => {
+        const response = await exitEvent(eventId, type);
+
+        if (response.success) {
+            const events = eventsData.filter((event) => event.eventId !== eventId);
+            setEventsData(events);
+        } else {
+            console.error("Erro ao sair do evento");
+        }
+    }
 
     useEffect(() => {
         const callApi = async () => {
@@ -78,12 +73,17 @@ const UserSchedules = () => {
             <div className={style.containerList}>
                 {isLoading && <p>Carregando...</p>}
                 {error && <p>Ocorreu um erro.</p>}
-                {(!isLoading) && (!error) &&
-                    <ul>
-                        {showCards(eventsData)}
-                        {hasNext && <button>Ver mais</button>}
-                    </ul>
-                }
+                <ul>
+                    {eventsData &&
+                        eventsData.map((eventData) =>
+                            <UserSchedules_card
+                                schedule={eventData.schedule}
+                                buttonFunction={() => exitEventFunc(eventData.eventId, eventData.type)}
+                                key={eventData.id} date={eventData.date} name={eventData.name}
+                            />
+                        )
+                    }
+                </ul>
             </div>
         </div>
     )
